@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="KosenOrange">#ff8200</color>
+    <color name="KosenYellow" >#EBBE23</color>
+    <color name="KosenGreen" >#82B44B</color>
+    <color name="KosenBlue" >#285FAA</color>
+    <color name="KosenClearYellow" >#40EBBE23</color>
+    <color name="KosenClearGreen" >#4082B44B</color>
+    <color name="KosenClearBlue" >#40285FAA</color>
+    <color name="LGray" >#EBEBEB</color>
+    <color name="Black" >#000000</color>
+
+    <color name="ClickableText" >#0000FF</color>
+    <color name="SectionLineColor" >#C8C8C8</color>
+
+    <color name="TopicTextBackColor" >#99ffffff</color>
+    <color name="ClearColor" >#00ffffff</color>
+</resources>
