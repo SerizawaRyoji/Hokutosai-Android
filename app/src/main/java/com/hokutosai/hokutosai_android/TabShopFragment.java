@@ -49,40 +49,48 @@ public class TabShopFragment  extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-
         //adapter.setShopItemList(list);
         //listView.setAdapter(adapter);
 
-        MyJsonArrayRequest jArrayRequest =
-                new MyJsonArrayRequest("https://api.hokutosai.tech/2016/shops/",
-                        new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
 
-                                //JSONArrayをListShopItemに変換して取得
-                                Gson gson = new Gson();
-                                Type collectionType = new TypeToken<Collection<ShopItem>>(){}.getType();
-                                list = gson.fromJson(response.toString(),collectionType);
+        if(list.isEmpty()) {
+            MyJsonArrayRequest jArrayRequest =
+                    new MyJsonArrayRequest("https://api.hokutosai.tech/2016/shops/",
+                            new Response.Listener<JSONArray>() {
+                                @Override
+                                public void onResponse(JSONArray response) {
 
-                                if(listView == null){
+                                    //JSONArrayをListShopItemに変換して取得
+                                    Gson gson = new Gson();
+                                    Type collectionType = new TypeToken<Collection<ShopItem>>() {
+                                    }.getType();
+                                    list = gson.fromJson(response.toString(), collectionType);
+
                                     //UIに反映
-                                    listView = (ListView)getActivity().findViewById(R.id.list_shop_view);
+                                    listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
                                     adapter.setShopItemList(list);
                                     listView.setAdapter(adapter);
                                 }
-                            }
-                        },
+                            },
 
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("LIFE", error.toString());
-                                // エラー処理 error.networkResponseで確認
-                                // エラー表示など
-                            }
-                        });
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e("LIFE", error.toString());
+                                    // エラー処理 error.networkResponseで確認
+                                    // エラー表示など
+                                }
+                            });
 
-        jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
-        RequestQueueSingleton.getInstance().add(jArrayRequest);	//WebAPIの呼び出し
+            jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
+            RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
+        }
+        else{
+            listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
+            adapter.setShopItemList(list);
+            listView.setAdapter(adapter);
+        }
     }
+
+
 }

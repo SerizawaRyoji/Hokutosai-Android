@@ -27,6 +27,6 @@ public class MainActivity extends FragmentActivity {
         mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_news").setIndicator(vNews),TabNewsFragment.class, null);				//ニュースタブ
         mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_schedule").setIndicator(vSchedule),TabScheduleFragment.class, null);	//スケジュールタブ
         mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_shop").setIndicator(vShop),TabShopFragment.class, null);				//模擬店タブ
-        mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_exhibition").setIndicator(vExhibition),TabShopFragment.class, null);	//展示タブ
+        mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_exhibition").setIndicator(vExhibition),TabExhibitionFragment.class, null);	//展示タブ
     }
 }
