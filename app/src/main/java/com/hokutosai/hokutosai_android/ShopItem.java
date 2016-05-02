@@ -1,9 +1,11 @@
 package com.hokutosai.hokutosai_android;
 
+import java.io.Serializable;
+
 /**
  * Created by ryoji on 2016/05/02.
  */
-public class ShopItem {
+public class ShopItem implements Serializable {
 
     private int shop_id;
     private String name;

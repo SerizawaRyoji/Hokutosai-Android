@@ -58,14 +58,6 @@ public class TabShopFragment  extends Fragment {
                         new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
-                                Log.d("test", "resuponnsu");
-                                /*try {
-                                    org.json.JSONObject j = response.getJSONObject(0);
-                                    Log.d("test", j.getString("tenant"));
-                                } catch (JSONException e) {
-                                    Log.d("test", "エラー");
-                                    e.printStackTrace();
-                                }*/
 
                                 //JSONArrayをListShopItemに変換して取得
                                 Gson gson = new Gson();
@@ -90,7 +82,7 @@ public class TabShopFragment  extends Fragment {
                             }
                         });
 
-        jArrayRequest.setCustomTimeOut();
+        jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
         RequestQueueSingleton.getInstance().add(jArrayRequest);	//WebAPIの呼び出し
     }
 }

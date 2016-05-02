@@ -1,25 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_height" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="name"
-        android:id="@+id/name"
-        android:layout_alignParentTop="true"
+    <!-- 画像 -->
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/shop_item_image"
+        android:layout_width="@dimen/list_height"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_margin="10dp" />
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/list_image_padding_margin"
+        />
 
-    <TextView
+    <!-- 模擬店名 -->
+    <android:TextView
+        android:id="@+id/shop_item_name"
+        android:layout_toRightOf="@id/shop_item_image"
+        android:layout_alignTop="@id/shop_item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="tweet"
-        android:id="@+id/tenant"
-        android:layout_below="@+id/name"
-        android:layout_alignParentLeft="@+id/name" />
+        android:layout_marginLeft="@dimen/list_title_padding_left_margin"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="22sp"/>
 
-</LinearLayout>
+    <!-- テナント名 -->
+    <android:TextView
+        android:id="@+id/shop_item_tenant"
+        android:layout_toRightOf="@id/shop_item_image"
+        android:layout_below="@id/shop_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_tenant_padding_left_margin"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="12sp" />
+
+    <!-- 主な商品名 -->
+    <android:TextView
+        android:id="@+id/shop_item_sales"
+        android:layout_below="@id/shop_item_tenant"
+        android:layout_toRightOf="@id/shop_item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_sales_padding_left_margin"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="12sp" />
+
+</RelativeLayout>
