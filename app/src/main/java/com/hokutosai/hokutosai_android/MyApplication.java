@@ -13,5 +13,6 @@ public class MyApplication extends Application {
         super.onCreate();
 
         RequestQueueSingleton.create(getApplicationContext());    //RequestQueueの作成
+        LruCacheSingleton.create();
     }
 }

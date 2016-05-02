@@ -6,8 +6,8 @@
     <!-- 画像 -->
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/shop_item_image"
-        android:layout_width="@dimen/list_height"
-        android:layout_height="match_parent"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:padding="@dimen/list_image_padding_margin"

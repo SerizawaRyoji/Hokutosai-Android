@@ -1,11 +1,14 @@
 package com.hokutosai.hokutosai_android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
@@ -49,18 +52,10 @@ public class ShopItemAdapter extends BaseAdapter{
         if(convertView == null) {
             convertView = layoutInflater.inflate(R.layout.shop_item, null);
 
-            TextView shopName = (TextView) convertView.findViewById(R.id.shop_item_name);
-            TextView shopTenant = (TextView) convertView.findViewById(R.id.shop_item_tenant);
-            TextView shopSales = (TextView) convertView.findViewById(R.id.shop_item_sales);
-
-            shopName.setText(shopItemList.get(position).getName());
-            shopTenant.setText(shopItemList.get(position).getTenant());
-            shopSales.setText(shopItemList.get(position).getSales());
-
             holder = new ViewHolder();
-            holder.name = shopName;
-            holder.tenant = shopTenant;
-            holder.sales = shopSales;
+            holder.name = (TextView) convertView.findViewById(R.id.shop_item_name);
+            holder.tenant = (TextView) convertView.findViewById(R.id.shop_item_tenant);
+            holder.sales = (TextView) convertView.findViewById(R.id.shop_item_sales);
 
             convertView.setTag(holder);
         }
@@ -68,18 +63,15 @@ public class ShopItemAdapter extends BaseAdapter{
             holder = (ViewHolder)convertView.getTag();
         }
 
-        // リクエストのキャンセル処理
-        /*ImageLoader.ImageContainer imageContainer = (ImageLoader.ImageContainer)holder.imageView.getTag();
-        if (imageContainer != null) {
-            imageContainer.cancelRequest();
-        }
+        holder.name.setText(shopItemList.get(position).getName());
+        holder.tenant.setText(shopItemList.get(position).getTenant());
+        holder.sales.setText(shopItemList.get(position).getSales());
 
         if (shopItemList.get(position).getImage_url() != null) {
+            Log.d("url",shopItemList.get(position).getImage_url());
             NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.shop_item_image);
-            imageView.setImageUrl(shopItemList.get(position).getImage_url(), mImageLoader);
-            holder.image.setImageUrl(item.getImageResource(), new ImageLoader(RequestQueueSingleton.getInstance(), LruBitmapCache.getInstance()));
-            //holder.image.setTag(mImageLoader.get(item.getImageResource(), listener));
-        }*/
+            imageView.setImageUrl(shopItemList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
+        }
 
         return convertView;
     }
