@@ -17,6 +17,7 @@ public class ShopItemAdapter extends BaseAdapter{
     Context context;
     LayoutInflater layoutInflater = null;
     ArrayList<ShopItem> shopItemList;
+    private ViewHolder holder = null;
 
     public ShopItemAdapter(Context context) {
         this.context = context;
@@ -45,46 +46,47 @@ public class ShopItemAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        /*final ViewHolder holder;
-        if (convertView == null) {	//取得すべきビューがnullなら
-            convertView = mInflater.inflate(R.layout.shop_item, parent, false);
+        if(convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.shop_item, null);
+
+            TextView shopName = (TextView) convertView.findViewById(R.id.shop_item_name);
+            TextView shopTenant = (TextView) convertView.findViewById(R.id.shop_item_tenant);
+            TextView shopSales = (TextView) convertView.findViewById(R.id.shop_item_sales);
+
+            shopName.setText(shopItemList.get(position).getName());
+            shopTenant.setText(shopItemList.get(position).getTenant());
+            shopSales.setText(shopItemList.get(position).getSales());
+
             holder = new ViewHolder();
-            holder.name = (TextView)convertView.findViewById(R.id.list_shop_title);
-            holder.tenant = (TextView)convertView.findViewById(R.id.list_shop_tenant);
-            holder.sales = (TextView)convertView.findViewById(R.id.list_shop_sales);
-            holder.image = (NetworkImageView)convertView.findViewById(R.id.list_shop_image);
+            holder.name = shopName;
+            holder.tenant = shopTenant;
+            holder.sales = shopSales;
 
             convertView.setTag(holder);
-        } else {
+        }
+        else {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        final ShopItem item = getItem(position);
-        holder.name.setText(item.getName());
-        holder.tenant.setText(item.getTenant());
-        holder.sales.setText(item.getSales());
-
-        if(item.getImage_url() != null){
-            holder.image.setImageUrl(item.getImage_url(), new ImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
-            //holder.image.setTag(mImageLoader.get(item.getImageResource(), listener));
+        // リクエストのキャンセル処理
+        /*ImageLoader.ImageContainer imageContainer = (ImageLoader.ImageContainer)holder.imageView.getTag();
+        if (imageContainer != null) {
+            imageContainer.cancelRequest();
         }
 
-        return convertView;*/
-
-
-        convertView = layoutInflater.inflate(R.layout.shop_item,parent,false);
-
-        ((TextView)convertView.findViewById(R.id.shop_item_name)).setText(shopItemList.get(position).getName());
-        ((TextView)convertView.findViewById(R.id.shop_item_tenant)).setText(shopItemList.get(position).getTenant());
-        ((TextView)convertView.findViewById(R.id.shop_item_sales)).setText(shopItemList.get(position).getSales());
+        if (shopItemList.get(position).getImage_url() != null) {
+            NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.shop_item_image);
+            imageView.setImageUrl(shopItemList.get(position).getImage_url(), mImageLoader);
+            holder.image.setImageUrl(item.getImageResource(), new ImageLoader(RequestQueueSingleton.getInstance(), LruBitmapCache.getInstance()));
+            //holder.image.setTag(mImageLoader.get(item.getImageResource(), listener));
+        }*/
 
         return convertView;
     }
 
-    /*private class ViewHolder {
+    private class ViewHolder{
         TextView name;
         TextView tenant;
         TextView sales;
-        NetworkImageView image;
-    }*/
+    }
 }
