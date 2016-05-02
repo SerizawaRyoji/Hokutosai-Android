@@ -1,6 +1,7 @@
 package com.hokutosai.hokutosai_android;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 
@@ -14,6 +15,8 @@ import java.util.Map;
  */
 public class MyJsonArrayRequest extends JsonArrayRequest
 {
+
+    private static final int CUSTOM_TIMEOUT_MS = 1000;
 
     public MyJsonArrayRequest(String url, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener) {
         super(url, listener, errorListener);
@@ -29,5 +32,12 @@ public class MyJsonArrayRequest extends JsonArrayRequest
         newHeaders.putAll(headers);
         newHeaders.put("Authorization", "user_id=client-android-app,access_token=fIsngZeqTRUOjl8HtlqRnhjPK8TTaDnd3bFsgda8fxMVpBGX180Ld3Hlr5gT30tr");
         return newHeaders;
+    }
+
+    //volleyのタイムアウト時間の変更 *変更しないとタイムアウトによるエラーが発生したため
+    //http://qiita.com/ya13241ba/items/c6a5ebb93afbae3d039a
+    public void setCustomTimeOut(){
+        DefaultRetryPolicy policy = new DefaultRetryPolicy(CUSTOM_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        this.setRetryPolicy(policy);
     }
 }

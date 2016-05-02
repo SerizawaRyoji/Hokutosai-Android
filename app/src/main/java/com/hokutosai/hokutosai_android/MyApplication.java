@@ -11,6 +11,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         // TODO 自動生成されたメソッド・スタブ
         super.onCreate();
+
         RequestQueueSingleton.create(getApplicationContext());    //RequestQueueの作成
     }
 }

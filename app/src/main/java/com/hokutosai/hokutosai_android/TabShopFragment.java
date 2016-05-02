@@ -90,6 +90,7 @@ public class TabShopFragment  extends Fragment {
                             }
                         });
 
+        jArrayRequest.setCustomTimeOut();
         RequestQueueSingleton.getInstance().add(jArrayRequest);	//WebAPIの呼び出し
     }
 }
