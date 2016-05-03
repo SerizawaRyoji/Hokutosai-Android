@@ -1,5 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -41,6 +43,20 @@ public class TabShopFragment  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        /*listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                ListView lv = (ListView) parent;
+                // クリックされたアイテムを取得します
+                ShopItem item = (ShopItem) lv.getItemAtPosition(position);
+                Log.d("test",item.getName());
+            }
+        });*/
+
         // TODO 自動生成されたメソッド・スタブ
         return inflater.inflate(R.layout.tab_shop_fragment, container, false);
     }
@@ -70,6 +86,8 @@ public class TabShopFragment  extends Fragment {
                                     listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
                                     adapter.setShopItemList(list);
                                     listView.setAdapter(adapter);
+
+                                    setClickListener();     //クリックしたときの処理について
                                 }
                             },
 
@@ -89,8 +107,26 @@ public class TabShopFragment  extends Fragment {
             listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
             adapter.setShopItemList(list);
             listView.setAdapter(adapter);
+
+            setClickListener();     //クリックしたときの処理について
         }
     }
 
+    private void setClickListener(){
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                //ListView lv = (ListView) parent;
+                // クリックされたアイテムを取得します
+                //ShopItem item = (ShopItem) lv.getItemAtPosition(position);
+                //Log.d("test",item.getName());
+
+                Intent i = new Intent(getActivity(), ShopDetailActivity.class);
+                i.putExtra("ShopItem", list.get(position));
+                startActivity(i);
+            }
+        });
+    }
 }
