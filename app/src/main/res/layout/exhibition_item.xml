@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/list_height">
+
+    <!-- 画像 -->
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/exhibition_item_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/list_image_padding_margin"
+        />
+
+    <!-- タイトル -->
+    <android:TextView
+        android:id="@+id/exhibition_item_title"
+        android:layout_toRightOf="@id/exhibition_item_image"
+        android:layout_alignTop="@id/exhibition_item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_title_padding_left_margin"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="22sp"/>
+
+    <!-- 主な展示品 -->
+    <android:TextView
+        android:id="@+id/exhibition_item_displays"
+        android:layout_below="@id/exhibition_item_title"
+        android:layout_toRightOf="@id/exhibition_item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_sales_padding_left_margin"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="12sp" />
+
+</RelativeLayout>

@@ -1,7 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +67,6 @@ public class ShopItemAdapter extends BaseAdapter{
         holder.sales.setText(shopItemList.get(position).getSales());
 
         if (shopItemList.get(position).getImage_url() != null) {
-            Log.d("url",shopItemList.get(position).getImage_url());
             NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.shop_item_image);
             imageView.setImageUrl(shopItemList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
         }
