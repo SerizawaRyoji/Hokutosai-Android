@@ -15,7 +15,7 @@
         android:layout_height="0dp"
         android:layout_weight="40"
         android:adjustViewBounds="false"
-        android:src="@drawable/tab_schedule_icon" />
+        android:src="@drawable/tab_event_icon" />
 
     <TextView
         android:layout_width="match_parent"

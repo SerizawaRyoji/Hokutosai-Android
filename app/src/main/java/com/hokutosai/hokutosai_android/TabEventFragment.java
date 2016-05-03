@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 /**
  * Created by ryoji on 2016/05/01.
  */
-public class TabScheduleFragment  extends Fragment {
+public class TabEventFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
