@@ -29,6 +29,9 @@ public class TabExhibitionFragment  extends Fragment {
     ExhibitionItemAdapter adapter;
     ListView listView;
 
+    //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
+    private static final Object TAG_EXHIBITION_REQUEST_QUEUE = new Object();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO 自動生成されたメソッド・スタブ
@@ -82,6 +85,7 @@ public class TabExhibitionFragment  extends Fragment {
                             });
 
             jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
+            jArrayRequest.setTag(TAG_EXHIBITION_REQUEST_QUEUE);    //タグのセット
             RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
         }
         else{
@@ -93,5 +97,9 @@ public class TabExhibitionFragment  extends Fragment {
         }
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueueSingleton.getInstance().cancelAll(TAG_EXHIBITION_REQUEST_QUEUE);
+    }
 }

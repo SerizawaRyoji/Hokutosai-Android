@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class MyJsonObjectRequest extends JsonObjectRequest {
 
+    private static final int CUSTOM_TIMEOUT_MS = 1000;
+
     public MyJsonObjectRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener,
                                Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, listener, errorListener);
@@ -35,7 +37,7 @@ public class MyJsonObjectRequest extends JsonObjectRequest {
     //volleyのタイムアウト時間の変更 *変更しないとタイムアウトによるエラーが発生したため
     //http://qiita.com/ya13241ba/items/c6a5ebb93afbae3d039a
     public void setCustomTimeOut(){
-        DefaultRetryPolicy policy = new DefaultRetryPolicy(1000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        DefaultRetryPolicy policy = new DefaultRetryPolicy(CUSTOM_TIMEOUT_MS,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         this.setRetryPolicy(policy);
     }
 }

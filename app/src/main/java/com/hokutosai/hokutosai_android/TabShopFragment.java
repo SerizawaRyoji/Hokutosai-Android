@@ -31,6 +31,9 @@ public class TabShopFragment  extends Fragment {
     ShopItemAdapter adapter;
     ListView listView;
 
+    //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
+    private static final Object TAG_SHOP_REQUEST_QUEUE = new Object();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +104,7 @@ public class TabShopFragment  extends Fragment {
                             });
 
             jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
+            jArrayRequest.setTag(TAG_SHOP_REQUEST_QUEUE);    //タグのセット
             RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
         }
         else{
@@ -128,5 +132,11 @@ public class TabShopFragment  extends Fragment {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueueSingleton.getInstance().cancelAll(TAG_SHOP_REQUEST_QUEUE);
     }
 }
