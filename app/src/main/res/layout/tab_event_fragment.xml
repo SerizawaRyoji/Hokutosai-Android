@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:viewpager="http://schemas.android.com/tools">
+    android:orientation="vertical" >
 
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/events_tabs"
+    <!-- トピックなどのスライドショーを表示するFragment -->
+    <FrameLayout
+        android:id="@+id/layout_fragment_topic_event"
         android:layout_width="match_parent"
-        android:layout_height="48dip"
-        viewpager:pstsShouldExpand="true"/>
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/events_pager"
+    <!-- イベントのリストビューを表示するFragment -->
+    <FrameLayout
+        android:id="@+id/layout_fragment_list_event"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/events_tabs" />
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        />
 
-</RelativeLayout>
+
+</LinearLayout>
