@@ -16,7 +16,7 @@ import java.util.Map;
 public class MyJsonArrayRequest extends JsonArrayRequest
 {
 
-    private static final int CUSTOM_TIMEOUT_MS = 1000;
+    private static final int CUSTOM_TIMEOUT_MS = 10000;
 
     public MyJsonArrayRequest(String url, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener) {
         super(url, listener, errorListener);

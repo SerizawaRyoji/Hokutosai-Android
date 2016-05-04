@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class MyJsonObjectRequest extends JsonObjectRequest {
 
-    private static final int CUSTOM_TIMEOUT_MS = 1000;
+    private static final int CUSTOM_TIMEOUT_MS = 10000;
 
     public MyJsonObjectRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener,
                                Response.ErrorListener errorListener) {
