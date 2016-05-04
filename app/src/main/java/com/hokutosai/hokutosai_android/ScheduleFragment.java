@@ -81,7 +81,7 @@ public class ScheduleFragment  extends Fragment {
                                     EventListFragment elf03 = new EventListFragment();  //1日目
                                     EventListFragment elf04 = new EventListFragment();  //2日目
 
-                                    List<EventItem> e = new ArrayList<EventItem>(); //すべてのイベントリストをまとめる
+                                    List<Event> e = new ArrayList<Event>(); //すべてのイベントリストをまとめる
                                     e.addAll(list.get(0).getTimetable());
                                     e.addAll(list.get(1).getTimetable());
                                     e.addAll(list.get(2).getTimetable());

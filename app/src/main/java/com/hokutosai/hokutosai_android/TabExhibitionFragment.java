@@ -25,7 +25,7 @@ import java.util.Collection;
  */
 public class TabExhibitionFragment  extends Fragment {
 
-    ArrayList<ExhibitionItem> list;
+    ArrayList<Exhibition> list;
     ExhibitionItemAdapter adapter;
     ListView listView;
 
@@ -62,13 +62,13 @@ public class TabExhibitionFragment  extends Fragment {
 
                                     //JSONArrayをListShopItemに変換して取得
                                     Gson gson = new Gson();
-                                    Type collectionType = new TypeToken<Collection<ExhibitionItem>>() {
+                                    Type collectionType = new TypeToken<Collection<Exhibition>>() {
                                     }.getType();
                                     list = gson.fromJson(response.toString(), collectionType);
 
                                     //UIに反映
                                     listView = (ListView) getActivity().findViewById(R.id.list_exhibition_view);
-                                    adapter.setExhibitionItemList(list);
+                                    adapter.setExhibitionList(list);
                                     listView.setAdapter(adapter);
 
                                     //setClickListener();     //クリックしたときの処理について
@@ -90,7 +90,7 @@ public class TabExhibitionFragment  extends Fragment {
         }
         else{
             listView = (ListView) getActivity().findViewById(R.id.list_exhibition_view);
-            adapter.setExhibitionItemList(list);
+            adapter.setExhibitionList(list);
             listView.setAdapter(adapter);
 
             //setClickListener();     //クリックしたときの処理について

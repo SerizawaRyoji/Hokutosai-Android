@@ -14,11 +14,10 @@ import java.util.List;
  */
 public class EventListFragment extends ListFragment {
 
-    private List<EventItem> list;
-    private ArrayAdapter<EventItem> adapter;
+    private List<Event> list;
+    private ArrayAdapter<Event> adapter;
 
-    public void setEventListFragment( List<EventItem> list){
-        //list = new ArrayList<EventItem>();
+    public void setEventListFragment( List<Event> list){
         this.list = list;
     }
 

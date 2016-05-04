@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by ryoji on 2016/05/02.
  */
-public class ShopItem implements Serializable {
+public class Shop implements Serializable {
 
     private int shop_id;
     private String name;

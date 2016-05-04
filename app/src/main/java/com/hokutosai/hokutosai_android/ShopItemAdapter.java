@@ -18,7 +18,7 @@ public class ShopItemAdapter extends BaseAdapter{
 
     Context context;
     LayoutInflater layoutInflater = null;
-    ArrayList<ShopItem> shopItemList;
+    ArrayList<Shop> shopList;
     private ViewHolder holder = null;
 
     public ShopItemAdapter(Context context) {
@@ -26,23 +26,23 @@ public class ShopItemAdapter extends BaseAdapter{
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setShopItemList(ArrayList<ShopItem> itemList) {
-        this.shopItemList = itemList;
+    public void setShopList(ArrayList<Shop> itemList) {
+        this.shopList = itemList;
     }
 
     @Override
     public int getCount() {
-        return shopItemList.size();
+        return shopList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return shopItemList.get(position);
+        return shopList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return shopItemList.get(position).getShop_id();
+        return shopList.get(position).getShop_id();
     }
 
     @Override
@@ -62,13 +62,13 @@ public class ShopItemAdapter extends BaseAdapter{
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.name.setText(shopItemList.get(position).getName());
-        holder.tenant.setText(shopItemList.get(position).getTenant());
-        holder.sales.setText(shopItemList.get(position).getSales());
+        holder.name.setText(shopList.get(position).getName());
+        holder.tenant.setText(shopList.get(position).getTenant());
+        holder.sales.setText(shopList.get(position).getSales());
 
-        if (shopItemList.get(position).getImage_url() != null) {
+        if (shopList.get(position).getImage_url() != null) {
             NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.shop_item_image);
-            imageView.setImageUrl(shopItemList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
+            imageView.setImageUrl(shopList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
         }
 
         return convertView;

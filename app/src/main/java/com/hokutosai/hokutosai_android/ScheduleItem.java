@@ -10,7 +10,7 @@ public class ScheduleItem {
     int schedule_id;
     String date;
     String day;
-    List<EventItem> timetable;
+    List<Event> timetable;
 
     public String getDate() {
         return date;
@@ -36,11 +36,11 @@ public class ScheduleItem {
         this.schedule_id = schedule_id;
     }
 
-    public List<EventItem> getTimetable() {
+    public List<Event> getTimetable() {
         return timetable;
     }
 
-    public void setTimetable(List<EventItem> timetable) {
+    public void setTimetable(List<Event> timetable) {
         this.timetable = timetable;
     }
 }

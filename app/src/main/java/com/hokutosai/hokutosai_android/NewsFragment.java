@@ -3,17 +3,31 @@ package com.hokutosai.hokutosai_android;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by ryoji on 2016/05/05.
  */
 public class NewsFragment extends Fragment {
 
-    //ArrayList<NewsItem> list;
-    //ListView listView;
+    ArrayList<News> list;
+    NewsItemAdapter adapter;
+    ListView listView;
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
     private static final Object TAG_NEWS_REQUEST_QUEUE = new Object();
@@ -22,8 +36,9 @@ public class NewsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //list = new ArrayList<>();
-        //listView = null;
+        list = new ArrayList<>();
+        adapter = new NewsItemAdapter( getActivity() );
+        listView = null;
     }
 
     @Nullable
@@ -36,7 +51,7 @@ public class NewsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*String url = "https://api.hokutosai.tech/2016/news/timeline";
+        String url = "https://api.hokutosai.tech/2016/news/timeline";
 
         if(list.isEmpty()) {
             MyJsonArrayRequest jArrayRequest =
@@ -47,7 +62,7 @@ public class NewsFragment extends Fragment {
 
                                     //JSONArrayをListShopItemに変換して取得
                                     Gson gson = new Gson();
-                                    Type collectionType = new TypeToken<Collection<NewsItem>>() {
+                                    Type collectionType = new TypeToken<Collection<News>>() {
                                     }.getType();
                                     list = gson.fromJson(response.toString(), collectionType);
                                     Log.d("test",list.get(0).text);
@@ -80,6 +95,6 @@ public class NewsFragment extends Fragment {
             listView.setAdapter(adapter);
 
             //setClickListener();     //クリックしたときの処理について
-        }*/
+        }
     }
 }

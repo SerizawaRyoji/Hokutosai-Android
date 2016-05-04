@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * Created by ryoji on 2016/05/04.
  */
-public class EventItemAdapter extends ArrayAdapter<EventItem> {
+public class EventItemAdapter extends ArrayAdapter<Event> {
 
     private LayoutInflater mInflater;
     private int resource = 0;
 
-    public EventItemAdapter(Context context, List<EventItem> data, int resource) {
+    public EventItemAdapter(Context context, List<Event> data, int resource) {
         super(context, 0, data);
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.resource = resource;	//リソースを保持しておく
@@ -41,7 +41,7 @@ public class EventItemAdapter extends ArrayAdapter<EventItem> {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        final EventItem item = getItem(position);
+        final Event item = getItem(position);
         holder.title.setText(item.getTitle());
         holder.date.setText(item.getDate());
         holder.state.setText("test");

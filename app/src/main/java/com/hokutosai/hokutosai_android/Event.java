@@ -3,7 +3,7 @@ package com.hokutosai.hokutosai_android;
 /**
  * Created by ryoji on 2016/05/04.
  */
-public class EventItem {
+public class Event {
 
     int event_id;
     String title;

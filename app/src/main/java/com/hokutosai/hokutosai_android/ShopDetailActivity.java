@@ -38,7 +38,7 @@ public class ShopDetailActivity extends Activity {
         mshopDetail = new ShopDetail();
 
         Intent i = getIntent();
-        final ShopItem item = (ShopItem)i.getSerializableExtra("ShopItem");
+        final Shop item = (Shop)i.getSerializableExtra("Shop");
 
         TextView name = (TextView)this.findViewById(R.id.shop_detail_name);
         TextView tenant = (TextView)this.findViewById(R.id.shop_detail_tenant);

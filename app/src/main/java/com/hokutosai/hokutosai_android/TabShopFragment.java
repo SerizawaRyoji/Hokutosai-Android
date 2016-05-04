@@ -27,7 +27,7 @@ import java.util.Collection;
  */
 public class TabShopFragment  extends Fragment {
 
-    ArrayList<ShopItem> list;
+    ArrayList<Shop> list;
     ShopItemAdapter adapter;
     ListView listView;
 
@@ -47,19 +47,6 @@ public class TabShopFragment  extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        /*listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-
-                ListView lv = (ListView) parent;
-                // クリックされたアイテムを取得します
-                ShopItem item = (ShopItem) lv.getItemAtPosition(position);
-                Log.d("test",item.getName());
-            }
-        });*/
-
         // TODO 自動生成されたメソッド・スタブ
         return inflater.inflate(R.layout.tab_shop_fragment, container, false);
     }
@@ -68,9 +55,6 @@ public class TabShopFragment  extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        //adapter.setShopItemList(list);
-        //listView.setAdapter(adapter);
-
 
         if(list.isEmpty()) {
             MyJsonArrayRequest jArrayRequest =
@@ -81,13 +65,13 @@ public class TabShopFragment  extends Fragment {
 
                                     //JSONArrayをListShopItemに変換して取得
                                     Gson gson = new Gson();
-                                    Type collectionType = new TypeToken<Collection<ShopItem>>() {
+                                    Type collectionType = new TypeToken<Collection<Shop>>() {
                                     }.getType();
                                     list = gson.fromJson(response.toString(), collectionType);
 
                                     //UIに反映
                                     listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
-                                    adapter.setShopItemList(list);
+                                    adapter.setShopList(list);
                                     listView.setAdapter(adapter);
 
                                     setClickListener();     //クリックしたときの処理について
@@ -109,7 +93,7 @@ public class TabShopFragment  extends Fragment {
         }
         else{
             listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
-            adapter.setShopItemList(list);
+            adapter.setShopList(list);
             listView.setAdapter(adapter);
 
             setClickListener();     //クリックしたときの処理について
@@ -122,13 +106,8 @@ public class TabShopFragment  extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 
-                //ListView lv = (ListView) parent;
-                // クリックされたアイテムを取得します
-                //ShopItem item = (ShopItem) lv.getItemAtPosition(position);
-                //Log.d("test",item.getName());
-
                 Intent i = new Intent(getActivity(), ShopDetailActivity.class);
-                i.putExtra("ShopItem", list.get(position));
+                i.putExtra("Shop", list.get(position));
                 startActivity(i);
             }
         });

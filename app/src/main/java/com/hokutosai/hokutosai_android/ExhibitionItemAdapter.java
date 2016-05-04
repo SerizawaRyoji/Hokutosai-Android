@@ -18,7 +18,7 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
 
     Context context;
     LayoutInflater layoutInflater = null;
-    ArrayList<ExhibitionItem> exhibitionItemList;
+    ArrayList<Exhibition> exhibitionList;
     private ViewHolder holder = null;
 
     public ExhibitionItemAdapter(Context context) {
@@ -26,23 +26,23 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setExhibitionItemList(ArrayList<ExhibitionItem> itemList) {
-        this.exhibitionItemList = itemList;
+    public void setExhibitionList(ArrayList<Exhibition> itemList) {
+        this.exhibitionList = itemList;
     }
 
     @Override
     public int getCount() {
-        return exhibitionItemList.size();
+        return exhibitionList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return exhibitionItemList.get(position);
+        return exhibitionList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return exhibitionItemList.get(position).getExhibition_id();
+        return exhibitionList.get(position).getExhibition_id();
     }
 
     @Override
@@ -61,12 +61,12 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.title.setText(exhibitionItemList.get(position).getTitle());
-        holder.display.setText(exhibitionItemList.get(position).getDisplays());
+        holder.title.setText(exhibitionList.get(position).getTitle());
+        holder.display.setText(exhibitionList.get(position).getDisplays());
 
-        if (exhibitionItemList.get(position).getImage_url() != null) {
+        if (exhibitionList.get(position).getImage_url() != null) {
             NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.exhibition_item_image);
-            imageView.setImageUrl(exhibitionItemList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
+            imageView.setImageUrl(exhibitionList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
         }
 
         return convertView;
