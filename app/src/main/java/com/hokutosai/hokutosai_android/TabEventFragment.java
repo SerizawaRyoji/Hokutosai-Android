@@ -25,7 +25,7 @@ public class TabEventFragment extends Fragment {
 
         //Fragment内でFragmentを作成する場合は動的にFragmentを作成しなければならない
         //レイアウトに使うフラグメントを作成
-        //TabNewsFragment topicFragment = new TabNewsFragment();
+        EventTopicFragment topicFragment = new EventTopicFragment();
         ScheduleFragment scheduleFragment = new ScheduleFragment();
 
         //Fragmentを管理するFragmentManagerを取得
@@ -33,7 +33,7 @@ public class TabEventFragment extends Fragment {
         //追加や削除などを1つの処理としてまとめるためのトランザクションクラスを取得
         FragmentTransaction tx = manager.beginTransaction();
 
-        //tx.replace(R.id.layout_fragment_topic_event, topicFragment);
+        tx.replace(R.id.layout_fragment_topic_event, topicFragment);
         tx.replace(R.id.layout_fragment_list_event, scheduleFragment);
         tx.commit();
 
