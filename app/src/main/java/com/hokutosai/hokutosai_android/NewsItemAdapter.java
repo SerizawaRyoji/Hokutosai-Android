@@ -1,12 +1,13 @@
 package com.hokutosai.hokutosai_android;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,7 @@ public class NewsItemAdapter extends BaseAdapter {
             holder.title = (TextView) convertView.findViewById(R.id.news_item_title);
             holder.related = (TextView) convertView.findViewById(R.id.news_item_related);
             holder.datetime = (TextView) convertView.findViewById(R.id.news_item_datetime);
+            holder.image = (NetworkImageView) convertView.findViewById(R.id.news_item_image);
 
             convertView.setTag(holder);
         }
@@ -64,10 +66,14 @@ public class NewsItemAdapter extends BaseAdapter {
         holder.title.setText(newsItemList.get(position).getTitle());
         holder.related.setText("related");        //修正必要あり   newsItemList.get(position).getRelated_event().title
         holder.datetime.setText(newsItemList.get(position).getDatetime());
-        Log.d("test",newsItemList.get(position).getTitle() + ":" + newsItemList.get(position).getDatetime());
-        if ( newsItemList.get(position).getMedias() != null ) {
-            //NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.news_item_image);
-            //imageView.setImageUrl(newsItemList.get(position).getMedias().get(0).url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
+
+        holder.image.setVisibility(View.GONE);
+        if ( !newsItemList.get(position).getMedias().isEmpty() ) {
+            if( newsItemList.get(position).getMedias().get(0).url != null) {
+                //Log.d("test",newsItemList.get(position).getMedias().get(0).url);
+                holder.image.setVisibility(View.VISIBLE);
+                holder.image.setImageUrl(newsItemList.get(position).getMedias().get(0).url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
+            }
         }
 
         return convertView;
@@ -77,5 +83,6 @@ public class NewsItemAdapter extends BaseAdapter {
         TextView title;
         TextView related;
         TextView datetime;
+        NetworkImageView image;
     }
 }
