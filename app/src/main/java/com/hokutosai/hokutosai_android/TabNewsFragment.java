@@ -32,7 +32,7 @@ public class TabNewsFragment  extends Fragment {
         FragmentManager manager = getChildFragmentManager();
         //追加や削除などを1つの処理としてまとめるためのトランザクションクラスを取得
         FragmentTransaction tx = manager.beginTransaction();
-        
+
         //tx.replace(R.id.layout_fragment_topic_news, topicFragment);
         tx.replace(R.id.layout_fragment_list_news, newsFragment);
         tx.commit();
