@@ -69,46 +69,48 @@ public class ScheduleFragment  extends Fragment {
                                     }.getType();
                                     list = gson.fromJson(response.toString(), collectionType);
 
-                                    //タブのタイトルの作成
-                                    titles.add("全て");
-                                    titles.add("前夜祭");
-                                    titles.add("1日目");
-                                    titles.add("2日目");
+                                    if(getActivity() != null) {
+                                        //タブのタイトルの作成
+                                        titles.add("全て");
+                                        titles.add("前夜祭");
+                                        titles.add("1日目");
+                                        titles.add("2日目");
 
-                                    //タブごとのリストフラグメントを作成
-                                    EventListFragment elf01 = new EventListFragment();  //全て
-                                    EventListFragment elf02 = new EventListFragment();  //前夜祭
-                                    EventListFragment elf03 = new EventListFragment();  //1日目
-                                    EventListFragment elf04 = new EventListFragment();  //2日目
+                                        //タブごとのリストフラグメントを作成
+                                        EventListFragment elf01 = new EventListFragment();  //全て
+                                        EventListFragment elf02 = new EventListFragment();  //前夜祭
+                                        EventListFragment elf03 = new EventListFragment();  //1日目
+                                        EventListFragment elf04 = new EventListFragment();  //2日目
 
-                                    List<Event> e = new ArrayList<Event>(); //すべてのイベントリストをまとめる
-                                    e.addAll(list.get(0).getTimetable());
-                                    e.addAll(list.get(1).getTimetable());
-                                    e.addAll(list.get(2).getTimetable());
+                                        List<Event> e = new ArrayList<Event>(); //すべてのイベントリストをまとめる
+                                        e.addAll(list.get(0).getTimetable());
+                                        e.addAll(list.get(1).getTimetable());
+                                        e.addAll(list.get(2).getTimetable());
 
-                                    //それぞれのリストフラグメントにデータを挿入
-                                    elf01.setEventListFragment(e);
-                                    elf02.setEventListFragment(list.get(0).getTimetable());
-                                    elf03.setEventListFragment(list.get(1).getTimetable());
-                                    elf04.setEventListFragment(list.get(2).getTimetable());
+                                        //それぞれのリストフラグメントにデータを挿入
+                                        elf01.setEventListFragment(e);
+                                        elf02.setEventListFragment(list.get(0).getTimetable());
+                                        elf03.setEventListFragment(list.get(1).getTimetable());
+                                        elf04.setEventListFragment(list.get(2).getTimetable());
 
-                                    //フラグメントのリストに追加
-                                    fragments.add( elf01 );
-                                    fragments.add( elf02 );
-                                    fragments.add( elf03 );
-                                    fragments.add( elf04 );
+                                        //フラグメントのリストに追加
+                                        fragments.add(elf01);
+                                        fragments.add(elf02);
+                                        fragments.add(elf03);
+                                        fragments.add(elf04);
 
-                                    mPagerAdapter = new MyFragmentPagerAdapter( getChildFragmentManager(), fragments, titles);
-                                    //ViewPagerを取得
-                                    ViewPager viewPager = (ViewPager)getActivity().findViewById(R.id.events_pager);
-                                    PagerSlidingTabStrip tabs = (PagerSlidingTabStrip)getActivity().findViewById(R.id.events_tabs);
+                                        mPagerAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), fragments, titles);
+                                        //ViewPagerを取得
+                                        ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.events_pager);
+                                        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) getActivity().findViewById(R.id.events_tabs);
 
-                                    tabs.setShouldExpand(true);
-                                    tabs.setIndicatorColor(getResources().getColor(R.color.KosenOrange));
-                                    //adapterの設定
-                                    viewPager.setAdapter(mPagerAdapter);
-                                    //PagerSlidingTabStripにセット
-                                    tabs.setViewPager(viewPager);
+                                        tabs.setShouldExpand(true);
+                                        tabs.setIndicatorColor(getResources().getColor(R.color.KosenOrange));
+                                        //adapterの設定
+                                        viewPager.setAdapter(mPagerAdapter);
+                                        //PagerSlidingTabStripにセット
+                                        tabs.setViewPager(viewPager);
+                                    }
                                 }
                             },
 

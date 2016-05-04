@@ -66,16 +66,18 @@ public class EventTopicFragment extends Fragment {
                                     list = gson.fromJson(response.toString(), collectionType);
 
                                     //UIに反映
-                                    final LoopViewPager viewPager = (LoopViewPager) getActivity().findViewById(R.id.event_topic_view_pager);
+                                    if(getActivity() != null) {
+                                        final LoopViewPager viewPager = (LoopViewPager) getActivity().findViewById(R.id.event_topic_view_pager);
 
-                                    for(int i=0 ; i<list.size() ; ++i){
-                                        NetworkImageView view = new NetworkImageView(getActivity());
-                                        view.setImageUrl(list.get(i).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
+                                        for (int i = 0; i < list.size(); ++i) {
+                                            NetworkImageView view = new NetworkImageView(getActivity());
+                                            view.setImageUrl(list.get(i).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
 
-                                        view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                                        adapter.addView(view);
+                                            view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                                            adapter.addView(view);
+                                        }
+                                        viewPager.setAdapter(adapter);
                                     }
-                                    viewPager.setAdapter(adapter);
                                 }
                             },
 
@@ -92,5 +94,11 @@ public class EventTopicFragment extends Fragment {
             jArrayRequest.setTag(TAG_EVENT_TOPIC_REQUEST_QUEUE);    //タグのセット
             RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueueSingleton.getInstance().cancelAll(TAG_EVENT_TOPIC_REQUEST_QUEUE);
     }
 }

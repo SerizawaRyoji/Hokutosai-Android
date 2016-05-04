@@ -67,10 +67,12 @@ public class NewsFragment extends Fragment {
                                     list = gson.fromJson(response.toString(), collectionType);
                                     Log.d("test",list.get(0).text);
 
-                                    //UIに反映
-                                    listView = (ListView) getActivity().findViewById(R.id.list_news_view);
-                                    adapter.setNewsItemList(list);
-                                    listView.setAdapter(adapter);
+                                    if(getActivity() != null) {
+                                        //UIに反映
+                                        listView = (ListView) getActivity().findViewById(R.id.list_news_view);
+                                        adapter.setNewsItemList(list);
+                                        listView.setAdapter(adapter);
+                                    }
 
                                     //setClickListener();     //クリックしたときの処理について
                                 }
@@ -96,5 +98,11 @@ public class NewsFragment extends Fragment {
 
             //setClickListener();     //クリックしたときの処理について
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        RequestQueueSingleton.getInstance().cancelAll(TAG_NEWS_REQUEST_QUEUE);
     }
 }

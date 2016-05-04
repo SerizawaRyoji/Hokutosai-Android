@@ -69,12 +69,14 @@ public class TabShopFragment  extends Fragment {
                                     }.getType();
                                     list = gson.fromJson(response.toString(), collectionType);
 
-                                    //UIに反映
-                                    listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
-                                    adapter.setShopList(list);
-                                    listView.setAdapter(adapter);
+                                    if(getActivity() != null) {
+                                        //UIに反映
+                                        listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
+                                        adapter.setShopList(list);
+                                        listView.setAdapter(adapter);
 
-                                    setClickListener();     //クリックしたときの処理について
+                                        setClickListener();     //クリックしたときの処理について
+                                    }
                                 }
                             },
 

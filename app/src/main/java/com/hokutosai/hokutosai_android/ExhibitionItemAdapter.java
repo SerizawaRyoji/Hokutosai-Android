@@ -54,6 +54,7 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.exhibition_item_title);
             holder.display = (TextView) convertView.findViewById(R.id.exhibition_item_displays);
+            holder.image = (NetworkImageView) convertView.findViewById(R.id.exhibition_item_image);
 
             convertView.setTag(holder);
         }
@@ -65,8 +66,7 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
         holder.display.setText(exhibitionList.get(position).getDisplays());
 
         if (exhibitionList.get(position).getImage_url() != null) {
-            NetworkImageView imageView = (NetworkImageView) convertView.findViewById(R.id.exhibition_item_image);
-            imageView.setImageUrl(exhibitionList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
+            holder.image.setImageUrl(exhibitionList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
         }
 
         return convertView;
@@ -75,5 +75,6 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
     private class ViewHolder{
         TextView title;
         TextView display;
+        NetworkImageView image;
     }
 }
