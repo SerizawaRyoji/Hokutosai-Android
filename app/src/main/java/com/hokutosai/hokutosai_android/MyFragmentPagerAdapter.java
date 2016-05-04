@@ -11,28 +11,28 @@ import java.util.List;
  */
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        private List<Fragment> mFragments;
-        private List<String> mPagetitles;
+    private List<Fragment> mFragments;
+    private List<String> mPagetitles;
 
-        public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> pagetitles) {
-            super(fm);
-            this.mFragments = fragments;
-            this.mPagetitles = pagetitles;
-        }
+    public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> pagetitles) {
+        super(fm);
+        this.mFragments = fragments;
+        this.mPagetitles = pagetitles;
+    }
 
-        @Override
-        public Fragment getItem(int position) {
-            return this.mFragments.get(position);
-        }
+    @Override
+    public Fragment getItem(int position) {
+        return this.mFragments.get(position);
+    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return this.mPagetitles.get(position);
-        }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return this.mPagetitles.get(position);
+    }
 
 
-        @Override
-        public int getCount() {
-            return this.mFragments.size();
-        }
+    @Override
+    public int getCount() {
+        return this.mFragments.size();
+    }
 }

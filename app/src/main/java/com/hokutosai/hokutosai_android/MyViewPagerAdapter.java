@@ -1,8 +1,9 @@
 package com.hokutosai.hokutosai_android;
 
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.uphyca.android.loopviewpager.PagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

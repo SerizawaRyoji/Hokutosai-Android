@@ -109,19 +109,6 @@ public class ScheduleFragment  extends Fragment {
                                     viewPager.setAdapter(mPagerAdapter);
                                     //PagerSlidingTabStripにセット
                                     tabs.setViewPager(viewPager);
-                                    /*try {
-                                        Gson gsonTimeTable = new Gson();
-                                        JSONArray jArray = response.getJSONArray("timetable");    //メニュー取得
-                                        //JSONArrayをListShopItemに変換して取得
-                                        Type eventItemType = new TypeToken<Collection<EventItem>>() {
-                                        }.getType();
-
-                                        list.menus = gsonTimeTable.fromJson(jArray.toString(), eventItemType);
-
-                                    } catch (JSONException e) {    //menuがnullの時など
-                                        // TODO 自動生成された catch ブロック
-                                        e.printStackTrace();
-                                    }*/
                                 }
                             },
 

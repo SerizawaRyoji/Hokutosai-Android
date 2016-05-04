@@ -3,11 +3,12 @@ package com.hokutosai.hokutosai_android;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.uphyca.android.loopviewpager.LoopViewPager;
 
 /**
  * Created by ryoji on 2016/05/04.
@@ -27,7 +28,7 @@ public class EventTopicFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.event_topic_view_pager);
+        final LoopViewPager viewPager = (LoopViewPager) getActivity().findViewById(R.id.event_topic_view_pager);
         //final LxIndicatorGroup indicatorGroup = (LxIndicatorGroup) findViewById(R.id.indicator_view);
         //indicatorGroup.setup(VIEW_COUNT, R.drawable.indicator);
         MyViewPagerAdapter adapter = new MyViewPagerAdapter();
