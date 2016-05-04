@@ -72,7 +72,7 @@ public class ShopDetailActivity extends Activity {
 
                                 //場所の表示*********************************************************************************************
                                 TextView place = (TextView)findViewById(R.id.shop_detail_place);
-                                place.setText(mshopDetail.place.name);
+                                place.setText(mshopDetail.place.getName());
                                 //*****************************************************************************************************
 
                                 //いいねの表示*******************************************************************************************
@@ -150,13 +150,8 @@ public class ShopDetailActivity extends Activity {
         Boolean liked;
         int like_count;
         String introduction;
-        Place place;
+        PlaceItem place;
         List<Menu> menus;
-    }
-
-    private class Place{
-        int place_id;
-        String name;
     }
 
     private class Menu{
