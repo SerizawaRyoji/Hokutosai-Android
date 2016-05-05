@@ -21,6 +21,7 @@
         </activity>
         <activity android:name=".ShopDetailActivity"></activity>
         <activity android:name=".ExhibitionDetailActivity"></activity>
+        <activity android:name=".EventDetailActivity"></activity>
     </application>
 
 </manifest>

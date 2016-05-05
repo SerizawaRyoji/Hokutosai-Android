@@ -1,9 +1,11 @@
 package com.hokutosai.hokutosai_android;
 
+import java.io.Serializable;
+
 /**
  * Created by ryoji on 2016/05/04.
  */
-public class Event {
+public class Event  implements Serializable {
 
     int event_id;
     String title;

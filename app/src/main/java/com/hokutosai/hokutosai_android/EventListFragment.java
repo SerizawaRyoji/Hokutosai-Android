@@ -1,5 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -46,9 +47,9 @@ public class EventListFragment extends ListFragment {
         // TODO 自動生成されたメソッド・スタブ
         super.onListItemClick(l, v, position, id);
 
-       //Intent i = new Intent(getActivity(), ShopShowActivity.class);
-        //i.putExtra("ListShopItem", list.get(position));
-        //startActivity(i);
+        Intent i = new Intent(getActivity(), EventDetailActivity.class);
+        i.putExtra("Event", list.get(position));
+        startActivity(i);
     }
 
     @Override
