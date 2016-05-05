@@ -160,14 +160,6 @@ public class ShopDetailActivity extends Activity {
         int price;
     }
 
-    private class Assessment{
-        int assessment_id;
-        Account user;
-        String datetime;
-        int score;
-        String comment;
-    }
-
     private class Account{
         String account_id;
         String user_name;
