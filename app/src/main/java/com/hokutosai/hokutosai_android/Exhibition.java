@@ -1,9 +1,11 @@
 package com.hokutosai.hokutosai_android;
 
+import java.io.Serializable;
+
 /**
  * Created by ryoji on 2016/05/03.
  */
-public class Exhibition {
+public class Exhibition implements Serializable {
 
     int exhibition_id;
     String title;

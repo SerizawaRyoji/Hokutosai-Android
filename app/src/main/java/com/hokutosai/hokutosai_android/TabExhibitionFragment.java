@@ -1,5 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -72,7 +74,7 @@ public class TabExhibitionFragment  extends Fragment {
                                         adapter.setExhibitionList(list);
                                         listView.setAdapter(adapter);
 
-                                        //setClickListener();     //クリックしたときの処理について
+                                        setClickListener();     //クリックしたときの処理について
                                     }
                                 }
                             },
@@ -95,7 +97,7 @@ public class TabExhibitionFragment  extends Fragment {
             adapter.setExhibitionList(list);
             listView.setAdapter(adapter);
 
-            //setClickListener();     //クリックしたときの処理について
+            setClickListener();     //クリックしたときの処理について
         }
     }
 
@@ -103,5 +105,18 @@ public class TabExhibitionFragment  extends Fragment {
     public void onStop() {
         super.onStop();
         RequestQueueSingleton.getInstance().cancelAll(TAG_EXHIBITION_REQUEST_QUEUE);
+    }
+
+    private void setClickListener(){
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                Intent i = new Intent(getActivity(), ExhibitionDetailActivity.class);
+                i.putExtra("Exhibition",list.get(position));
+                startActivity(i);
+            }
+        });
     }
 }
