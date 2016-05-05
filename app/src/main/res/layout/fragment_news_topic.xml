@@ -19,8 +19,8 @@
     <!-- ページの下に来るようにインディケータを配置 -->
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/news_topic_indicator"
+        style="@style/CustomCirclePageIndicator"
         android:padding="10dip"
-        android:background="#000000"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_gravity="bottom"/>

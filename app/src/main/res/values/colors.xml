@@ -19,4 +19,7 @@
 
     <color name="TopicTextBackColor" >#99ffffff</color>
     <color name="ClearColor" >#00ffffff</color>
+
+    <color name="red" >#22ff0000</color>
+    <color name="clear_black" >#0f000000</color>
 </resources>

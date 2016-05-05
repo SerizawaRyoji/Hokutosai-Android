@@ -20,7 +20,7 @@
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/event_topic_indicator"
         android:padding="10dip"
-        android:background="#000000"
+        style="@style/CustomCirclePageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_gravity="bottom"/>
