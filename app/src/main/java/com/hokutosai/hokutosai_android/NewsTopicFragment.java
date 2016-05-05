@@ -3,6 +3,7 @@ package com.hokutosai.hokutosai_android;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.uphyca.android.loopviewpager.LoopViewPager;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;
 
@@ -68,7 +69,7 @@ public class NewsTopicFragment extends Fragment {
 
                                     //UIに反映
                                     if(getActivity() != null) {
-                                        final LoopViewPager viewPager = (LoopViewPager) getActivity().findViewById(R.id.news_topic_view_pager);
+                                        final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.news_topic_view_pager);
 
                                         for (int i = 0; i < list.size(); ++i) {
                                             if(list.get(i).getMedia_url() != null) {
@@ -88,6 +89,9 @@ public class NewsTopicFragment extends Fragment {
                                             }
                                         }
                                         viewPager.setAdapter(adapter);
+
+                                        CirclePageIndicator circleIndicator = (CirclePageIndicator)getActivity().findViewById(R.id.news_topic_indicator);
+                                        circleIndicator.setViewPager( viewPager );
                                     }
                                 }
                             },
