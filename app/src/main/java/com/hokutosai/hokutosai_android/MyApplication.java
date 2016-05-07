@@ -14,5 +14,7 @@ public class MyApplication extends Application {
 
         RequestQueueSingleton.create(getApplicationContext());    //RequestQueueの作成
         LruCacheSingleton.create();
+
+        MyAccountSingleton.getInstance().createAccount(this);   //アカウントの作成
     }
 }
