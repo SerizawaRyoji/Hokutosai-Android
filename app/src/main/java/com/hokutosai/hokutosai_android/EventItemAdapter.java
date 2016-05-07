@@ -46,9 +46,12 @@ public class EventItemAdapter extends ArrayAdapter<Event> {
         holder.date.setText(item.getDate());
         holder.state.setText("test");
 
+        holder.image.setErrorImageResId(R.mipmap.no_image_500x200);
         if(item.getImage_url() != null){
             holder.image.setImageUrl(item.getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
             //holder.image.setTag(mImageLoader.get(item.getImageResource(), listener));
+        } else{
+            holder.image.setImageResource(R.mipmap.no_image_500x200);
         }
 
         return convertView;
