@@ -1,11 +1,12 @@
 package com.hokutosai.hokutosai_android;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by ryoji on 2016/05/05.
  */
-public class News {
+public class News  implements Serializable{
 
     int news_id;
     String title;
@@ -116,19 +117,19 @@ public class News {
         this.topic = topic;
     }
 
-    class EventItem{
+    class EventItem  implements Serializable{
         int event_id;
         String title;
     }
-    class ShopItem{
+    class ShopItem  implements Serializable{
         int shop_id;
         String name;
     }
-    class ExhibitionItem{
+    class ExhibitionItem  implements Serializable{
         int exhibition_id;
         String title;
     }
-    class Media{
+    class Media  implements Serializable{
         String media_id;
         int sequence;
         String url;

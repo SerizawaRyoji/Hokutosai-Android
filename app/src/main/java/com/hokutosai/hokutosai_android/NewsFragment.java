@@ -1,5 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -74,7 +76,7 @@ public class NewsFragment extends Fragment {
                                         listView.setAdapter(adapter);
                                     }
 
-                                    //setClickListener();     //クリックしたときの処理について
+                                    setClickListener();     //クリックしたときの処理について
                                 }
                             },
 
@@ -96,7 +98,7 @@ public class NewsFragment extends Fragment {
             adapter.setNewsItemList(list);
             listView.setAdapter(adapter);
 
-            //setClickListener();     //クリックしたときの処理について
+            setClickListener();     //クリックしたときの処理について
         }
     }
 
@@ -104,5 +106,18 @@ public class NewsFragment extends Fragment {
     public void onStop() {
         super.onStop();
         RequestQueueSingleton.getInstance().cancelAll(TAG_NEWS_REQUEST_QUEUE);
+    }
+
+    private void setClickListener(){
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+
+                Intent i = new Intent(getActivity(), NewsDetailActivity.class);
+                i.putExtra("News", list.get(position));
+                startActivity(i);
+            }
+        });
     }
 }

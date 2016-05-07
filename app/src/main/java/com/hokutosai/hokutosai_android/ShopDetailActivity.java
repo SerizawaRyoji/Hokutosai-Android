@@ -135,11 +135,6 @@ public class ShopDetailActivity extends Activity {
         RequestQueueSingleton.getInstance().add(jObjectRequest);    //WebAPIの呼び出し
     }
 
-    void setMenuLayout(){
-
-
-    }
-
     private class ShopDetail{
         int shop_id;
         String name;
