@@ -50,7 +50,7 @@ public class NewsDetailActivity extends Activity {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-
+                                Log.d("test", "newsだよ" + response.toString());
                                 //JSONArrayをListShopItemに変換して取得
                                 Gson gson = new Gson();
                                 mNewsDetail = gson.fromJson(response.toString(), News.class);

@@ -1,5 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,7 @@ import java.util.Collection;
  */
 public class NewsTopicFragment extends Fragment {
 
-    ArrayList<NewsTopicItem> list;
+    ArrayList<News> list;
     MyViewPagerAdapter adapter;
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
@@ -60,38 +61,17 @@ public class NewsTopicFragment extends Fragment {
                             new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
-
+                                    Log.d("test","testです" + response.toString());
                                     //JSONArrayをListShopItemに変換して取得
                                     Gson gson = new Gson();
-                                    Type collectionType = new TypeToken<Collection<NewsTopicItem>>() {
+                                    Type collectionType = new TypeToken<Collection<News>>() {
                                     }.getType();
                                     list = gson.fromJson(response.toString(), collectionType);
 
                                     //UIに反映
                                     if(getActivity() != null) {
-                                        final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.news_topic_view_pager);
 
-                                        for (int i = 0; i < list.size(); ++i) {
-                                            if(list.get(i).getMedia_url() != null) {
-                                                NetworkImageView view = new NetworkImageView(getActivity());
-                                                view.setImageUrl(list.get(i).media_url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
-                                                view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
-                                                adapter.addView(view);
-                                            }
-                                            else if(list.get(i).getTitle() != null){
-                                                TextView view = new TextView(getActivity());
-                                                view.setText(list.get(i).getTitle());
-                                                view.setGravity(Gravity.CENTER);
-                                                view.setTextSize(30);
-
-                                                adapter.addView(view);
-                                            }
-                                        }
-                                        viewPager.setAdapter(adapter);
-
-                                        CirclePageIndicator circleIndicator = (CirclePageIndicator)getActivity().findViewById(R.id.news_topic_indicator);
-                                        circleIndicator.setViewPager( viewPager );
+                                        setTopicView();
                                     }
                                 }
                             },
@@ -109,11 +89,70 @@ public class NewsTopicFragment extends Fragment {
             jArrayRequest.setTag(TAG_NEWS_TOPIC_REQUEST_QUEUE);    //タグのセット
             RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
         }
+        else{
+
+            setTopicView();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
         RequestQueueSingleton.getInstance().cancelAll(TAG_NEWS_TOPIC_REQUEST_QUEUE);
+    }
+
+    public void setTopicView(){
+
+        final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.news_topic_view_pager);
+
+        for (int i = 0; i < list.size(); ++i) {
+            if( i!=0 && list.get(i).getMedias() != null && !list.get(i).getMedias().isEmpty() && list.get(i).getMedias().get(0).url != null) {  //画像つきのトピックニュース
+                NetworkImageView view = new NetworkImageView(getActivity());
+                view.setImageUrl(list.get(i).getMedias().get(0).url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
+                view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+                if(i!=0 && list.get(i).getTitle() != null) {
+                    final News newsItem = list.get(i);
+                    view.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Intent i = new Intent(getActivity(), NewsDetailActivity.class);
+                            i.putExtra("News", newsItem);
+                            startActivity(i);
+                        }
+                    });
+                }
+                adapter.addView(view);
+
+            }
+            else if( i!=0 && list.get(i).getTitle() != null){
+                TextView view = new TextView(getActivity());
+                view.setText(list.get(i).getTitle());
+                view.setGravity(Gravity.CENTER);
+                view.setTextSize(30);
+
+                if(i!=0 && list.get(i).getTitle() != null) {
+                    final News newsItem = list.get(i);
+                    view.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Intent i = new Intent(getActivity(), NewsDetailActivity.class);
+                            i.putExtra("News", newsItem);
+                            startActivity(i);
+                        }
+                    });
+                }
+                adapter.addView(view);
+            }
+            else if(i==0){   //画像もタイトルも存在しない一つ目のトピック = テーマ画像
+                TextView view = new TextView(getActivity());
+                view.setText("ここにテーマ画像を貼り付けます");
+                view.setGravity(Gravity.CENTER);
+                view.setTextSize(30);
+                adapter.addView(view);
+            }
+        }
+        viewPager.setAdapter(adapter);
+
+        CirclePageIndicator circleIndicator = (CirclePageIndicator)getActivity().findViewById(R.id.news_topic_indicator);
+        circleIndicator.setViewPager( viewPager );
     }
 }
