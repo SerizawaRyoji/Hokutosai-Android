@@ -90,7 +90,6 @@ public class NewsTopicFragment extends Fragment {
             RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
         }
         else{
-
             setTopicView();
         }
     }
