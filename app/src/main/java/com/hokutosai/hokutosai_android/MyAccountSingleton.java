@@ -34,7 +34,7 @@ public class MyAccountSingleton {
 
         if( mAccount.mAccountCredentials.account_id.equalsIgnoreCase("no_account") || mAccount.mAccountCredentials.account_pass.equalsIgnoreCase("no_pass")){   //アカウントが存在しないなら
 
-            String url = "https://api.hokutosai.tech/2016/authrozation/management";
+            String url = "https://api.hokutosai.tech/2016/accounts/new";
 
             MyJsonObjectRequest jObjectRequest =
                     new MyJsonObjectRequest(Request.Method.GET,url,null,
