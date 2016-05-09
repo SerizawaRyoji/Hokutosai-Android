@@ -55,7 +55,7 @@ public class NewsFragment extends Fragment {
 
         String url = "https://api.hokutosai.tech/2016/news/timeline";
 
-        if(list.isEmpty()) {
+        if(list.isEmpty() && getActivity() != null) {
             MyJsonArrayRequest jArrayRequest =
                     new MyJsonArrayRequest(url,
                             new Response.Listener<JSONArray>() {
@@ -73,9 +73,9 @@ public class NewsFragment extends Fragment {
                                         listView = (ListView) getActivity().findViewById(R.id.list_news_view);
                                         adapter.setNewsItemList(list);
                                         listView.setAdapter(adapter);
-                                    }
 
-                                    setClickListener();     //クリックしたときの処理について
+                                        setClickListener();     //クリックしたときの処理について
+                                    }
                                 }
                             },
 
@@ -92,7 +92,7 @@ public class NewsFragment extends Fragment {
             jArrayRequest.setTag(TAG_NEWS_REQUEST_QUEUE);    //タグのセット
             RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
         }
-        else{
+        else if(!list.isEmpty() && getActivity() != null){
             listView = (ListView) getActivity().findViewById(R.id.list_news_view);
             adapter.setNewsItemList(list);
             listView.setAdapter(adapter);

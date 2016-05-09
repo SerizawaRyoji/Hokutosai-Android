@@ -70,14 +70,21 @@
         <include layout="@layout/under_line" />
 
         <!--ここに画像を表示させる-->
-        <TextView
-            android:id="@+id/news_detail_imagelist"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/news_detail_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/show_sentence_size"
-            android:layout_marginLeft="@dimen/show_text_margin"
-            android:layout_marginBottom="@dimen/section_line_margin"
+            android:layout_height="0dp"
             />
+
+        <!-- ページの下に来るようにインディケータを配置 -->
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/news_detail_indicator"
+            style="@style/CustomCirclePageIndicator"
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_gravity="bottom"/>
+
         <include layout="@layout/under_line" />
 
 

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -103,6 +104,16 @@ public class NewsTopicFragment extends Fragment {
     public void setTopicView(){
 
         final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.news_topic_view_pager);
+        final LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.news_topic_layout);
+
+
+        // density (比率)を取得する
+        float density = getResources().getDisplayMetrics().density;
+        // 21 dp を pixel に変換する ( dp × density + 0.5f（四捨五入) )
+        int px = (int) (21f * density + 0.5f);
+        int h = layout.getHeight();
+        viewPager.getLayoutParams().height = h-px;
+        Log.d("test",String.valueOf(h) + ", " + String.valueOf(px));
 
         for (int i = 0; i < list.size(); ++i) {
             if( i!=0 && list.get(i).getMedias() != null && !list.get(i).getMedias().isEmpty() && list.get(i).getMedias().get(0).url != null) {  //画像つきのトピックニュース

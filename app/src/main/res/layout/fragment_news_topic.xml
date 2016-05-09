@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/news_topic_layout"
+    android:orientation="vertical">
 
     <!--<com.uphyca.android.loopviewpager.LoopViewPager
         android:id="@+id/news_topic_view_pager"
@@ -13,16 +15,16 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/news_topic_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         />
 
     <!-- ページの下に来るようにインディケータを配置 -->
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/news_topic_indicator"
         style="@style/CustomCirclePageIndicator"
-        android:padding="10dip"
+        android:padding="3dip"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="15dp"
         android:layout_gravity="bottom"/>
 
-</FrameLayout>
+</LinearLayout>

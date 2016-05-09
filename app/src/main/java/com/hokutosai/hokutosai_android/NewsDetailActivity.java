@@ -2,6 +2,7 @@ package com.hokutosai.hokutosai_android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,14 +12,17 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -27,6 +31,8 @@ import java.util.Collection;
 public class NewsDetailActivity extends AppCompatActivity {
 
     News mNewsDetail;
+    ArrayList<News> list;
+    MyViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_detail);
 
         mNewsDetail = new News();
+        list = new ArrayList<>();
+        adapter = new MyViewPagerAdapter();
 
         Intent i = getIntent();
         final News item = (News)i.getSerializableExtra("News");
@@ -48,6 +56,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         String url = "https://api.hokutosai.tech/2016/news/";
         url += String.valueOf(item.getNews_id());
         url += "/details";
+
+        final AppCompatActivity activity = this;
 
         MyJsonObjectRequest jObjectRequest =
                 new MyJsonObjectRequest(Request.Method.GET,url,null,
@@ -81,17 +91,27 @@ public class NewsDetailActivity extends AppCompatActivity {
                                     }.getType();
 
                                     mNewsDetail.medias = gsonMedias.fromJson(jArray.toString(), collectionType);
+                                    if (activity != null) {
 
-                                    //メニューの読み込みに成功したときのみ反映
-                                    TextView UrlList = (TextView) NewsDetailActivity.this.findViewById(R.id.news_detail_imagelist);
+                                        final ViewPager viewPager = (ViewPager) activity.findViewById(R.id.news_detail_view_pager);
 
-                                    String mediasUrl = "";
-                                    for (int i = 0; i < mNewsDetail.medias.size(); ++i) {
-                                        Log.d("test",mNewsDetail.medias.get(i).url);
-                                        mediasUrl += mNewsDetail.medias.get(i).url + '\n';
+                                        for (int i = 0; i < mNewsDetail.medias.size(); ++i) {
+                                            NetworkImageView view = new NetworkImageView(activity);
+                                            view.setImageUrl(mNewsDetail.medias.get(i).url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
+                                            view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+                                            adapter.addView(view);
+                                        }
+
+                                        if(  mNewsDetail.medias.size() != 0) {
+                                            int w = viewPager.getWidth();
+                                            viewPager.getLayoutParams().height = (viewPager.getWidth()*2)/5;    //画像は2:5とする
+
+                                            viewPager.setAdapter(adapter);
+                                            CirclePageIndicator circleIndicator = (CirclePageIndicator) activity.findViewById(R.id.news_detail_indicator);
+                                            circleIndicator.setViewPager(viewPager);
+                                        }
                                     }
-                                    UrlList.setText(mediasUrl);
-
                                 } catch (JSONException e) {    //menuがnullの時など
                                     // TODO 自動生成された catch ブロック
                                     e.printStackTrace();
