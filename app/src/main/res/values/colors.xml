@@ -13,6 +13,7 @@
     <color name="KosenClearBlue" >#40285FAA</color>
     <color name="LGray" >#EBEBEB</color>
     <color name="Black" >#000000</color>
+    <color name="White" >#FFFFFF</color>
 
     <color name="ClickableText" >#0000FF</color>
     <color name="SectionLineColor" >#C8C8C8</color>

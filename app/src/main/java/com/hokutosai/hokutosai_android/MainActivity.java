@@ -1,20 +1,25 @@
 package com.hokutosai.hokutosai_android;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
+
+    private String[] mDrawerAppTitles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentTabHost mTabHost;
+
+
 
         //メイン画面のレイアウト*********************************************************************
+        FragmentTabHost mTabHost;
+
         mTabHost = (FragmentTabHost)findViewById(R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
@@ -28,5 +33,6 @@ public class MainActivity extends FragmentActivity {
         mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_schedule").setIndicator(vSchedule),TabEventFragment.class, null);	//スケジュールタブ
         mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_shop").setIndicator(vShop),TabShopFragment.class, null);				//模擬店タブ
         mTabHost.addTab(mTabHost.newTabSpec("code_id_tab_exhibition").setIndicator(vExhibition),TabExhibitionFragment.class, null);	//展示タブ
+        //****************************************************************************************
     }
 }
