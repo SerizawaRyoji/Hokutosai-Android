@@ -1,9 +1,10 @@
 package com.hokutosai.hokutosai_android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,13 +24,16 @@ import java.util.Collection;
 /**
  * Created by ryoji on 2016/05/08.
  */
-public class NewsDetailActivity extends Activity {
+public class NewsDetailActivity extends AppCompatActivity {
 
     News mNewsDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("ニュース");
 
         setContentView(R.layout.activity_news_detail);
 
@@ -112,5 +116,15 @@ public class NewsDetailActivity extends Activity {
 
         jObjectRequest.setCustomTimeOut();   //タイムアウト時間の変更
         RequestQueueSingleton.getInstance().add(jObjectRequest);    //WebAPIの呼び出し
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){ // if使うとエラー（itemがInt形式なため）
+            case android.R.id.home:   // アプリアイコン（ホームアイコン）を押した時の処理
+                finish();
+                break;
+        }
+        return true;
     }
 }

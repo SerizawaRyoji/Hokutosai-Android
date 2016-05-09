@@ -1,9 +1,10 @@
 package com.hokutosai.hokutosai_android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,13 +22,16 @@ import java.util.List;
 /**
  * Created by ryoji on 2016/05/05.
  */
-public class ExhibitionDetailActivity extends Activity {
+public class ExhibitionDetailActivity extends AppCompatActivity {
 
     private ExhibitionDetail mExhibitionDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("展示");
 
         setContentView(R.layout.activity_exhibition_detail);
 
@@ -96,6 +100,16 @@ public class ExhibitionDetailActivity extends Activity {
 
         jObjectRequest.setCustomTimeOut();   //タイムアウト時間の変更
         RequestQueueSingleton.getInstance().add(jObjectRequest);    //WebAPIの呼び出し
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){ // if使うとエラー（itemがInt形式なため）
+            case android.R.id.home:   // アプリアイコン（ホームアイコン）を押した時の処理
+                finish();
+                break;
+        }
+        return true;
     }
 
     private class ExhibitionDetail{
