@@ -7,10 +7,17 @@ import android.app.Application;
  */
 public class MyApplication extends Application {
 
+    private static MyApplication sInstance;
+
+    public static synchronized MyApplication getInstance() {
+        return sInstance;
+    }
+
     @Override
     public void onCreate() {
         // TODO 自動生成されたメソッド・スタブ
         super.onCreate();
+        sInstance = this;
 
         RequestQueueSingleton.create(getApplicationContext());    //RequestQueueの作成
         LruCacheSingleton.create();

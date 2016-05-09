@@ -61,7 +61,7 @@ public class NewsTopicFragment extends Fragment {
                             new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
-                                    Log.d("test","testです" + response.toString());
+
                                     //JSONArrayをListShopItemに変換して取得
                                     Gson gson = new Gson();
                                     Type collectionType = new TypeToken<Collection<News>>() {

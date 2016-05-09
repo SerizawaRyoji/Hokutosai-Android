@@ -67,7 +67,6 @@ public class NewsFragment extends Fragment {
                                     Type collectionType = new TypeToken<Collection<News>>() {
                                     }.getType();
                                     list = gson.fromJson(response.toString(), collectionType);
-                                    Log.d("test",list.get(0).text);
 
                                     if(getActivity() != null) {
                                         //UIに反映

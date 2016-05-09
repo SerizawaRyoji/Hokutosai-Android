@@ -20,7 +20,7 @@ public class MyAccountSingleton {
 
     private static MyAccountSingleton mAccount = new MyAccountSingleton();
     private AccountCredentials mAccountCredentials = new AccountCredentials();
-    private Boolean mAccountSaved = false;
+
     static final String HEADER = "user_id=client-android-app,access_token=fIsngZeqTRUOjl8HtlqRnhjPK8TTaDnd3bFsgda8fxMVpBGX180Ld3Hlr5gT30tr";
 
     public static MyAccountSingleton getInstance() { return mAccount; }
@@ -32,7 +32,7 @@ public class MyAccountSingleton {
         mAccountCredentials.account_id = data.getString("account_id", "" );
         mAccountCredentials.account_pass = data.getString("account_pass", "" );
 
-        if( mAccount.mAccountCredentials.account_id.equalsIgnoreCase("no_account") || mAccount.mAccountCredentials.account_pass.equalsIgnoreCase("no_pass")){   //アカウントが存在しないなら
+        if( mAccount.mAccountCredentials.account_id.isEmpty() || mAccount.mAccountCredentials.account_pass.isEmpty() ){   //アカウントが存在しないなら
 
             String url = "https://api.hokutosai.tech/2016/accounts/new";
 
@@ -45,7 +45,12 @@ public class MyAccountSingleton {
                                     //JSONArrayをListShopItemに変換して取得
                                     Gson gson = new Gson();
                                     mAccountCredentials = gson.fromJson(response.toString(), AccountCredentials.class); //アカウントの作成
-                                    Log.d("test", "account is created");
+
+                                    SharedPreferences data = MyApplication.getInstance().getSharedPreferences("DataSave", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = data.edit();
+                                    editor.putString("account_id", mAccountCredentials.account_id);
+                                    editor.putString("account_pass", mAccountCredentials.account_pass);
+                                    editor.apply();
                                 }
                             },
 
@@ -62,7 +67,8 @@ public class MyAccountSingleton {
             RequestQueueSingleton.getInstance().add(jObjectRequest);    //WebAPIの呼び出し
         }
         else{   //アカウントが存在したなら
-            mAccountSaved = true;
+            Log.d("test","account id already created");
+
         }
     }
 
@@ -72,7 +78,7 @@ public class MyAccountSingleton {
             return MyAccountSingleton.HEADER;
         }
 
-        return HEADER + "user_id" + mAccount.mAccountCredentials.account_id + "," + mAccount.mAccountCredentials.account_pass;
+        return HEADER + ",account_id=" + mAccount.mAccountCredentials.account_id + ",account_pass=" + mAccount.mAccountCredentials.account_pass;
     }
 
     private class AccountCredentials{

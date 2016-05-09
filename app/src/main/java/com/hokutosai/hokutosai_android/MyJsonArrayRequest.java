@@ -1,7 +1,5 @@
 package com.hokutosai.hokutosai_android;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
@@ -31,7 +29,6 @@ public class MyJsonArrayRequest extends JsonArrayRequest
         Map<String, String> headers = super.getHeaders();
 
         String header = MyAccountSingleton.getInstance().getAccountHeader();
-        Log.d("test", header);
 
         // Add BASIC AUTH HEADER
         Map<String, String> newHeaders = new HashMap<String, String>();

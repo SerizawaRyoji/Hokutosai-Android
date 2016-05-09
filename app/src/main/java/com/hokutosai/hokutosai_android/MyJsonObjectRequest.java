@@ -1,7 +1,5 @@
 package com.hokutosai.hokutosai_android;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
@@ -31,12 +29,11 @@ public class MyJsonObjectRequest extends JsonObjectRequest {
         Map<String, String> headers = super.getHeaders();
 
         String header = MyAccountSingleton.getInstance().getAccountHeader();
-        Log.d("test","put header");
 
         // Add BASIC AUTH HEADER
         Map<String, String> newHeaders = new HashMap<String, String>();
         newHeaders.putAll(headers);
-        newHeaders.put("Authorization", "user_id=client-android-app,access_token=fIsngZeqTRUOjl8HtlqRnhjPK8TTaDnd3bFsgda8fxMVpBGX180Ld3Hlr5gT30tr");
+        newHeaders.put("Authorization", header);
 
         return newHeaders;
     }
