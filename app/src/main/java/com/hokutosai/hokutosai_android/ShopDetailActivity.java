@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,9 +80,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 //*****************************************************************************************************
 
                                 //いいねの表示*******************************************************************************************
-                                ImageView like = (ImageView)findViewById(R.id.shop_detail_like);
                                 TextView like_count = (TextView)findViewById(R.id.shop_detail_like_count);
-                                like.setImageResource(R.mipmap.like_selected);
                                 like_count.setText("いいね：" + String.valueOf(mshopDetail.like_count) + "件");
                                 //*****************************************************************************************************
 
