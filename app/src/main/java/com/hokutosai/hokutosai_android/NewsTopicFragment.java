@@ -153,11 +153,10 @@ public class NewsTopicFragment extends Fragment {
                 adapter.addView(view);
             }
             else if(i==0){   //画像もタイトルも存在しない一つ目のトピック = テーマ画像
-                TextView view = new TextView(getActivity());
-                view.setText("ここにテーマ画像を貼り付けます");
-                view.setGravity(Gravity.CENTER);
-                view.setTextSize(30);
-                adapter.addView(view);
+                ImageView image = new ImageView(getActivity());
+                image.setImageResource(R.mipmap.hokutosai_2016_theme);
+                image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                adapter.addView(image);
             }
         }
         viewPager.setAdapter(adapter);

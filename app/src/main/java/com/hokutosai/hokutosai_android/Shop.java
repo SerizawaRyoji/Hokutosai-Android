@@ -14,7 +14,7 @@ public class Shop implements Serializable {
     private String image_url;
     private AssessedScore assesssed_score;
     private Boolean liked;
-    private int like_count;
+    private int likes_count;
 
     public AssessedScore getAssesssed_score() {
         return assesssed_score;
@@ -32,12 +32,12 @@ public class Shop implements Serializable {
         this.image_url = image_url;
     }
 
-    public int getLike_count() {
-        return like_count;
+    public int getLikes_count() {
+        return likes_count;
     }
 
-    public void setLike_count(int like_count) {
-        this.like_count = like_count;
+    public void setLikes_count(int likes_count) {
+        this.likes_count = likes_count;
     }
 
     public Boolean getLiked() {
