@@ -79,7 +79,6 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 place.setText(mshopDetail.place.getName());
                                 //*****************************************************************************************************
 
-                                //いいねの表示*******************************************************************************************
                                 TextView like_count = (TextView)findViewById(R.id.shop_detail_like_count);
                                 like_count.setText("いいね：" + String.valueOf(mshopDetail.like_count) + "件");
                                 //*****************************************************************************************************

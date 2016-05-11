@@ -2,13 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/show_side_margin"
-    android:layout_marginRight="@dimen/show_side_margin"
     android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/show_side_margin"
+        android:layout_marginRight="@dimen/show_side_margin"
         android:orientation="vertical" >
 
         <!-- タイトル -->
@@ -26,7 +26,6 @@
             android:scrollHorizontally="true"
             android:marqueeRepeatLimit="marquee_forever"
             />
-
         <include layout="@layout/under_line" />
 
         <LinearLayout
@@ -57,8 +56,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="left">
+                    android:orientation="horizontal">
                     <ImageView
                         android:layout_width="@dimen/show_icon_size_w"
                         android:layout_height="@dimen/show_icon_size_h"
@@ -80,8 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingTop="4dp"
-                    android:layout_gravity="left">
+                    android:paddingTop="4dp">
                     <ImageView
                         android:layout_width="@dimen/show_icon_size_w"
                         android:layout_height="@dimen/show_icon_size_h"
@@ -103,8 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingTop="4dp"
-                    android:layout_gravity="left">
+                    android:paddingTop="4dp">
                     <ImageView
                         android:layout_width="@dimen/show_icon_size_w"
                         android:layout_height="@dimen/show_icon_size_h"
@@ -153,6 +149,17 @@
 
         </LinearLayout>
 
+        <include layout="@layout/under_line" />
+
+        <!-- いいね(クリック可) -->
+        <ImageView
+            android:id="@+id/shop_detail_like_clickable"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:src="@drawable/like"
+            android:scaleType="fitCenter"
+            android:gravity="center"
+            android:background="#ffffff" />
 
         <include layout="@layout/under_line" />
 
@@ -160,7 +167,7 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/show_sub_title_size"
-            android:text="メニュー"
+            android:text="メニュー\n\n\n\n\n\n\n\n"
             />
         <LinearLayout
             android:layout_width="match_parent"
