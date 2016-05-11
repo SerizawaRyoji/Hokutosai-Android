@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,6 +54,8 @@ public class ShopDetailActivity extends AppCompatActivity {
         tenant.setText(item.getTenant());
         sales.setText(item.getSales());
 
+        setLikeClickEvent();
+
         String url = "https://api.hokutosai.tech/2016/shops/";
         url += String.valueOf(item.getShop_id());
         url += "/details";
@@ -79,6 +83,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 place.setText(mshopDetail.place.getName());
                                 //*****************************************************************************************************
 
+                                //いいねの表示*******************************************************************************************
                                 TextView like_count = (TextView)findViewById(R.id.shop_detail_like_count);
                                 like_count.setText("いいね：" + String.valueOf(mshopDetail.like_count) + "件");
                                 //*****************************************************************************************************
@@ -144,6 +149,20 @@ public class ShopDetailActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private void setLikeClickEvent(){
+
+        final ImageView like = (ImageView)findViewById(R.id.shop_detail_like_clickable);
+        // ImageViewオブジェクトにクリックイベントを追加する
+        like.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        like.setSelected( !like.isSelected() );
+                        Log.d("test","clicked");
+                    }
+                }
+        );
     }
 
     private class ShopDetail{

@@ -43,6 +43,12 @@ public class ScheduleFragment  extends Fragment {
 
         titles = new ArrayList<String>();
         fragments = new ArrayList<Fragment>();
+
+        //タブのタイトルの作成
+        titles.add("全て");
+        titles.add("前夜祭");
+        titles.add("1日目");
+        titles.add("2日目");
     }
 
     @Override
@@ -70,11 +76,6 @@ public class ScheduleFragment  extends Fragment {
                                     list = gson.fromJson(response.toString(), collectionType);
 
                                     if(getActivity() != null) {
-                                        //タブのタイトルの作成
-                                        titles.add("全て");
-                                        titles.add("前夜祭");
-                                        titles.add("1日目");
-                                        titles.add("2日目");
 
                                         //タブごとのリストフラグメントを作成
                                         EventListFragment elf01 = new EventListFragment();  //全て
