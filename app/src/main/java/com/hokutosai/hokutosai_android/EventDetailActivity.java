@@ -1,12 +1,15 @@
 package com.hokutosai.hokutosai_android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,6 +25,10 @@ import org.json.JSONObject;
 public class EventDetailActivity extends AppCompatActivity {
 
     EventDetail mEventDetail;
+    int mLikeCount;             //いいねの件数
+
+    //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
+    private static final Object TAG_EVENT_LIKE_REQUEST_QUEUE = new Object();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,10 @@ public class EventDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         final Event item = (Event)i.getSerializableExtra("Event");
 
+        mLikeCount = item.getLike_count();
+
+        setLikeClickEvent(item, this);
+
         String url = "https://api.hokutosai.tech/2016/events/";
         url += String.valueOf(item.getEvent_id());
         url += "/details";
@@ -50,7 +61,7 @@ public class EventDetailActivity extends AppCompatActivity {
                                 //JSONArrayをListShopItemに変換して取得
                                 Gson gson = new Gson();
                                 mEventDetail = gson.fromJson(response.toString(), EventDetail.class);
-
+                                Log.d("test",response.toString());
                                 //画像の表示********************************************************************************************
                                 NetworkImageView image = (NetworkImageView) findViewById(R.id.event_detail_image);
                                 image.setImageUrl(mEventDetail.image_url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
@@ -58,12 +69,14 @@ public class EventDetailActivity extends AppCompatActivity {
 
                                 //タイトルの表示****************************************************************************************
                                 TextView title = (TextView)findViewById(R.id.event_detail_name);
-                                title.setText(mEventDetail.title);
+                                if( !mEventDetail.title.isEmpty() ) title.setText(mEventDetail.title);
+                                else title.setText("未登録");
                                 //****************************************************************************************************
 
                                 //出演者の表示******************************************************************************************
                                 TextView performer = (TextView)findViewById(R.id.event_detail_performer);
-                                performer.setText(mEventDetail.performer);
+                                if(!mEventDetail.performer.isEmpty()) performer.setText(mEventDetail.performer);
+                                else performer.setText("未登録");
                                 //****************************************************************************************************
 
                                 //場所の表示*******************************************************************************************
@@ -71,16 +84,21 @@ public class EventDetailActivity extends AppCompatActivity {
                                 place.setText(mEventDetail.place.getName());
                                 //****************************************************************************************************
 
+                                //時間の表示*******************************************************************************************
+                                TextView datetime = (TextView)findViewById(R.id.event_detail_datetime);
+                                if(!mEventDetail.start_time.isEmpty() && !mEventDetail.end_time.isEmpty()) datetime.setText(mEventDetail.start_time  + " to " + mEventDetail.end_time);
+                                else datetime.setText("未登録");
+                                //****************************************************************************************************
+
                                 //いいねの表示******************************************************************************************
-                                ImageView like = (ImageView)findViewById(R.id.event_detail_like);
+                                mLikeCount = mEventDetail.like_count;
                                 TextView like_count = (TextView)findViewById(R.id.event_detail_like_count);
-                                like.setImageResource(R.drawable.like_selected);
-                                like_count.setText("いいね：" + String.valueOf(mEventDetail.like_count) + "件");
+                                like_count.setText("いいね：" + String.valueOf(mLikeCount) + "件");
                                 //****************************************************************************************************
 
                                 //詳細の表示*******************************************************************************************
                                 TextView detail = (TextView)findViewById(R.id.event_detail_detail);
-                                place.setText(mEventDetail.detail);
+                                detail.setText(mEventDetail.detail);
                                 //****************************************************************************************************
                             }
                         },
@@ -108,13 +126,70 @@ public class EventDetailActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        RequestQueueSingleton.getInstance().cancelAll(TAG_EVENT_LIKE_REQUEST_QUEUE);
+    }
+
+    private void setLikeClickEvent(final Event item, final Activity activity){
+
+        final ImageView like = (ImageView)findViewById(R.id.event_detail_like_clickable);
+        // ImageViewオブジェクトにクリックイベントを追加する
+        if(like != null) {
+            like.setOnClickListener(
+                    new View.OnClickListener() {
+                        public void onClick(View v) {
+
+                            String url = "https://api.hokutosai.tech/2016/events/" + item.getEvent_id() + "/likes";
+
+                            MyStringRequest postJson = new MyStringRequest(Request.Method.POST, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            // TODO 自動生成されたメソッド・スタブ
+                                            if( activity != null) {
+                                                like.setSelected(!like.isSelected());   //画像の反転
+
+                                                TextView like_count = (TextView)findViewById(R.id.event_detail_like_count);
+
+                                                if( like.isSelected() ){
+                                                    Toast.makeText(activity, "いいねしました", Toast.LENGTH_SHORT).show();
+                                                    ++mLikeCount;
+                                                    like_count.setText("いいね：" + String.valueOf(mLikeCount) + "件");
+                                                }
+                                                else{
+                                                    Toast.makeText(activity, "いいねを取り消しました", Toast.LENGTH_SHORT).show();
+                                                    --mLikeCount;
+                                                    like_count.setText("いいね：" + String.valueOf(mLikeCount) + "件");
+                                                }
+                                            }
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            if(activity != null) Toast.makeText(activity, "いいねに失敗しました", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                            );
+
+                            postJson.setCustomTimeOut();   //タイムアウト時間の変更
+                            postJson.setTag(TAG_EVENT_LIKE_REQUEST_QUEUE);    //タグのセット
+                            RequestQueueSingleton.getInstance().add(postJson);    //WebAPIの呼び出し
+                        }
+                    }
+            );
+        }
+    }
+
     private class EventDetail{
         int event_id;
         String title;
         String date;
         String start_time;
         String end_time;
-        PlaceItem place;
+        Place place;
         String performer;
         String detail;
         String image_url;

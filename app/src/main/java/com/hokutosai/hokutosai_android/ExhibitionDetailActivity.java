@@ -193,7 +193,7 @@ public class ExhibitionDetailActivity extends AppCompatActivity {
         Boolean liked;
         int likes_count;
         String introduction;
-        PlaceItem place;
+        Place place;
         List<Assessment> assessments;
         Assessment my_assessment;
     }

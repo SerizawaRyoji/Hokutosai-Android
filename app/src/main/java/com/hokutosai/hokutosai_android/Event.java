@@ -12,7 +12,7 @@ public class Event  implements Serializable {
     String date;
     String start_time;
     String end_time;
-    PlaceItem place;
+    Place place;
     String performer;
     String detail;
     String image_url;
@@ -92,11 +92,11 @@ public class Event  implements Serializable {
         this.performer = performer;
     }
 
-    public PlaceItem getPlace() {
+    public Place getPlace() {
         return place;
     }
 
-    public void setPlace(PlaceItem place) {
+    public void setPlace(Place place) {
         this.place = place;
     }
 

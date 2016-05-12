@@ -2,8 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/show_side_margin"
-    android:layout_marginRight="@dimen/show_side_margin"
     android:scrollbars="none">
 
     <LinearLayout
@@ -17,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
-            android:padding="5dp"
             />
 
         <!-- タイトル -->
@@ -26,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/section_line_margin"
+            android:layout_marginLeft="@dimen/show_side_margin"
             android:gravity="left"
             android:textSize="@dimen/show_title_size"
             android:singleLine="true"
@@ -38,57 +36,104 @@
 
         <include layout="@layout/under_line" />
 
-        <!-- 出演者 -->
-        <TextView
-            android:id="@+id/event_detail_performer"
+        <!--出演者-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/show_text_margin"
-            android:textSize="@dimen/show_sentence_size"
-            />
+            android:layout_marginLeft="@dimen/show_side_margin"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/exhibitor"
+                android:scaleType="fitCenter"/>
 
-        <!-- 場所 -->
-        <TextView
-            android:id="@+id/event_detail_place"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/show_text_margin"
-            android:textSize="@dimen/show_sentence_size"
-            />
+            <TextView
+                android:id="@+id/event_detail_performer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="@dimen/show_sentence_size" />
+        </LinearLayout>
 
-        <!-- 時間 -->
-        <TextView
-            android:id="@+id/event_detail_datetime"
+        <!--場所-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/show_text_margin"
-            android:textSize="@dimen/show_sentence_size"
-            />
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/show_side_margin"
+            android:paddingTop="6dp">
+            <ImageView
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/map"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:id="@+id/event_detail_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="@dimen/show_sentence_size" />
+        </LinearLayout>
+
+        <!--時間-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/show_side_margin"
+            android:paddingTop="6dp">
+            <ImageView
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/time"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:id="@+id/event_detail_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="@dimen/show_sentence_size" />
+        </LinearLayout>
 
         <!--いいね-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingTop="6dp"
+            android:layout_marginLeft="@dimen/show_side_margin"
             android:layout_gravity="left">
 
             <ImageView
                 android:id="@+id/event_detail_like"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/like_unselected"
                 android:scaleType="fitCenter"
-                android:layout_gravity="center"
-                android:layout_height="@dimen/show_sentence_size"
-                android:background="#ffffff" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/event_detail_like_count"
-                android:layout_width="0dp"
-                android:layout_weight="7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:textSize="@dimen/show_sentence_size"
                 />
         </LinearLayout>
+
+        <include layout="@layout/under_line" />
+
+        <!-- いいね(クリック可) -->
+        <ImageView
+            android:id="@+id/event_detail_like_clickable"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/like_icon"
+            android:scaleType="fitCenter"
+            android:gravity="center"/>
 
         <include layout="@layout/under_line" />
 
@@ -96,6 +141,7 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/show_sub_title_size"
+            android:paddingLeft="5dp"
             android:text="詳細"
             />
         <TextView

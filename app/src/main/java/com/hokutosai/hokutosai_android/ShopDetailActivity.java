@@ -231,7 +231,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         Boolean liked;
         int likes_count;
         String introduction;
-        PlaceItem place;
+        Place place;
         List<Menu> menus;
     }
 
