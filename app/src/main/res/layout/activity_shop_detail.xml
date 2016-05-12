@@ -131,10 +131,9 @@
                 android:id="@+id/shop_detail_like"
                 android:layout_width="@dimen/show_icon_size_w"
                 android:layout_height="@dimen/show_icon_size_h"
-                android:src="@drawable/like"
+                android:src="@drawable/like_unselected"
                 android:scaleType="fitCenter"
-                android:gravity="center"
-                android:background="#ffffff" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/shop_detail_like_count"
@@ -160,11 +159,26 @@
         <include layout="@layout/under_line" />
 
         <!--メニュー-->
-        <TextView android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/show_sub_title_size"
-            android:text="メニュー"
-            />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/menu"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="@dimen/show_sub_title_size"
+                android:text="メニュー"
+                />
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,12 +200,27 @@
         </LinearLayout>
 
         <include layout="@layout/under_line" />
+
         <!--出店者から-->
-        <TextView android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/show_sub_title_size"
-            android:text="出店者から"
-            />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/introduction"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="@dimen/show_sub_title_size"
+                android:text="出店者から"
+                />
+        </LinearLayout>
         <TextView
             android:id="@+id/shop_detail_introduction"
             android:layout_width="match_parent"

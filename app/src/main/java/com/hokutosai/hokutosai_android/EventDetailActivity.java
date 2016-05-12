@@ -74,7 +74,7 @@ public class EventDetailActivity extends AppCompatActivity {
                                 //いいねの表示******************************************************************************************
                                 ImageView like = (ImageView)findViewById(R.id.event_detail_like);
                                 TextView like_count = (TextView)findViewById(R.id.event_detail_like_count);
-                                like.setImageResource(R.mipmap.like_selected);
+                                like.setImageResource(R.drawable.like_selected);
                                 like_count.setText("いいね：" + String.valueOf(mEventDetail.like_count) + "件");
                                 //****************************************************************************************************
 

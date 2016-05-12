@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:state_selected="true"
-        android:drawable="@mipmap/news_selected" />
-    <item android:drawable="@mipmap/news_unselected" />
+        android:drawable="@drawable/news_selected" />
+    <item android:drawable="@drawable/news_unselected" />
 </selector>
