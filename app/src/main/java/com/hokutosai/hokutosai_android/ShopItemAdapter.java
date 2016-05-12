@@ -61,6 +61,7 @@ public class ShopItemAdapter extends BaseAdapter{
             holder.sales = (TextView) convertView.findViewById(R.id.shop_item_sales);
             holder.image = (NetworkImageView) convertView.findViewById(R.id.shop_item_image);
             holder.like_icon = (ImageView) convertView.findViewById(R.id.shop_item_like);
+            holder.likes_count = (TextView) convertView.findViewById(R.id.shop_item_like_count);
 
             convertView.setTag(holder);
         }
@@ -74,6 +75,7 @@ public class ShopItemAdapter extends BaseAdapter{
         holder.tenant.setText(shopList.get(position).getTenant());
         holder.sales.setText(shopList.get(position).getSales());
         holder.like_icon.setSelected( shopList.get(position).getLiked() );
+        holder.likes_count.setText( String.valueOf(shopList.get(position).getLikes_count()) );
 
         if (shopList.get(position).getImage_url() != null) {
             holder.image.setImageUrl(shopList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
@@ -91,6 +93,7 @@ public class ShopItemAdapter extends BaseAdapter{
         TextView tenant;
         TextView sales;
         NetworkImageView image;
+        TextView likes_count;
         ImageView like_icon;
     }
 }
