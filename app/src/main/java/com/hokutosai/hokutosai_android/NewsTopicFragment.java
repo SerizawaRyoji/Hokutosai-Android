@@ -113,7 +113,6 @@ public class NewsTopicFragment extends Fragment {
         int px = (int) (21f * density + 0.5f);
         int h = layout.getHeight();
         viewPager.getLayoutParams().height = h-px;
-        Log.d("test",String.valueOf(h) + ", " + String.valueOf(px));
 
         for (int i = 0; i < list.size(); ++i) {
             if( i!=0 && list.get(i).getMedias() != null && !list.get(i).getMedias().isEmpty() && list.get(i).getMedias().get(0).url != null) {  //画像つきのトピックニュース

@@ -1,13 +1,16 @@
 package com.hokutosai.hokutosai_android;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -73,6 +76,19 @@ public class TabShopFragment  extends Fragment {
                                         //UIに反映
                                         listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
                                         adapter.setShopList(list);
+
+                                        //salesの分の幅を計算
+                                        WindowManager wm = (WindowManager)getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+                                        Display disp = wm.getDefaultDisplay();
+                                        Point size = new Point();
+                                        disp.getSize(size);         //画面のディスプレイサイズを取得(ピクセル)
+                                        int width =  getActivity().getResources().getDimensionPixelSize(R.dimen.list_shop_image_size)    //ショップ画像といいねの画像の幅を足し合わせる
+                                                            + getActivity().getResources().getDimensionPixelSize(R.dimen.list_shop_item_height);
+                                        Log.d("test",String.valueOf(width));
+                                        int px = size.x - (width + 240);  //画面幅 - ( ショップ画像幅+いいね画像幅+いいね数の文字列幅(240)) がsales(TextView)の幅となる   ＊240は本当はちゃんと計算したほうがいい
+                                        adapter.setSalesWidth(px);
+                                        Log.d("test",String.valueOf(px));
+
                                         listView.setAdapter(adapter);
 
                                         setClickListener();     //クリックしたときの処理について

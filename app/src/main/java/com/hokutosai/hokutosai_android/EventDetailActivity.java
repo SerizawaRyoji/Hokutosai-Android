@@ -44,7 +44,7 @@ public class EventDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         final Event item = (Event)i.getSerializableExtra("Event");
 
-        mLikeCount = item.getLike_count();
+        mLikeCount = item.getLikes_count();
 
         setLikeClickEvent(item, this);
 
@@ -91,7 +91,7 @@ public class EventDetailActivity extends AppCompatActivity {
                                 //****************************************************************************************************
 
                                 //いいねの表示******************************************************************************************
-                                mLikeCount = mEventDetail.like_count;
+                                mLikeCount = mEventDetail.likes_count;
                                 TextView like_count = (TextView)findViewById(R.id.event_detail_like_count);
                                 like_count.setText("いいね：" + String.valueOf(mLikeCount) + "件");
                                 //****************************************************************************************************
@@ -142,8 +142,10 @@ public class EventDetailActivity extends AppCompatActivity {
                         public void onClick(View v) {
 
                             String url = "https://api.hokutosai.tech/2016/events/" + item.getEvent_id() + "/likes";
+                            int method = Request.Method.POST;
+                            if(item.getLiked()) method = Request.Method.DELETE; //いいね済みの状態でいいねを押した場合はDELETE
 
-                            MyStringRequest postJson = new MyStringRequest(Request.Method.POST, url,
+                            MyStringRequest postJson = new MyStringRequest(method, url,
                                     new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
@@ -193,7 +195,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String performer;
         String detail;
         String image_url;
-        int like_count;
+        int likes_count;
         Boolean liked;
         Boolean featured;
     }

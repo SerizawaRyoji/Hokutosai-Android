@@ -16,7 +16,7 @@ public class Event  implements Serializable {
     String performer;
     String detail;
     String image_url;
-    int like_count;
+    int likes_count;
     Boolean liked;
     Boolean featured;
 
@@ -68,12 +68,12 @@ public class Event  implements Serializable {
         this.image_url = image_url;
     }
 
-    public int getLike_count() {
-        return like_count;
+    public int getLikes_count() {
+        return likes_count;
     }
 
-    public void setLike_count(int like_count) {
-        this.like_count = like_count;
+    public void setLikes_count(int likes_count) {
+        this.likes_count = likes_count;
     }
 
     public Boolean getLiked() {

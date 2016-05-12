@@ -19,6 +19,9 @@
     <dimen name="list_display_padding_left_margin">40dp</dimen>
     <dimen name="list_place_padding_left_margin">40dp</dimen>
 
+    <dimen name="list_shop_item_height">18dp</dimen>
+    <dimen name="list_shop_image_size">70dp</dimen>
+
     <!-- 詳細ページについて -->
     <dimen name="show_side_margin">8dp</dimen>
     <dimen name="show_text_margin">30dp</dimen>

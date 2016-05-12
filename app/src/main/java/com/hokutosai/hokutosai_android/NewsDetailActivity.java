@@ -177,8 +177,10 @@ public class NewsDetailActivity extends AppCompatActivity {
                         public void onClick(View v) {
 
                             String url = "https://api.hokutosai.tech/2016/news/" + item.getNews_id() + "/likes";
+                            int method = Request.Method.POST;
+                            if(item.getLiked()) method = Request.Method.DELETE; //いいね済みの状態でいいねを押した場合はDELETE
 
-                            MyStringRequest postJson = new MyStringRequest(Request.Method.POST, url,
+                            MyStringRequest postJson = new MyStringRequest(method, url,
                                     new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {

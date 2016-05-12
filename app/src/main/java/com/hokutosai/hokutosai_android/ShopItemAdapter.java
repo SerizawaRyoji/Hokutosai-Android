@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -20,6 +21,7 @@ public class ShopItemAdapter extends BaseAdapter{
     LayoutInflater layoutInflater = null;
     ArrayList<Shop> shopList;
     private ViewHolder holder = null;
+    private int sales_width = 0;        //salesの文字の幅　＊いいねと重ならないようにする必要があるため計算された幅を保持
 
     public ShopItemAdapter(Context context) {
         this.context = context;
@@ -29,6 +31,8 @@ public class ShopItemAdapter extends BaseAdapter{
     public void setShopList(ArrayList<Shop> itemList) {
         this.shopList = itemList;
     }
+
+    public void setSalesWidth(int pixel){ sales_width = pixel; }
 
     @Override
     public int getCount() {
@@ -56,6 +60,7 @@ public class ShopItemAdapter extends BaseAdapter{
             holder.tenant = (TextView) convertView.findViewById(R.id.shop_item_tenant);
             holder.sales = (TextView) convertView.findViewById(R.id.shop_item_sales);
             holder.image = (NetworkImageView) convertView.findViewById(R.id.shop_item_image);
+            holder.like_icon = (ImageView) convertView.findViewById(R.id.shop_item_like);
 
             convertView.setTag(holder);
         }
@@ -63,13 +68,20 @@ public class ShopItemAdapter extends BaseAdapter{
             holder = (ViewHolder)convertView.getTag();
         }
 
+        holder.sales.setWidth(sales_width);
+
         holder.name.setText(shopList.get(position).getName());
         holder.tenant.setText(shopList.get(position).getTenant());
         holder.sales.setText(shopList.get(position).getSales());
+        holder.like_icon.setSelected( shopList.get(position).getLiked() );
 
         if (shopList.get(position).getImage_url() != null) {
             holder.image.setImageUrl(shopList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
         }
+
+
+
+
 
         return convertView;
     }
@@ -79,5 +91,6 @@ public class ShopItemAdapter extends BaseAdapter{
         TextView tenant;
         TextView sales;
         NetworkImageView image;
+        ImageView like_icon;
     }
 }
