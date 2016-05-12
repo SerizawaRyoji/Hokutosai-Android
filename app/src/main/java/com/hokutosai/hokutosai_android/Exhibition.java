@@ -14,7 +14,34 @@ public class Exhibition implements Serializable {
     String image_url;
     AssessedScore assessed_score;
     Boolean liked;
-    int like_count;
+    int likes_count;
+    String introduction;
+    Place place;
+    Assessment my_assessment;
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public Assessment getMy_assessment() {
+        return my_assessment;
+    }
+
+    public void setMy_assessment(Assessment my_assessment) {
+        this.my_assessment = my_assessment;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
 
     public AssessedScore getAssessed_score() {
         return assessed_score;
@@ -56,12 +83,12 @@ public class Exhibition implements Serializable {
         this.image_url = image_url;
     }
 
-    public int getLike_count() {
-        return like_count;
+    public int getLikes_count() {
+        return likes_count;
     }
 
-    public void setLike_count(int like_count) {
-        this.like_count = like_count;
+    public void setLikes_count(int likes_count) {
+        this.likes_count = likes_count;
     }
 
     public Boolean getLiked() {

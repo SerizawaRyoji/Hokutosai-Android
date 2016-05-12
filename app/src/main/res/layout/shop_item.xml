@@ -54,6 +54,8 @@
         android:ellipsize="end"
         android:textSize="12sp" />
 
+
+    <!--いいねの数-->
     <TextView
         android:id="@+id/shop_item_like_count"
         android:layout_width="wrap_content"
@@ -64,6 +66,7 @@
         android:layout_marginRight="8dp"
         android:textSize="12sp" />
 
+    <!--いいねのアイコン-->
     <ImageView
         android:id="@+id/shop_item_like"
         android:layout_width="@dimen/list_shop_item_height"

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -55,6 +56,8 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
             holder.title = (TextView) convertView.findViewById(R.id.exhibition_item_title);
             holder.display = (TextView) convertView.findViewById(R.id.exhibition_item_displays);
             holder.image = (NetworkImageView) convertView.findViewById(R.id.exhibition_item_image);
+            holder.liked = (ImageView) convertView.findViewById(R.id.exhibition_item_like);
+            holder.likes_count = (TextView)  convertView.findViewById(R.id.exhibition_item_like_count);
 
             convertView.setTag(holder);
         }
@@ -64,6 +67,8 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
 
         holder.title.setText(exhibitionList.get(position).getTitle());
         holder.display.setText(exhibitionList.get(position).getDisplays());
+        holder.liked.setSelected(exhibitionList.get(position).getLiked());
+        holder.likes_count.setText(String.valueOf(exhibitionList.get(position).getLikes_count()));
 
         if (exhibitionList.get(position).getImage_url() != null) {
             holder.image.setImageUrl(exhibitionList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
@@ -76,5 +81,7 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
         TextView title;
         TextView display;
         NetworkImageView image;
+        TextView likes_count;
+        ImageView liked;
     }
 }

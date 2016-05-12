@@ -47,7 +47,7 @@ public class ExhibitionDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         final Exhibition item = (Exhibition)i.getSerializableExtra("Exhibition");
 
-        mLikeCount = item.getLike_count();
+        mLikeCount = item.getLikes_count();
 
         TextView name = (TextView)this.findViewById(R.id.exhibition_detail_name);
         TextView exhibitors = (TextView)this.findViewById(R.id.exhibition_detail_exhibitors);
