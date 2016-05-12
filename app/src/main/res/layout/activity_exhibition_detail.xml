@@ -49,64 +49,106 @@
                 android:layout_weight="7"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="center">
 
-                <!-- 出店者 -->
-                <TextView
-                    android:id="@+id/exhibition_detail_exhibitors"
-                    android:layout_width="wrap_content"
+                <!--出展者-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="@dimen/show_sentence_size"	/>
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="@dimen/show_icon_size_w"
+                        android:layout_height="@dimen/show_icon_size_h"
+                        android:src="@drawable/exhibitor"
+                        android:scaleType="fitCenter"/>
 
-                <!-- 主な展示品 -->
-                <TextView
-                    android:id="@+id/exhibition_detail_displays"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/show_text_margin"
-                    android:textSize="@dimen/show_sentence_size"
-                    />
+                    <TextView
+                        android:id="@+id/exhibition_detail_exhibitors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:textSize="@dimen/show_sentence_size" />
+                </LinearLayout>
 
-                <!-- 場所 -->
-                <TextView
-                    android:id="@+id/exhibition_detail_place"
-                    android:layout_width="wrap_content"
+                <!--主な展示品-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/show_text_margin"
-                    android:textSize="@dimen/show_sentence_size"
-                    />
+                    android:orientation="horizontal"
+                    android:paddingTop="4dp">
+                    <ImageView
+                        android:layout_width="@dimen/show_icon_size_w"
+                        android:layout_height="@dimen/show_icon_size_h"
+                        android:src="@drawable/sales"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:id="@+id/exhibition_detail_displays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:textSize="@dimen/show_sentence_size" />
+                </LinearLayout>
+
+                <!--主な展示品-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="4dp">
+                    <ImageView
+                        android:layout_width="@dimen/show_icon_size_w"
+                        android:layout_height="@dimen/show_icon_size_h"
+                        android:src="@drawable/map"
+                        android:scaleType="fitCenter"/>
+
+                    <TextView
+                        android:id="@+id/exhibition_detail_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:textSize="@dimen/show_sentence_size" />
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
-
 
         <!--いいね-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingLeft="5dp"
             android:layout_gravity="left">
 
             <ImageView
                 android:id="@+id/exhibition_detail_like"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/like_unselected"
                 android:scaleType="fitCenter"
-                android:layout_gravity="center"
-                android:layout_height="@dimen/show_sentence_size"
-                android:background="#ffffff" />
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/exhibition_detail_like_count"
-                android:layout_width="0dp"
-                android:layout_weight="7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
                 android:textSize="@dimen/show_sentence_size"
                 />
-
         </LinearLayout>
 
+        <include layout="@layout/under_line" />
+
+        <!-- いいね(クリック可) -->
+        <ImageView
+            android:id="@+id/exhibition_detail_like_clickable"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/like_icon"
+            android:scaleType="fitCenter"
+            android:gravity="center"/>
 
         <include layout="@layout/under_line" />
 

@@ -142,7 +142,6 @@
                 android:paddingLeft="5dp"
                 android:textSize="@dimen/show_sentence_size"
                 />
-
         </LinearLayout>
 
         <include layout="@layout/under_line" />
