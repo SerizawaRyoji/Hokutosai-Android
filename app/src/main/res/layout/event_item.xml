@@ -9,7 +9,7 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:padding="@dimen/list_image_padding_margin"
         />
 
@@ -34,7 +34,7 @@
         android:layout_below="@id/event_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/list_tenant_padding_left_margin"
+        android:layout_marginLeft="@dimen/list_title_padding_left_margin"
         android:singleLine="true"
         android:ellipsize="end"
         android:textSize="12sp" />
@@ -46,9 +46,32 @@
         android:layout_toRightOf="@id/event_item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/list_sales_padding_left_margin"
+        android:layout_marginLeft="@dimen/list_title_padding_left_margin"
         android:singleLine="true"
         android:ellipsize="end"
         android:textSize="12sp" />
+
+    <!--いいねの数-->
+    <TextView
+        android:id="@+id/event_item_like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/list_shop_item_height"
+        android:layout_marginTop="2dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/event_item_date"
+        android:layout_marginRight="8dp"
+        android:textSize="12sp" />
+
+    <!--いいねのアイコン-->
+    <ImageView
+        android:id="@+id/event_item_like"
+        android:layout_width="@dimen/list_shop_item_height"
+        android:layout_height="@dimen/list_shop_item_height"
+        android:src="@drawable/like_icon"
+        android:layout_marginTop="2dp"
+        android:scaleType="fitCenter"
+        android:layout_toLeftOf="@+id/event_item_like_count"
+        android:layout_below="@id/event_item_date"
+        android:layout_marginRight="4dp"/>
 
 </RelativeLayout>

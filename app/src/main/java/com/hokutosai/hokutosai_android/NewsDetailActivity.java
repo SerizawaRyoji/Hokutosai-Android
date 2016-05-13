@@ -63,7 +63,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         TextView title = (TextView)this.findViewById(R.id.news_detail_title);
         TextView date = (TextView)this.findViewById(R.id.news_detail_date);
         title.setText(item.getTitle());
-        date.setText( MyDateFormatSingleton.getInstance().getDateTIme(item.getDatetime()));
+        date.setText( MyDateFormatSingleton.getInstance().getDateTime(item.getDatetime()));
 
         setLikeClickEvent(item, this);
 
