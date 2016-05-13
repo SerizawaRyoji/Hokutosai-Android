@@ -21,6 +21,7 @@ public class NewsItemAdapter extends BaseAdapter {
     LayoutInflater layoutInflater = null;
     ArrayList<News> newsItemList;
     private ViewHolder holder = null;
+    private Boolean isEnabled = true;       //アイテムがクリック可能かどうか(ロード中はクリック不可にしたい)
 
     public NewsItemAdapter(Context context) {
         this.context = context;
@@ -29,6 +30,22 @@ public class NewsItemAdapter extends BaseAdapter {
 
     public void setNewsItemList(ArrayList<News> itemList) {
         this.newsItemList = itemList;
+    }
+
+    public void setEnabled(Boolean e){ this.isEnabled = e; }
+
+    public void addList(ArrayList<News> itemList){
+        this.newsItemList.addAll(itemList);
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return isEnabled;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return isEnabled;
     }
 
     @Override
@@ -72,7 +89,7 @@ public class NewsItemAdapter extends BaseAdapter {
         if( newsItemList.get(position).getRelated_event() != null ) related =  newsItemList.get(position).getRelated_event().title;
         else if(newsItemList.get(position).getRelated_shop() != null ) related =  newsItemList.get(position).getRelated_shop().name;
         else if(newsItemList.get(position).getRelated_exhibition() != null ) related =  newsItemList.get(position).getRelated_exhibition().title;
-        holder.related.setText(related);        //修正必要あり   newsItemList.get(position).getRelated_event().title
+        holder.related.setText(String.valueOf(newsItemList.get(position).getNews_id()));
 
         holder.datetime.setText( MyDateFormatSingleton.getInstance().getDateTime(newsItemList.get(position).getDatetime()) );
         holder.like_icon.setSelected( newsItemList.get(position).getLiked() );
