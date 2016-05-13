@@ -96,6 +96,11 @@ public class EventDetailActivity extends AppCompatActivity {
                                 like_count.setText("いいね：" + String.valueOf(mLikeCount) + "件");
                                 //****************************************************************************************************
 
+                                //いいね(クリック可)の表示********************************************************************************
+                                ImageView like = (ImageView)findViewById(R.id.event_detail_like_clickable);
+                                like.setSelected(mEventDetail.liked);
+                                //*****************************************************************************************************
+
                                 //詳細の表示*******************************************************************************************
                                 TextView detail = (TextView)findViewById(R.id.event_detail_detail);
                                 detail.setText(mEventDetail.detail);
