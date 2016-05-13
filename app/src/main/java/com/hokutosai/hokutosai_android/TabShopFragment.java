@@ -33,6 +33,8 @@ public class TabShopFragment  extends Fragment {
     ArrayList<Shop> list;
     ShopItemAdapter adapter;
     ListView listView;
+    Boolean isFirst;
+    Boolean mRequestEnded;
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
     private static final Object TAG_SHOP_REQUEST_QUEUE = new Object();
@@ -50,6 +52,7 @@ public class TabShopFragment  extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        isFirst = true;
         // TODO 自動生成されたメソッド・スタブ
         return inflater.inflate(R.layout.tab_shop_fragment, container, false);
     }
@@ -60,54 +63,7 @@ public class TabShopFragment  extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if(list.isEmpty()) {
-            MyJsonArrayRequest jArrayRequest =
-                    new MyJsonArrayRequest("https://api.hokutosai.tech/2016/shops/",
-                            new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-
-                                    //JSONArrayをListShopItemに変換して取得
-                                    Gson gson = new Gson();
-                                    Type collectionType = new TypeToken<Collection<Shop>>() {
-                                    }.getType();
-                                    list = gson.fromJson(response.toString(), collectionType);
-
-                                    if(getActivity() != null) {
-                                        //UIに反映
-                                        listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
-                                        adapter.setShopList(list);
-
-                                        //salesの分の幅を計算
-                                        WindowManager wm = (WindowManager)getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-                                        Display disp = wm.getDefaultDisplay();
-                                        Point size = new Point();
-                                        disp.getSize(size);         //画面のディスプレイサイズを取得(ピクセル)
-                                        int width =  getActivity().getResources().getDimensionPixelSize(R.dimen.list_shop_image_size)    //ショップ画像といいねの画像の幅を足し合わせる
-                                                            + getActivity().getResources().getDimensionPixelSize(R.dimen.list_shop_item_height);
-                                        Log.d("test",String.valueOf(width));
-                                        int px = size.x - (width + 240);  //画面幅 - ( ショップ画像幅+いいね画像幅+いいね数の文字列幅(240)) がsales(TextView)の幅となる   ＊240は本当はちゃんと計算したほうがいい
-                                        adapter.setSalesWidth(px);
-                                        Log.d("test",String.valueOf(px));
-
-                                        listView.setAdapter(adapter);
-
-                                        setClickListener();     //クリックしたときの処理について
-                                    }
-                                }
-                            },
-
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("LIFE", error.toString());
-                                    // エラー処理 error.networkResponseで確認
-                                    // エラー表示など
-                                }
-                            });
-
-            jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
-            jArrayRequest.setTag(TAG_SHOP_REQUEST_QUEUE);    //タグのセット
-            RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
+            loadShopList();     //リストをロードしてアダプターにセット
         }
         else{
             listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
@@ -135,5 +91,94 @@ public class TabShopFragment  extends Fragment {
     public void onStop() {
         super.onStop();
         RequestQueueSingleton.getInstance().cancelAll(TAG_SHOP_REQUEST_QUEUE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if( isFirst ){  //初めてこのメソッドが呼ばれたときは情報が最新なので更新しない
+            isFirst = false;
+            return ;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    loadShopList(); //サーバーからショップリストを受け取る
+
+                    while( !mRequestEnded ){ //web apiが呼び終わるまで待つ
+                        Thread.sleep(500);
+                    }
+                } catch (InterruptedException e) {
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //adapter.setNewsItemList(list);
+                        //listView.invalidateViews();
+                        adapter.notifyDataSetChanged(); //画面の更新
+
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void loadShopList(){
+
+        mRequestEnded = false;
+
+        MyJsonArrayRequest jArrayRequest =
+                new MyJsonArrayRequest("https://api.hokutosai.tech/2016/shops/",
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+
+                                //JSONArrayをListShopItemに変換して取得
+                                Gson gson = new Gson();
+                                Type collectionType = new TypeToken<Collection<Shop>>() {
+                                }.getType();
+                                list = gson.fromJson(response.toString(), collectionType);
+
+                                if(getActivity() != null) {
+                                    //UIに反映
+                                    adapter.setShopList(list);
+
+                                    //salesの分の幅を計算
+                                    WindowManager wm = (WindowManager)getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+                                    Display disp = wm.getDefaultDisplay();
+                                    Point size = new Point();
+                                    disp.getSize(size);         //画面のディスプレイサイズを取得(ピクセル)
+                                    int width =  getActivity().getResources().getDimensionPixelSize(R.dimen.list_shop_image_size)    //ショップ画像といいねの画像の幅を足し合わせる
+                                            + getActivity().getResources().getDimensionPixelSize(R.dimen.list_shop_item_height);
+                                    int px = size.x - (width + 240);  //画面幅 - ( ショップ画像幅+いいね画像幅+いいね数の文字列幅(240)) がsales(TextView)の幅となる   ＊240は本当はちゃんと計算したほうがいい
+                                    adapter.setSalesWidth(px);
+
+                                    if(listView == null){   //初めてリストを作成するときのみ呼ぶ
+                                        listView = (ListView) getActivity().findViewById(R.id.list_shop_view);
+                                        listView.setAdapter(adapter);
+                                        setClickListener();     //クリックしたときの処理について
+                                    }
+                                }
+                                mRequestEnded = true;
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("LIFE", error.toString());
+                                // エラー処理 error.networkResponseで確認
+                                // エラー表示など
+                            }
+                        });
+
+        jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
+        jArrayRequest.setTag(TAG_SHOP_REQUEST_QUEUE);    //タグのセット
+        RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
+
+
     }
 }
