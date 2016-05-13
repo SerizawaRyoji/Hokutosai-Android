@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -56,6 +57,8 @@ public class NewsItemAdapter extends BaseAdapter {
             holder.related = (TextView) convertView.findViewById(R.id.news_item_related);
             holder.datetime = (TextView) convertView.findViewById(R.id.news_item_datetime);
             holder.image = (NetworkImageView) convertView.findViewById(R.id.news_item_image);
+            holder.like_icon = (ImageView) convertView.findViewById(R.id.news_item_like);
+            holder.likes_count = (TextView) convertView.findViewById(R.id.news_item_like_count);
 
             convertView.setTag(holder);
         }
@@ -64,8 +67,16 @@ public class NewsItemAdapter extends BaseAdapter {
         }
 
         holder.title.setText(newsItemList.get(position).getTitle());
-        holder.related.setText("related");        //修正必要あり   newsItemList.get(position).getRelated_event().title
-        holder.datetime.setText(newsItemList.get(position).getDatetime());
+
+        String related = "";
+        if( newsItemList.get(position).getRelated_event() != null ) related =  newsItemList.get(position).getRelated_event().title;
+        else if(newsItemList.get(position).getRelated_shop() != null ) related =  newsItemList.get(position).getRelated_shop().name;
+        else if(newsItemList.get(position).getRelated_exhibition() != null ) related =  newsItemList.get(position).getRelated_exhibition().title;
+        holder.related.setText(related);        //修正必要あり   newsItemList.get(position).getRelated_event().title
+
+        holder.datetime.setText( MyDateFormatSingleton.getInstance().getDateTime(newsItemList.get(position).getDatetime()) );
+        holder.like_icon.setSelected( newsItemList.get(position).getLiked() );
+        holder.likes_count.setText( String.valueOf(newsItemList.get(position).getLikes_count()) );
 
         holder.image.setVisibility(View.GONE);
         if ( !newsItemList.get(position).getMedias().isEmpty() ) {
@@ -84,5 +95,7 @@ public class NewsItemAdapter extends BaseAdapter {
         TextView related;
         TextView datetime;
         NetworkImageView image;
+        TextView likes_count;
+        ImageView like_icon;
     }
 }
