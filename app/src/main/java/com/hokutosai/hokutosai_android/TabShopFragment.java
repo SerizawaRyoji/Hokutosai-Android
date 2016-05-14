@@ -35,6 +35,7 @@ public class TabShopFragment  extends Fragment {
     ListView listView;
     Boolean isFirst;
     Boolean mRequestEnded;
+    Boolean isStoped;
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
     private static final Object TAG_SHOP_REQUEST_QUEUE = new Object();
@@ -46,13 +47,12 @@ public class TabShopFragment  extends Fragment {
         list = new ArrayList<>();
         adapter = new ShopItemAdapter( getActivity() );
         listView = null;
+        isFirst = true;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        isFirst = true;
         // TODO 自動生成されたメソッド・スタブ
         return inflater.inflate(R.layout.tab_shop_fragment, container, false);
     }
@@ -90,13 +90,19 @@ public class TabShopFragment  extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        isStoped = true;
         RequestQueueSingleton.getInstance().cancelAll(TAG_SHOP_REQUEST_QUEUE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStoped = false;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         if( isFirst ){  //初めてこのメソッドが呼ばれたときは情報が最新なので更新しない
             isFirst = false;
             return ;
@@ -108,7 +114,7 @@ public class TabShopFragment  extends Fragment {
                 try {
                     loadShopList(); //サーバーからショップリストを受け取る
 
-                    while( !mRequestEnded ){ //web apiが呼び終わるまで待つ
+                    while( !mRequestEnded && !isStoped){ //web apiが呼び終わるまで待つ *画面遷移した場合は終わらせる
                         Thread.sleep(500);
                     }
                 } catch (InterruptedException e) {
@@ -116,10 +122,7 @@ public class TabShopFragment  extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //adapter.setNewsItemList(list);
-                        //listView.invalidateViews();
-                        adapter.notifyDataSetChanged(); //画面の更新
-
+                        if( !isStoped )    adapter.notifyDataSetChanged(); //画面の更新
                     }
                 });
             }
@@ -178,7 +181,5 @@ public class TabShopFragment  extends Fragment {
         jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
         jArrayRequest.setTag(TAG_SHOP_REQUEST_QUEUE);    //タグのセット
         RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
-
-
     }
 }
