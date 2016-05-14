@@ -30,6 +30,9 @@ public class TabExhibitionFragment  extends Fragment {
     ArrayList<Exhibition> list;
     ExhibitionItemAdapter adapter;
     ListView listView;
+    Boolean isFirst;
+    Boolean mRequestEnded;
+    Boolean isStoped;
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
     private static final Object TAG_EXHIBITION_REQUEST_QUEUE = new Object();
@@ -42,6 +45,7 @@ public class TabExhibitionFragment  extends Fragment {
         list = new ArrayList<>();
         adapter = new ExhibitionItemAdapter( getActivity() );
         listView = null;
+        isFirst = true;
     }
 
     @Override
@@ -56,43 +60,10 @@ public class TabExhibitionFragment  extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if(list.isEmpty()) {
-            MyJsonArrayRequest jArrayRequest =
-                    new MyJsonArrayRequest("https://api.hokutosai.tech/2016/exhibitions",
-                            new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-
-                                    //JSONArrayをListShopItemに変換して取得
-                                    Gson gson = new Gson();
-                                    Type collectionType = new TypeToken<Collection<Exhibition>>() {
-                                    }.getType();
-                                    list = gson.fromJson(response.toString(), collectionType);
-
-                                    if(getActivity() != null) {
-                                        //UIに反映
-                                        listView = (ListView) getActivity().findViewById(R.id.list_exhibition_view);
-                                        adapter.setExhibitionList(list);
-                                        listView.setAdapter(adapter);
-
-                                        setClickListener();     //クリックしたときの処理について
-                                    }
-                                }
-                            },
-
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("LIFE", error.toString());
-                                    // エラー処理 error.networkResponseで確認
-                                    // エラー表示など
-                                }
-                            });
-
-            jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
-            jArrayRequest.setTag(TAG_EXHIBITION_REQUEST_QUEUE);    //タグのセット
-            RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
+            loadExhibitionList();
         }
         else{
+            Log.d("test", "else");
             listView = (ListView) getActivity().findViewById(R.id.list_exhibition_view);
             adapter.setExhibitionList(list);
             listView.setAdapter(adapter);
@@ -104,7 +75,14 @@ public class TabExhibitionFragment  extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        isStoped = true;
         RequestQueueSingleton.getInstance().cancelAll(TAG_EXHIBITION_REQUEST_QUEUE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStoped = false;
     }
 
     private void setClickListener(){
@@ -118,5 +96,81 @@ public class TabExhibitionFragment  extends Fragment {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if( isFirst ){  //初めてこのメソッドが呼ばれたときは情報が最新なので更新しない
+            isFirst = false;
+            return ;
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    loadExhibitionList(); //サーバーからショップリストを受け取る
+
+                    while( !mRequestEnded && !isStoped){ //web apiが呼び終わるまで待つ *画面遷移した場合は終わらせる
+                        Thread.sleep(500);
+                    }
+                } catch (InterruptedException e) {
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if( !isStoped )    adapter.notifyDataSetChanged(); //画面の更新
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void loadExhibitionList(){
+
+        mRequestEnded = false;
+
+        MyJsonArrayRequest jArrayRequest =
+                new MyJsonArrayRequest("https://api.hokutosai.tech/2016/exhibitions",
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+
+                                //JSONArrayをListShopItemに変換して取得
+                                Gson gson = new Gson();
+                                Type collectionType = new TypeToken<Collection<Exhibition>>() {
+                                }.getType();
+                                list = gson.fromJson(response.toString(), collectionType);
+
+                                if(getActivity() != null) {
+
+                                    adapter.setExhibitionList(list);
+
+                                    //UIに反映
+                                    if(listView == null) {  //初めてリストを作成するときのみ呼ぶ
+                                        listView = (ListView) getActivity().findViewById(R.id.list_exhibition_view);
+                                        listView.setAdapter(adapter);
+                                        setClickListener();     //クリックしたときの処理について
+                                    }
+
+                                    mRequestEnded = true;   //リクエストが終了したことを知らせる
+                                }
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("LIFE", error.toString());
+                                // エラー処理 error.networkResponseで確認
+                                // エラー表示など
+                                isStoped = true;    //取得できない場合はストップしてしまう
+                            }
+                        });
+
+        jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
+        jArrayRequest.setTag(TAG_EXHIBITION_REQUEST_QUEUE);    //タグのセット
+        RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
     }
 }

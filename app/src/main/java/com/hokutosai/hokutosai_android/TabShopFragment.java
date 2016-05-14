@@ -175,6 +175,7 @@ public class TabShopFragment  extends Fragment {
                                 Log.e("LIFE", error.toString());
                                 // エラー処理 error.networkResponseで確認
                                 // エラー表示など
+                                isStoped = true;    //取得できない場合はストップしてしまう
                             }
                         });
 
