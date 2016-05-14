@@ -1,5 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,12 +31,18 @@ import java.util.Collection;
 public class NewsFragment extends Fragment {
 
     ArrayList<News> list;
+    ArrayList<News> add_list;
     NewsItemAdapter adapter;
     ListView listView;
     private ProgressBar progress;
-    private static final int COUNT = 25;    //ニュースを一度に読み込む数
+    private static final int COUNT = 5;    //ニュースを一度に読み込む数
     private int mLastId = 0;
-    private Boolean mThreadFrag = true;
+
+    Boolean isFirst;
+    Boolean mRequestEnded;
+    Boolean isStoped;
+
+    static final int REQUEST_CODE = 2124;
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
     private static final Object TAG_NEWS_REQUEST_QUEUE = new Object();
@@ -45,10 +52,13 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         list = new ArrayList<>();
+        add_list = new ArrayList<>();
         adapter = new NewsItemAdapter( getActivity() );
         listView = null;
         progress = new ProgressBar(getActivity());
-        mThreadFrag = true;
+        progress.setEnabled(false);
+
+        isFirst = true;
     }
 
     @Nullable
@@ -61,59 +71,19 @@ public class NewsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        String url = "https://api.hokutosai.tech/2016/news/timeline";
-        String parameter1 = "?count=";
-		parameter1 += String.valueOf(COUNT);
-		url += parameter1;
+        Log.d("test","onActivityCreated");
 
         if(list.isEmpty() && getActivity() != null) {
-            MyJsonArrayRequest jArrayRequest =
-                    new MyJsonArrayRequest(url,
-                            new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-
-                                    //JSONArrayをListShopItemに変換して取得
-                                    Gson gson = new Gson();
-                                    Type collectionType = new TypeToken<Collection<News>>() {
-                                    }.getType();
-                                    list = gson.fromJson(response.toString(), collectionType);
-
-                                    mLastId = list.get(list.size()-1).getNews_id(); //取得したニュースのもっとも古いデータを保持
-
-                                    if(getActivity() != null) {
-                                        //UIに反映
-                                        listView = (ListView) getActivity().findViewById(R.id.list_news_view);
-                                        adapter.setNewsItemList(list);
-                                        listView.addFooterView(progress);
-                                        listView.setAdapter(adapter);
-                                        //Log.d("test", list.get(0).getNews_id() + " " + list.get(0).title);
-                                        //Log.d("test", list.get(list.size()-1).getNews_id() + " " + list.get(list.size()-1).title);
-                                        setClickListener();     //クリックしたときの処理について
-                                        setScrollListener();    //スクロールしたときの処理について
-                                    }
-                                }
-                            },
-
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e("LIFE", error.toString());
-                                    // エラー処理 error.networkResponseで確認
-                                    // エラー表示など
-                                }
-                            });
-
-            jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
-            jArrayRequest.setTag(TAG_NEWS_REQUEST_QUEUE);    //タグのセット
-            RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
+            Log.d("test","first");
+            firstLoadShopList();
         }
         else if(!list.isEmpty() && getActivity() != null){
-            listView = (ListView) getActivity().findViewById(R.id.list_news_view);
+            Log.d("test","second");
+            //listView = (ListView) getActivity().findViewById(R.id.list_news_view);
             adapter.setNewsItemList(list);
-            listView.setAdapter(adapter);
+            //listView.setAdapter(adapter);
 
-            setClickListener();     //クリックしたときの処理について
+            //setClickListener();     //クリックしたときの処理について
         }
     }
 
@@ -121,7 +91,48 @@ public class NewsFragment extends Fragment {
     public void onStop() {
         super.onStop();
         RequestQueueSingleton.getInstance().cancelAll(TAG_NEWS_REQUEST_QUEUE);
-        mThreadFrag = false;
+        isStoped = true;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStoped = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if( isFirst ){  //初めてこのメソッドが呼ばれたときは情報が最新なので更新しない
+            isFirst = false;
+            return ;
+        }
+        /*int position = listView.getFirstVisiblePosition();
+        listView.setSelectionFromTop(position, 0);
+
+        adapter.clearArrayList();   //アダプターのリストをいったん削除
+        list.clear();               //リストもいったん削除
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    loadShopList(); //サーバーからショップリストを受け取る    アダプター,listに再びセット
+
+                    while( !mRequestEnded && !isStoped){ //web apiが呼び終わるまで待つ *画面遷移した場合は終わらせる
+                        Thread.sleep(500);
+                    }
+                } catch (InterruptedException e) {
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if( !isStoped )    adapter.notifyDataSetChanged(); //画面の更新
+                    }
+                });
+            }
+        }).start();*/
     }
 
     private void setClickListener(){
@@ -132,20 +143,52 @@ public class NewsFragment extends Fragment {
 
                 Intent i = new Intent(getActivity(), NewsDetailActivity.class);
                 i.putExtra("News", list.get(position));
-                startActivity(i);
+
+                startActivityForResult( i, REQUEST_CODE );
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {    //詳細画面から戻ってきたときに呼ばれる
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // startActivityForResult()の際に指定した識別コードとの比較
+        if( requestCode == REQUEST_CODE ){
+            // 返却結果ステータスとの比較
+            if( resultCode == Activity.RESULT_OK ){
+
+                // 返却されてきたintentから値を取り出す
+                News news = (News)data.getSerializableExtra("NewsResult");
+
+                if(getActivity() != null){
+                    for(int i=0 ; i<list.size() ; ++i){
+                        if(news.getNews_id() == list.get(i).getNews_id()){
+
+                            if( news.getLiked() && !list.get(i).getLiked() || !news.getLiked() && list.get(i).getLiked()){
+                                list.get(i).setLiked( news.getLiked() );    //いいねの状態が変わっていたら更新
+                                list.get(i).setLikes_count( news.getLikes_count() );
+
+                                adapter.setNewsItemList(list);
+                                adapter.notifyDataSetChanged();
+                                listView.invalidateViews();
+                            }
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
     public void setScrollListener(){
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            boolean isloading = false;
+            Boolean isloading = false;
 
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
+            public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
             @Override
             public void onScroll(AbsListView view, final int firstVisibleItem,final int visibleItemCount,final int totalItemCount) {
@@ -160,7 +203,7 @@ public class NewsFragment extends Fragment {
 
                 // (item総数 - 表示されているitem総数) =  表示されているitemのindex
                 //  で最下部の検知
-                if ((totalItemCount - visibleItemCount) == firstVisibleItem) {
+                if ((totalItemCount - visibleItemCount) == firstVisibleItem && !isloading) {
                     isloading = true;
                     adapter.setEnabled(false);  //ロード中はクリック不可に
 
@@ -170,11 +213,12 @@ public class NewsFragment extends Fragment {
                             try {
                                 int now_id = mLastId;
                                 // DB読み込みとかitemを作成する時間.
-                                loadNewsList();
+                                addNewsList();
 
-                                while( now_id == mLastId && mLastId != 0 && mThreadFrag){ //web apiが呼び終わるまで待つ
-                                    Thread.sleep(500);
+                                while( !mRequestEnded && !isStoped){ //web apiが呼び終わるまで待つ
+                                    Thread.sleep(1500);
                                 }
+                                Log.d("test", String.valueOf(mRequestEnded) + " " + "mThreadFrag");
 
                             } catch (InterruptedException e) {
 
@@ -183,23 +227,23 @@ public class NewsFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Log.d("test","ui thread");
 
-                                    if( !mThreadFrag ) return;
-
-                                    adapter.setNewsItemList(list);
-                                    //listView.invalidateViews();
-                                    adapter.notifyDataSetChanged();
+                                    if( isStoped ) return;
 
                                     // 全て読み込んだらプログレスバーを削除
                                     if (mLastId <= 0) {
                                         listView.removeFooterView(progress);
                                     }
+                                    list.addAll(add_list);
+                                    adapter.setNewsItemList(list);
+
+                                    adapter.notifyDataSetChanged();
+                                    listView.invalidateViews();
+
+                                    isloading = false;
+                                    adapter.setEnabled(true);
                                 }
                             });
-
-                            isloading = false;
-                            adapter.setEnabled(true);
                         }
                     }).start();
                 }
@@ -207,7 +251,9 @@ public class NewsFragment extends Fragment {
         });
     }
 
-    public void loadNewsList(){
+    public void addNewsList(){
+
+        mRequestEnded = false;
 
         String url = "https://api.hokutosai.tech/2016/news/timeline";
         String parameter2 = "?last_id=";
@@ -230,11 +276,12 @@ public class NewsFragment extends Fragment {
                                     Type collectionType = new TypeToken<Collection<News>>() {
                                     }.getType();
 
-                                    ArrayList<News> l = gson.fromJson(response.toString(), collectionType);
-                                    list.addAll(l);
+                                    add_list = gson.fromJson(response.toString(), collectionType);      //追加分を保持
 
-                                    if(l.isEmpty()) mLastId = 0;    //IDを0にしてしまいリストが尽きたことを知らせる
-                                    else mLastId = list.get(list.size()-1).getNews_id(); //取得したニュースのもっとも古いデータを保持
+                                    if(add_list.isEmpty()) mLastId = 0;    //IDを0にしてしまいリストが尽きたことを知らせる
+                                    else mLastId = add_list.get(add_list.size()-1).getNews_id(); //取得したニュースのもっとも古いデータを保持
+
+                                    mRequestEnded = true;
                                 }
                             },
 
@@ -244,6 +291,7 @@ public class NewsFragment extends Fragment {
                                     Log.e("LIFE", error.toString());
                                     // エラー処理 error.networkResponseで確認
                                     // エラー表示など
+                                    isStoped = true;    //取得できない場合はストップしてしまう
                                 }
                             });
 
@@ -251,5 +299,54 @@ public class NewsFragment extends Fragment {
             jArrayRequest.setTag(TAG_NEWS_REQUEST_QUEUE);    //タグのセット
             RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
         }
+    }
+
+    public void firstLoadShopList(){
+
+        String url = "https://api.hokutosai.tech/2016/news/timeline";
+        String parameter1 = "?count=";
+        parameter1 += String.valueOf(COUNT);
+        url += parameter1;
+
+        MyJsonArrayRequest jArrayRequest =
+                new MyJsonArrayRequest(url,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+
+                                //JSONArrayをListShopItemに変換して取得
+                                Gson gson = new Gson();
+                                Type collectionType = new TypeToken<Collection<News>>() {
+                                }.getType();
+                                list = gson.fromJson(response.toString(), collectionType);
+
+                                mLastId = list.get(list.size()-1).getNews_id(); //取得したニュースのもっとも古いデータを保持
+                                adapter.setNewsItemList(list);
+
+                                if(getActivity() != null) {
+                                    //UIに反映
+                                    if(listView == null) {
+                                        listView = (ListView) getActivity().findViewById(R.id.list_news_view);
+                                        listView.addFooterView(progress, null, false);
+                                        listView.setAdapter(adapter);
+                                        setClickListener();     //クリックしたときの処理について
+                                        setScrollListener();    //スクロールしたときの処理について
+                                    }
+                                }
+                            }
+                        },
+
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e("LIFE", error.toString());
+                                // エラー処理 error.networkResponseで確認
+                                // エラー表示など
+                            }
+                        });
+
+        jArrayRequest.setCustomTimeOut();   //タイムアウト時間の変更
+        jArrayRequest.setTag(TAG_NEWS_REQUEST_QUEUE);    //タグのセット
+        RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
     }
 }

@@ -57,6 +57,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         final News item = (News)i.getSerializableExtra("News");
+        mNewsDetail = item;
 
         mLikeCount = item.getLikes_count();
 
@@ -155,10 +156,34 @@ public class NewsDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){ // if使うとエラー（itemがInt形式なため）
             case android.R.id.home:   // アプリアイコン（ホームアイコン）を押した時の処理
+
+                // intentの作成
+                Intent intent = new Intent();
+                // intentへ添え字付で値を保持させる
+                mNewsDetail.setLikes_count(mLikeCount);
+                intent.putExtra( "NewsResult", mNewsDetail );
+                // 返却したい結果ステータスをセットする
+                setResult( Activity.RESULT_OK, intent );
+
                 finish();
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // intentの作成
+        Intent intent = new Intent();
+        mNewsDetail.setLikes_count(mLikeCount);
+        // intentへ添え字付で値を保持させる
+        intent.putExtra( "NewsResult", mNewsDetail );
+        // 返却したい結果ステータスをセットする
+        setResult( Activity.RESULT_OK, intent );
+
+        finish();
+
+        super.onBackPressed();
     }
 
     @Override
@@ -187,6 +212,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                                             // TODO 自動生成されたメソッド・スタブ
                                             if( activity != null) {
                                                 like.setSelected(!like.isSelected());   //画像の反転
+                                                mNewsDetail.setLiked( !mNewsDetail.getLiked() );
 
                                                 TextView like_count = (TextView)findViewById(R.id.news_detail_like_count);
 

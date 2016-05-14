@@ -28,15 +28,19 @@ public class NewsItemAdapter extends BaseAdapter {
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /*public void clearArrayList(){
+        newsItemList.clear();
+    }*/
+
     public void setNewsItemList(ArrayList<News> itemList) {
         this.newsItemList = itemList;
     }
 
     public void setEnabled(Boolean e){ this.isEnabled = e; }
 
-    public void addList(ArrayList<News> itemList){
+    /*public void addList(ArrayList<News> itemList){
         this.newsItemList.addAll(itemList);
-    }
+    }*/
 
     @Override
     public boolean areAllItemsEnabled() {
@@ -82,6 +86,8 @@ public class NewsItemAdapter extends BaseAdapter {
         else {
             holder = (ViewHolder)convertView.getTag();
         }
+
+
 
         holder.title.setText(newsItemList.get(position).getTitle());
 
