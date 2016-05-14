@@ -59,6 +59,8 @@ public class NewsFragment extends Fragment {
         progress.setEnabled(false);
 
         isFirst = true;
+
+        Log.d("test","onCreate");
     }
 
     @Nullable
@@ -74,11 +76,9 @@ public class NewsFragment extends Fragment {
         Log.d("test","onActivityCreated");
 
         if(list.isEmpty() && getActivity() != null) {
-            Log.d("test","first");
             firstLoadShopList();
         }
         else if(!list.isEmpty() && getActivity() != null){
-            Log.d("test","second");
             //listView = (ListView) getActivity().findViewById(R.id.list_news_view);
             adapter.setNewsItemList(list);
             //listView.setAdapter(adapter);

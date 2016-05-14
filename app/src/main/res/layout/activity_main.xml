@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/darker_gray">
+            android:background="@color/TabBackGround">
 
             <FrameLayout
                 android:id="@+id/tabcontent"

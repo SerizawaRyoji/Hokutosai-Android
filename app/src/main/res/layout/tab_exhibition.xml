@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_gravity="top"
-        android:background="#000000" />
+        android:background="@color/TabDivideLine" />
 
     <ImageView
         android:paddingTop="6dp"

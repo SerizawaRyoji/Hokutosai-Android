@@ -14,14 +14,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         //メイン画面のレイアウト*********************************************************************
         FragmentTabHost mTabHost;
 
         mTabHost = (FragmentTabHost)findViewById(R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+        mTabHost.getTabWidget().setDividerDrawable(null);
 
         //タブに使うビューの作成	*第３引数は Fragment で読み込みたいデータ
         View vNews = getLayoutInflater().inflate(R.layout.tab_news, null);
