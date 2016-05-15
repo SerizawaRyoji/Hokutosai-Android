@@ -43,7 +43,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/LGray"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:background="#0A0A0A"
         />
 
 

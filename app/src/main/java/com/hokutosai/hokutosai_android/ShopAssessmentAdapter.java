@@ -53,6 +53,7 @@ public class ShopAssessmentAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.assessment_name);
             holder.rate = (RatingBar) convertView.findViewById(R.id.assessment_rate);
+            holder.datetime = (TextView) convertView.findViewById(R.id.assessment_datetime);
             holder.comment = (TextView) convertView.findViewById(R.id.assessment_comment);
 
             convertView.setTag(holder);
@@ -61,8 +62,10 @@ public class ShopAssessmentAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.name.setText(asList.get(position).getAccount().getUser_name());
-        holder.rate.setRating(2);
+        if( asList.get(position).getAccount().getUser_name().isEmpty() ) holder.name.setText("ゲスト");
+        else holder.name.setText(asList.get(position).getAccount().getUser_name());
+        holder.rate.setRating(asList.get(position).getScore());
+        holder.datetime.setText( MyDateFormatSingleton.getInstance().getDateTime(asList.get(position).getDatetime()) );
         holder.comment.setText(asList.get(position).getComment());
 
         return convertView;
@@ -71,6 +74,7 @@ public class ShopAssessmentAdapter extends BaseAdapter {
     private class ViewHolder{
         TextView name;
         RatingBar rate;
+        TextView datetime;
         TextView comment;
     }
 }

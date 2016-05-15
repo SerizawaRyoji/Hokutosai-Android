@@ -9,9 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textSize="12sp" />
+        android:textSize="@dimen/show_sub_title_size" />
 
     <!--星-->
     <RatingBar
@@ -24,15 +26,28 @@
         android:stepSize="1"
         android:numStars="5"/>
 
+    <!--日付-->
+    <android:TextView
+        android:id="@+id/assessment_datetime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/assessment_name"
+        android:gravity="right"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="@dimen/show_sentence_size" />
+
     <!-- コメント -->
     <android:TextView
         android:id="@+id/assessment_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/assessment_rate"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="4dp"
         android:layout_alignParentLeft="true"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textSize="12sp" />
+        android:textSize="@dimen/show_sentence_size" />
 
 </RelativeLayout>
