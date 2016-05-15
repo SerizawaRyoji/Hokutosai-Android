@@ -81,10 +81,6 @@ public class ShopItemAdapter extends BaseAdapter{
             holder.image.setImageUrl(shopList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
         }
 
-
-
-
-
         return convertView;
     }
 

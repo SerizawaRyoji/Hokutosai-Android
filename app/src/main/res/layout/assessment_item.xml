@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <!-- 名前 -->
+    <android:TextView
+        android:id="@+id/assessment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="12sp" />
+
+    <!--星-->
+    <RatingBar
+        android:id="@+id/assessment_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/assessment_name"
+        android:layout_alignParentLeft="true"
+        style="@style/ReviewRating"
+        android:stepSize="1"
+        android:numStars="5"/>
+
+    <!-- コメント -->
+    <android:TextView
+        android:id="@+id/assessment_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/assessment_rate"
+        android:layout_alignParentLeft="true"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="12sp" />
+
+</RelativeLayout>

@@ -45,18 +45,11 @@ public class Assessment implements Serializable {
         this.score = score;
     }
 
-    public Account getUser() {
+    public Account getAccount() {
         return user;
     }
 
-    public void setUser(Account user) {
+    public void setAccount(Account user) {
         this.user = user;
-    }
-
-
-    private class Account implements Serializable{
-        String account_id;
-        String user_name;
-        String media_url;
     }
 }
