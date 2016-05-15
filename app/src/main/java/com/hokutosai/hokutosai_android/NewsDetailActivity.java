@@ -66,8 +66,6 @@ public class NewsDetailActivity extends AppCompatActivity {
         title.setText(item.getTitle());
         date.setText( MyDateFormatSingleton.getInstance().getDateTime(item.getDatetime()));
 
-        setLikeClickEvent(item, this);
-
         String url = "https://api.hokutosai.tech/2016/news/";
         url += String.valueOf(item.getNews_id());
         url += "/details";
@@ -113,6 +111,8 @@ public class NewsDetailActivity extends AppCompatActivity {
                                             CirclePageIndicator circleIndicator = (CirclePageIndicator) activity.findViewById(R.id.news_detail_indicator);
                                             circleIndicator.setViewPager(viewPager);
                                         }
+
+                                        setLikeClickEvent(mNewsDetail, activity);
                                     }
                                 } catch (JSONException e) {    //menuがnullの時など
                                     // TODO 自動生成された catch ブロック
@@ -127,6 +127,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
                                 //いいねの表示*******************************************************************************************
                                 mLikeCount = mNewsDetail.likes_count;
+                                Log.d("test",String.valueOf(mLikeCount));
                                 TextView like_count = (TextView)findViewById(R.id.news_detail_like_count);
                                 like_count.setText("いいね：" + String.valueOf(mLikeCount) + "件");
                                 //*****************************************************************************************************
