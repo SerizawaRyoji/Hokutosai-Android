@@ -1,11 +1,11 @@
 package com.hokutosai.hokutosai_android;
 
-import android.accounts.Account;
+import java.io.Serializable;
 
 /**
  * Created by ryoji on 2016/05/05.
  */
-public class Assessment {
+public class Assessment implements Serializable {
 
     int assessment_id;
     Account user;
@@ -51,5 +51,12 @@ public class Assessment {
 
     public void setUser(Account user) {
         this.user = user;
+    }
+
+
+    private class Account implements Serializable{
+        String account_id;
+        String user_name;
+        String media_url;
     }
 }

@@ -30,4 +30,8 @@
         <item name="android:isIndicator">true</item>
     </style>
 
+    <style name="ReviewRating" parent="@android:style/Widget.Holo.Light.RatingBar.Small">
+        <item name="android:isIndicator">true</item>
+    </style>
+
 </resources>

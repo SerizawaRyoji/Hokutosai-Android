@@ -1,9 +1,11 @@
 package com.hokutosai.hokutosai_android;
 
+import java.io.Serializable;
+
 /**
  * Created by ryoji on 2016/05/02.
  */
-public class AssessedScore {
+public class AssessedScore  implements Serializable {
 
     private int assessed_count;
     private int total_score;

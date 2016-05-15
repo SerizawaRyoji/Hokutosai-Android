@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 public class ShopDetailActivity extends AppCompatActivity {
 
-    ShopDetail mshopDetail;
+    ShopDetail mshopDetail = null;
     int mLikeCount;             //いいねの件数
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
@@ -49,6 +50,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop_detail);
 
         mshopDetail = new ShopDetail();
+        mshopDetail.name = "";
 
         Intent i = getIntent();
         final Shop item = (Shop)i.getSerializableExtra("Shop");
@@ -233,7 +235,11 @@ public class ShopDetailActivity extends AppCompatActivity {
 
     public void reviewShowClickResult( View view ){
 
-        Log.d("test","wqwq");
+        if( !mshopDetail.name.isEmpty() ) {
+            Intent i = new Intent(ShopDetailActivity.this, ShopReviewActivity.class);
+            i.putExtra("ShopDetail", mshopDetail);
+            startActivity(i);
+        }
     }
 
     public void reviewWriteClickResult( View view ){
@@ -241,7 +247,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         Log.d("test","wqwq");
     }
 
-    private class ShopDetail{
+    public class ShopDetail implements Serializable {
         int shop_id;
         String name;
         String tenant;
@@ -257,15 +263,9 @@ public class ShopDetailActivity extends AppCompatActivity {
         Assessment my_asssessment;
     }
 
-    private class Menu{
+    public class Menu implements Serializable{
         int item_id;
         int price;
         String name;
-    }
-
-    private class Account{
-        String account_id;
-        String user_name;
-        String media_url;
     }
 }

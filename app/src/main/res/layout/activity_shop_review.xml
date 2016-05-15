@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/show_side_margin"
+    android:layout_marginRight="@dimen/show_side_margin">
+
+    <!--評価の表示-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="30dp" >
+
+        <RatingBar
+            android:id="@+id/shop_review_all_rate"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            style="@style/MyRating"
+            />
+        <!--星の数(文字) -->
+        <TextView
+            android:id="@+id/shop_review_all_rate_str"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/shop_review_all_rate"
+            android:layout_marginLeft="5dp"
+            android:gravity="bottom"
+            android:textSize="12sp"/>
+        <!--評価人数 -->
+        <TextView
+            android:id="@+id/shop_review_all_rate_num"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|right"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_shop_review"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <!--
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ReviewRating"
+        android:rating="4.5"
+        android:stepSize="0.5"
+        android:numStars="5"/>-->
+
+</LinearLayout>
