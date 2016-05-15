@@ -42,7 +42,7 @@ public class NewsFragment extends Fragment {
     Boolean mRequestEnded;
     Boolean isStoped;
 
-    static final int REQUEST_CODE = 2124;
+    static final int REQUEST_NEWS_CODE = 2124;
 
     //Volleyでリクエスト時に設定するタグ名。キャンセル時に利用する。
     private static final Object TAG_NEWS_REQUEST_QUEUE = new Object();
@@ -140,7 +140,7 @@ public class NewsFragment extends Fragment {
                 Intent i = new Intent(getActivity(), NewsDetailActivity.class);
                 i.putExtra("News", list.get(position));
 
-                startActivityForResult( i, REQUEST_CODE );
+                startActivityForResult( i, REQUEST_NEWS_CODE );
             }
         });
     }
@@ -150,7 +150,7 @@ public class NewsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         // startActivityForResult()の際に指定した識別コードとの比較
-        if( requestCode == REQUEST_CODE ){
+        if( requestCode == REQUEST_NEWS_CODE ){
             // 返却結果ステータスとの比較
             if( resultCode == Activity.RESULT_OK ){
 
