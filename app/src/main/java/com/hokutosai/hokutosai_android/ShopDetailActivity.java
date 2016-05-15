@@ -142,6 +142,7 @@ public class ShopDetailActivity extends AppCompatActivity {
 
                                 //評価***************************************************************************************************
                                 float rate = mshopDetail.assessment_aggregate.getTotal_score() / (float) mshopDetail.assessment_aggregate.getAssessed_count();
+                                if(Float.isNaN(rate)) rate = 0;
                                 RatingBar allRate = (RatingBar)findViewById(R.id.shop_detail_all_rate);
                                 allRate.setRating( rate );
                                 TextView allRateString = (TextView)findViewById(R.id.shop_detail_all_rate_str);
