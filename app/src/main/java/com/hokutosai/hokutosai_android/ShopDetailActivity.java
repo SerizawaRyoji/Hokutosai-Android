@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -110,17 +111,17 @@ public class ShopDetailActivity extends AppCompatActivity {
                                     Type collectionType = new TypeToken<Collection<ShopDetailActivity.Menu>>() {
                                     }.getType();
 
-                                   mshopDetail.menus = gsonMenu.fromJson(jArray.toString(), collectionType);
+                                   mshopDetail.menu = gsonMenu.fromJson(jArray.toString(), collectionType);
                                     //メニューの読み込みに成功したときのみ反映
                                     TextView menuNameText = (TextView) ShopDetailActivity.this.findViewById(R.id.shop_detail_menu_name);
                                     TextView menuPriceText = (TextView) ShopDetailActivity.this.findViewById(R.id.shop_detail_menu_price);
 
                                     String menuNameStr = new String();
                                     String menuPriceStr = new String();
-                                    for (int i = 0; i < mshopDetail.menus.size(); ++i) {
-                                        menuNameStr += mshopDetail.menus.get(i).name;
+                                    for (int i = 0; i < mshopDetail.menu.size(); ++i) {
+                                        menuNameStr += mshopDetail.menu.get(i).name;
                                         menuNameStr += "\n";
-                                        menuPriceStr += String.valueOf(mshopDetail.menus.get(i).price);
+                                        menuPriceStr += String.valueOf(mshopDetail.menu.get(i).price);
                                         menuPriceStr += "円\n";
                                     }
                                     menuNameText.setText(menuNameStr);
@@ -137,7 +138,15 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 introduction.setText(mshopDetail.introduction);
                                 //******************************************************************************************************
 
-
+                                //評価***************************************************************************************************
+                                float rate = mshopDetail.assessment_aggregate.getTotal_score() / (float) mshopDetail.assessment_aggregate.getAssessed_count();
+                                RatingBar allRate = (RatingBar)findViewById(R.id.shop_detail_all_rate);
+                                allRate.setRating( rate );
+                                TextView allRateString = (TextView)findViewById(R.id.shop_detail_all_rate_str);
+                                allRateString.setText( "(" + String.format("%.2f", rate) + ")" );
+                                TextView allRateNum = (TextView)findViewById(R.id.shop_detail_all_rate_num);
+                                allRateNum.setText("評価件数：" + mshopDetail.assessment_aggregate.getAssessed_count());
+                                //******************************************************************************************************
                             }
                         },
 
@@ -222,18 +231,30 @@ public class ShopDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void reviewShowClickResult( View view ){
+
+        Log.d("test","wqwq");
+    }
+
+    public void reviewWriteClickResult( View view ){
+
+        Log.d("test","wqwq");
+    }
+
     private class ShopDetail{
         int shop_id;
         String name;
         String tenant;
         String sales;
         String image_url;
-        AssessedScore assessed_score;
+        AssessedScore assessment_aggregate;
         Boolean liked;
         int likes_count;
         String introduction;
         Place place;
-        List<Menu> menus;
+        List<Menu> menu;
+        List<Assessment> assessments;
+        Assessment my_asssessment;
     }
 
     private class Menu{

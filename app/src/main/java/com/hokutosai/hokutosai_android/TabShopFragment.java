@@ -119,12 +119,14 @@ public class TabShopFragment  extends Fragment {
                     }
                 } catch (InterruptedException e) {
                 }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if( !isStoped )    adapter.notifyDataSetChanged(); //画面の更新
-                    }
-                });
+                if(getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!isStoped) adapter.notifyDataSetChanged(); //画面の更新
+                        }
+                    });
+                }
             }
         }).start();
     }

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hokutosai.hokutosai_android">
 
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true" android:largeScreens="true"
+        android:anyDensity="true" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 

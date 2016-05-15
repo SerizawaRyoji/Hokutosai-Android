@@ -35,7 +35,7 @@ public class NewsFragment extends Fragment {
     NewsItemAdapter adapter;
     ListView listView;
     private ProgressBar progress;
-    private static final int COUNT = 5;    //ニュースを一度に読み込む数
+    private static final int COUNT = 25;    //ニュースを一度に読み込む数
     private int mLastId = 0;
 
     Boolean isFirst;
@@ -212,7 +212,7 @@ public class NewsFragment extends Fragment {
                                 addNewsList();
 
                                 while( !mRequestEnded && !isStoped){ //web apiが呼び終わるまで待つ
-                                    Thread.sleep(1500);
+                                    Thread.sleep(500);
                                 }
                                 Log.d("test", String.valueOf(mRequestEnded) + " " + "mThreadFrag");
 
