@@ -74,4 +74,14 @@
         android:layout_below="@id/news_item_related"
         android:layout_marginRight="4dp"/>
 
+    <!--トピックの目印-->
+    <ImageView
+        android:id="@+id/news_item_topic"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/topic"
+        android:visibility="invisible"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
 </RelativeLayout>

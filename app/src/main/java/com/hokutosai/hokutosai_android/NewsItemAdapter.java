@@ -80,6 +80,7 @@ public class NewsItemAdapter extends BaseAdapter {
             holder.image = (NetworkImageView) convertView.findViewById(R.id.news_item_image);
             holder.like_icon = (ImageView) convertView.findViewById(R.id.news_item_like);
             holder.likes_count = (TextView) convertView.findViewById(R.id.news_item_like_count);
+            holder.topic = (ImageView) convertView.findViewById(R.id.news_item_topic);
 
             convertView.setTag(holder);
         }
@@ -110,6 +111,9 @@ public class NewsItemAdapter extends BaseAdapter {
             }
         }
 
+        if( newsItemList.get(position).getTopic() ) holder.topic.setVisibility(View.VISIBLE);
+        else holder.topic.setVisibility(View.INVISIBLE);
+
         return convertView;
     }
 
@@ -120,5 +124,6 @@ public class NewsItemAdapter extends BaseAdapter {
         NetworkImageView image;
         TextView likes_count;
         ImageView like_icon;
+        ImageView topic;
     }
 }
