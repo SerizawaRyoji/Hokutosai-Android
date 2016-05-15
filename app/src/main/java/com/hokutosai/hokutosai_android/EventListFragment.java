@@ -1,5 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -17,6 +18,8 @@ public class EventListFragment extends ListFragment {
 
     private List<Event> list;
     private ArrayAdapter<Event> adapter;
+
+    static final int REQUEST_EVENT_CODE = 2124;
 
     public void setEventListFragment( List<Event> list){
         this.list = list;
@@ -49,7 +52,38 @@ public class EventListFragment extends ListFragment {
 
         Intent i = new Intent(getActivity(), EventDetailActivity.class);
         i.putExtra("Event", list.get(position));
-        startActivity(i);
+        startActivityForResult( i, REQUEST_EVENT_CODE );
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {    //詳細画面から戻ってきたときに呼ばれる
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // startActivityForResult()の際に指定した識別コードとの比較
+        if( requestCode == REQUEST_EVENT_CODE ){
+            // 返却結果ステータスとの比較
+            if( resultCode == Activity.RESULT_OK ){
+
+                // 返却されてきたintentから値を取り出す
+                EventDetailActivity.EventDetail event = (EventDetailActivity.EventDetail)data.getSerializableExtra("EventDetail");
+
+                if(getActivity() != null){
+                    for(int i=0 ; i<list.size() ; ++i){
+                        if(event.event_id == list.get(i).getEvent_id()){
+
+                            if( event.liked && !list.get(i).getLiked() || !event.liked && list.get(i).getLiked()){
+                                list.get(i).setLiked( event.liked );    //いいねの状態が変わっていたら更新
+                                list.get(i).setLikes_count( event.likes_count );
+                                //setListAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                            }
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
     @Override
