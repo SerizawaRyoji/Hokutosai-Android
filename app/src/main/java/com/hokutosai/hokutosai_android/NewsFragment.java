@@ -59,8 +59,6 @@ public class NewsFragment extends Fragment {
         progress.setEnabled(false);
 
         isFirst = true;
-
-        Log.d("test","onCreate");
     }
 
     @Nullable
@@ -72,8 +70,6 @@ public class NewsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        Log.d("test","onActivityCreated");
 
         if(list.isEmpty() && getActivity() != null) {
             firstLoadShopList();

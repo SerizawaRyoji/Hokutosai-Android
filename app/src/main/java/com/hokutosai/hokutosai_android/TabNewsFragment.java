@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ public class TabNewsFragment  extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Log.d("test","onCreateView");
+
         //Fragment内でFragmentを作成する場合は動的にFragmentを作成しなければならない
         //レイアウトに使うフラグメントを作成
         NewsTopicFragment topicFragment = new NewsTopicFragment();
@@ -33,11 +36,9 @@ public class TabNewsFragment  extends Fragment {
         //追加や削除などを1つの処理としてまとめるためのトランザクションクラスを取得
         FragmentTransaction tx = manager.beginTransaction();
 
-        tx.replace(R.id.layout_fragment_topic_news, topicFragment);
         tx.replace(R.id.layout_fragment_list_news, newsFragment);
         tx.commit();
 
         return inflater.inflate(R.layout.tab_news_fragment, container, false);
     }
-
 }
