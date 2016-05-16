@@ -88,7 +88,9 @@ public class EventDetailActivity extends AppCompatActivity {
 
                                 //時間の表示*******************************************************************************************
                                 TextView datetime = (TextView)findViewById(R.id.event_detail_datetime);
-                                if(!mEventDetail.start_time.isEmpty() && !mEventDetail.end_time.isEmpty()) datetime.setText(mEventDetail.start_time  + " to " + mEventDetail.end_time);
+                                if(!mEventDetail.start_time.isEmpty() && !mEventDetail.end_time.isEmpty()){
+                                    datetime.setText(MyDateFormatSingleton.getInstance().getEventDateTime(mEventDetail.date,mEventDetail.start_time,mEventDetail.end_time));
+                                }
                                 else datetime.setText("未登録");
                                 //****************************************************************************************************
 
