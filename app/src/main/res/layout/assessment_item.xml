@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="wrap_content">
 
     <!-- 名前 -->
     <android:TextView
@@ -46,8 +46,6 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="4dp"
         android:layout_alignParentLeft="true"
-        android:singleLine="true"
-        android:ellipsize="end"
         android:textSize="@dimen/show_sentence_size" />
 
 </RelativeLayout>

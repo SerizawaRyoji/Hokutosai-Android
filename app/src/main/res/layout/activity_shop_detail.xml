@@ -295,11 +295,12 @@
             android:textSize="18sp"
             android:text="レビューを見る"
             android:onClick="reviewShowClickResult"
-            android:textColor="@drawable/text_clickable"
+            android:textColor="@color/text_clickable"
             />
 
         <include layout="@layout/under_line" />
 
+        <!--レビューを書く、修正する-->
         <TextView
             android:id="@+id/shop_detail_write_review"
             android:layout_width="match_parent"
@@ -307,9 +308,23 @@
             android:gravity="center"
             android:clickable="true"
             android:textSize="18sp"
-            android:text="レビューを書く"
             android:onClick="reviewWriteClickResult"
-            android:textColor="@drawable/text_clickable"
+            android:textColor="@color/text_clickable"
+            />
+
+        <include layout="@layout/under_line" />
+
+        <!--レビューを削除する-->
+        <TextView
+            android:id="@+id/shop_detail_delete_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="false"
+            android:textSize="18sp"
+            android:text="レビューを削除する"
+            android:onClick="reviewDeleteClickResult"
+            android:textColor="@color/text_clickable"
             />
 
         <include layout="@layout/under_line" />

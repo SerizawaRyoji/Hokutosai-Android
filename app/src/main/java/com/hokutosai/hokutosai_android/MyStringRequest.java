@@ -43,7 +43,7 @@ public class MyStringRequest extends StringRequest {
     }
 
     public void setCustomTimeOut(){
-        DefaultRetryPolicy policy = new DefaultRetryPolicy(500,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        DefaultRetryPolicy policy = new DefaultRetryPolicy(2500,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         this.setRetryPolicy(policy);
     }
 }

@@ -20,6 +20,7 @@
     <color name="White" >#FFFFFF</color>
 
     <color name="ClickableText" >#0000FF</color>
+    <color name="ClickdisableText" >#B0B0B0</color>
     <color name="SectionLineColor" >#C8C8C8</color>
 
     <color name="TopicTextBackColor" >#99ffffff</color>

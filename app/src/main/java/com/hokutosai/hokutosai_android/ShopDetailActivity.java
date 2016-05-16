@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -30,7 +31,9 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ryoji on 2016/05/02.
@@ -153,6 +156,21 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 TextView allRateNum = (TextView)findViewById(R.id.shop_detail_all_rate_num);
                                 allRateNum.setText("評価件数：" + mshopDetail.assessment_aggregate.getAssessed_count());
                                 //******************************************************************************************************
+
+                                //レビュー***********************************************************************************************
+                                TextView reviewText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_write_review);
+                                TextView deleteText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_delete_review);
+                                if(mshopDetail.my_assessment == null){
+                                    reviewText.setText("レビューを書く");
+                                    deleteText.setClickable(false);
+                                    deleteText.setTextColor(getResources().getColor(R.color.ClickdisableText));
+                                }
+                                else{
+                                    Log.d("test", mshopDetail.my_assessment.toString());
+                                    reviewText.setText("レビューを修正する");
+                                    deleteText.setClickable(true);  //レビュー削除ボタンを有効に
+                                    deleteText.setTextColor(getResources().getColor(R.color.text_clickable));
+                                }
                             }
                         },
 
@@ -256,13 +274,32 @@ public class ShopDetailActivity extends AppCompatActivity {
             builder.setTitle("模擬店の評価");
             builder.setView(inputView);
 
+            EditText user = (EditText)inputView.findViewById(R.id.dialog_user_name);
+            EditText comment = (EditText)inputView.findViewById(R.id.dialog_comment);
+            RatingBar rate = (RatingBar)inputView.findViewById(R.id.dialog_rate);
+
+            if(mshopDetail.my_assessment != null) {
+                Log.d("test",mshopDetail.my_assessment.toString());
+            }
+
+            if(mshopDetail.my_assessment != null) {
+                if( mshopDetail.my_assessment.getAccount().getUser_name() != null && !mshopDetail.my_assessment.getAccount().getUser_name().isEmpty() ) {
+                    user.setText(mshopDetail.my_assessment.getAccount().getUser_name());
+                }
+                if( mshopDetail.my_assessment.getComment() != null && !mshopDetail.my_assessment.getComment().isEmpty() ){
+                    comment.setText(mshopDetail.my_assessment.getComment());
+                }
+                rate.setRating( mshopDetail.my_assessment.getScore());
+            }
+
             builder.setPositiveButton("送信", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
 
-                    TextView user = (TextView)inputView.findViewById(R.id.dialog_user_name);
-                    TextView comment = (TextView)inputView.findViewById(R.id.dialog_comment);
+                    EditText user = (EditText)inputView.findViewById(R.id.dialog_user_name);
+                    EditText comment = (EditText)inputView.findViewById(R.id.dialog_comment);
                     RatingBar rate = (RatingBar)inputView.findViewById(R.id.dialog_rate);
+
 
                     if(comment.getText().toString().isEmpty() || comment.getText().toString().equals(System.getProperty("line.separator")) ){
                         Toast.makeText(ShopDetailActivity.this, "コメントが入力されていません", Toast.LENGTH_SHORT).show();
@@ -272,6 +309,45 @@ public class ShopDetailActivity extends AppCompatActivity {
                         Toast.makeText(ShopDetailActivity.this, "星の数を決めてください", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    //コメント送信処理
+                    String url = "https://api.hokutosai.tech/2016/shops/" + mshopDetail.shop_id + "/assessment";
+                    // 送信したいパラメーター
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("score", String.valueOf((int)rate.getRating()) );
+                    params.put("comment", comment.getText().toString());
+                    params.put("user_name", user.getText().toString());
+                    int method = Request.Method.POST;
+
+                    MyStringRequest postJson = new MyStringRequest(method, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // TODO 自動生成されたメソッド・スタブ
+                                    Log.d("test",response.toString());
+                                    if( ShopDetailActivity.this != null) {
+                                        Toast.makeText(ShopDetailActivity.this, "評価しました", Toast.LENGTH_SHORT).show();
+
+                                        TextView deleteText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_delete_review);
+                                        deleteText.setClickable(true);  //レビュー削除ボタンを有効に
+                                        deleteText.setTextColor(getResources().getColor(R.color.text_clickable));
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("test",error.toString());
+                                    if(ShopDetailActivity.this != null) Toast.makeText(ShopDetailActivity.this, "評価に失敗しました", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                    );
+
+                    postJson.setCustomTimeOut();                          //タイムアウト時間の変更
+                    postJson.setTag(TAG_SHOP_LIKE_REQUEST_QUEUE);         //タグのセット
+                    postJson.setParams(params);                           //パラメータのセット
+                    RequestQueueSingleton.getInstance().add(postJson);    //WebAPIの呼び出し
+
                 }
             });
 
@@ -284,6 +360,61 @@ public class ShopDetailActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+    }
+
+    public void reviewDeleteClickResult( View view ) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ShopDetailActivity.this);
+        builder.setTitle("レビューの削除").setMessage("自分の書いたレビューを削除しますか")
+                .setPositiveButton("はい",
+                        new DialogInterface.OnClickListener() {
+
+                            //はいの時の処理
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //コメント送信処理
+                                String url = "https://api.hokutosai.tech/2016/shops/" + mshopDetail.shop_id + "/assessment";
+                                int method = Request.Method.DELETE;
+
+                                MyStringRequest postJson = new MyStringRequest(method, url,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                // TODO 自動生成されたメソッド・スタブ
+                                                Log.d("test",response.toString());
+                                                if( ShopDetailActivity.this != null) {
+                                                    Toast.makeText(ShopDetailActivity.this, "レビューを削除しました", Toast.LENGTH_SHORT).show();
+
+                                                    TextView deleteText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_delete_review);
+                                                    deleteText.setClickable(false);  //レビュー削除ボタンを無効に
+                                                    deleteText.setTextColor(getResources().getColor(R.color.ClickdisableText));
+                                                }
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Log.d("test",error.toString());
+                                                if(ShopDetailActivity.this != null) Toast.makeText(ShopDetailActivity.this, "削除に失敗しました", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                );
+                                postJson.setCustomTimeOut();                          //タイムアウト時間の変更
+                                postJson.setTag(TAG_SHOP_LIKE_REQUEST_QUEUE);         //タグのセット
+                                RequestQueueSingleton.getInstance().add(postJson);    //WebAPIの呼び出し
+
+                            }
+                        }
+                )
+                .setNeutralButton("キャンセル",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO 自動生成されたメソッド・スタブ
+
+                            }
+                        }
+                ).show();
     }
 
     public class ShopDetail implements Serializable {
@@ -299,7 +430,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         Place place;
         List<Menu> menu;
         List<Assessment> assessments;
-        Assessment my_asssessment;
+        Assessment my_assessment;
     }
 
     public class Menu implements Serializable{
