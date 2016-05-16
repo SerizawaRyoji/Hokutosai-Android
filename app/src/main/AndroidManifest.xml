@@ -28,6 +28,7 @@
         <activity android:name=".ExhibitionDetailActivity"></activity>
         <activity android:name=".EventDetailActivity"></activity>
         <activity android:name=".NewsDetailActivity"></activity>
+        <activity android:name=".WebActivity"></activity>
     </application>
 
 </manifest>
