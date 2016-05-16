@@ -105,7 +105,7 @@ public class EventTopicFragment extends Fragment {
         for (int i = 0; i < list.size(); ++i) {
             NetworkImageView view = new NetworkImageView(getActivity());
             view.setImageUrl(list.get(i).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
-            view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
             final Event eventItem = list.get(i);
             view.setOnClickListener(new View.OnClickListener() {
