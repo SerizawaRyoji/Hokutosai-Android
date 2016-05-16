@@ -1,10 +1,13 @@
 package com.hokutosai.hokutosai_android;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -245,7 +248,42 @@ public class ShopDetailActivity extends AppCompatActivity {
 
     public void reviewWriteClickResult( View view ){
 
-        Log.d("test","wqwq");
+        if( !mshopDetail.name.isEmpty() ) {
+            LayoutInflater factory = LayoutInflater.from(this);
+            final View inputView = factory.inflate(R.layout.dialog_shop_review, null);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("模擬店の評価");
+            builder.setView(inputView);
+
+            builder.setPositiveButton("送信", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    TextView user = (TextView)inputView.findViewById(R.id.dialog_user_name);
+                    TextView comment = (TextView)inputView.findViewById(R.id.dialog_comment);
+                    RatingBar rate = (RatingBar)inputView.findViewById(R.id.dialog_rate);
+
+                    if(comment.getText().toString().isEmpty() || comment.getText().toString().equals(System.getProperty("line.separator")) ){
+                        Toast.makeText(ShopDetailActivity.this, "コメントが入力されていません", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if( rate.getRating() == 0 ){
+                        Toast.makeText(ShopDetailActivity.this, "星の数を決めてください", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            });
+
+            builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     public class ShopDetail implements Serializable {
