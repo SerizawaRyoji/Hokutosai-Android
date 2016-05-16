@@ -32,6 +32,7 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +87,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 //JSONArrayをListShopItemに変換して取得
                                 Gson gson = new Gson();
                                 mshopDetail = gson.fromJson(response.toString(), ShopDetail.class);
+                                Log.d("test",response.toString());
 
                                 //画像の表示********************************************************************************************
                                 NetworkImageView image = (NetworkImageView) findViewById(R.id.shop_detail_image);
@@ -279,10 +281,6 @@ public class ShopDetailActivity extends AppCompatActivity {
             RatingBar rate = (RatingBar)inputView.findViewById(R.id.dialog_rate);
 
             if(mshopDetail.my_assessment != null) {
-                Log.d("test",mshopDetail.my_assessment.toString());
-            }
-
-            if(mshopDetail.my_assessment != null) {
                 if( mshopDetail.my_assessment.getAccount().getUser_name() != null && !mshopDetail.my_assessment.getAccount().getUser_name().isEmpty() ) {
                     user.setText(mshopDetail.my_assessment.getAccount().getUser_name());
                 }
@@ -296,9 +294,9 @@ public class ShopDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int whichButton) {
 
-                    EditText user = (EditText)inputView.findViewById(R.id.dialog_user_name);
-                    EditText comment = (EditText)inputView.findViewById(R.id.dialog_comment);
-                    RatingBar rate = (RatingBar)inputView.findViewById(R.id.dialog_rate);
+                    final EditText user = (EditText)inputView.findViewById(R.id.dialog_user_name);
+                    final EditText comment = (EditText)inputView.findViewById(R.id.dialog_comment);
+                    final RatingBar rate = (RatingBar)inputView.findViewById(R.id.dialog_rate);
 
 
                     if(comment.getText().toString().isEmpty() || comment.getText().toString().equals(System.getProperty("line.separator")) ){
@@ -309,6 +307,8 @@ public class ShopDetailActivity extends AppCompatActivity {
                         Toast.makeText(ShopDetailActivity.this, "星の数を決めてください", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    Log.d("test",user.getText().toString());
 
                     //コメント送信処理
                     String url = "https://api.hokutosai.tech/2016/shops/" + mshopDetail.shop_id + "/assessment";
@@ -324,13 +324,47 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     // TODO 自動生成されたメソッド・スタブ
-                                    Log.d("test",response.toString());
                                     if( ShopDetailActivity.this != null) {
+
+                                        Gson gson = new Gson();
+                                        ShopMyAssessment shopMyAssessment = gson.fromJson(response.toString(), ShopMyAssessment.class);
+                                        Log.d("test",response.toString());
+                                        //データの更新
+                                        Iterator<Assessment> i = mshopDetail.assessments.iterator();
+                                        while(i.hasNext()){ //リストから自分のコメントがあればいったん削除
+                                            Assessment as = i.next();
+                                            if(as.getAccount().account_id.equals(shopMyAssessment.my_assessment.getAccount().account_id)){
+                                                i.remove();
+                                                break;
+                                            }
+                                        }
+                                        mshopDetail.assessment_aggregate = shopMyAssessment.assessment_aggregate;
+                                        mshopDetail.my_assessment = shopMyAssessment.my_assessment;
+
+                                        mshopDetail.my_assessment.getAccount().setUser_name(user.getText().toString());
+                                        shopMyAssessment.my_assessment.getAccount().setUser_name(user.getText().toString());
+
+                                        mshopDetail.shop_id = shopMyAssessment.shop_id;
+                                        mshopDetail.assessments.add(0,shopMyAssessment.my_assessment);    //自分のコメントをリストの先頭に追加
+
                                         Toast.makeText(ShopDetailActivity.this, "評価しました", Toast.LENGTH_SHORT).show();
 
                                         TextView deleteText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_delete_review);
                                         deleteText.setClickable(true);  //レビュー削除ボタンを有効に
                                         deleteText.setTextColor(getResources().getColor(R.color.text_clickable));
+                                        TextView reviewText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_write_review);
+                                        reviewText.setText("レビューを修正する");
+
+                                        //評価(再描画)******************************************************************************************
+                                        float rate = mshopDetail.assessment_aggregate.getTotal_score() / (float) mshopDetail.assessment_aggregate.getAssessed_count();
+                                        if(Float.isNaN(rate)) rate = 0;
+                                        RatingBar allRate = (RatingBar)findViewById(R.id.shop_detail_all_rate);
+                                        allRate.setRating( rate );
+                                        TextView allRateString = (TextView)findViewById(R.id.shop_detail_all_rate_str);
+                                        allRateString.setText( "(" + String.format("%.2f", rate) + ")" );
+                                        TextView allRateNum = (TextView)findViewById(R.id.shop_detail_all_rate_num);
+                                        allRateNum.setText("評価件数：" + mshopDetail.assessment_aggregate.getAssessed_count());
+                                        //******************************************************************************************************
                                     }
                                 }
                             },
@@ -383,11 +417,40 @@ public class ShopDetailActivity extends AppCompatActivity {
                                                 // TODO 自動生成されたメソッド・スタブ
                                                 Log.d("test",response.toString());
                                                 if( ShopDetailActivity.this != null) {
+
+                                                    Gson gson = new Gson();
+                                                    ShopMyAssessment shopMyAssessment = gson.fromJson(response.toString(), ShopMyAssessment.class);
+                                                    //データの更新
+                                                    Iterator<Assessment> i = mshopDetail.assessments.iterator();
+                                                    while(i.hasNext()){ //リストから自分のコメントを削除
+                                                        Assessment as = i.next();
+                                                        if(as.getAccount().account_id.equals(mshopDetail.my_assessment.getAccount().account_id)){
+                                                            i.remove();
+                                                            break;
+                                                        }
+                                                    }
+                                                    mshopDetail.assessment_aggregate = shopMyAssessment.assessment_aggregate;
+                                                    mshopDetail.my_assessment = shopMyAssessment.my_assessment;
+                                                    mshopDetail.shop_id = shopMyAssessment.shop_id;
+
                                                     Toast.makeText(ShopDetailActivity.this, "レビューを削除しました", Toast.LENGTH_SHORT).show();
 
                                                     TextView deleteText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_delete_review);
                                                     deleteText.setClickable(false);  //レビュー削除ボタンを無効に
                                                     deleteText.setTextColor(getResources().getColor(R.color.ClickdisableText));
+                                                    TextView reviewText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_write_review);
+                                                    reviewText.setText("レビューを書く");
+
+                                                    //評価(再描画)******************************************************************************************
+                                                    float rate = mshopDetail.assessment_aggregate.getTotal_score() / (float) mshopDetail.assessment_aggregate.getAssessed_count();
+                                                    if(Float.isNaN(rate)) rate = 0;
+                                                    RatingBar allRate = (RatingBar)findViewById(R.id.shop_detail_all_rate);
+                                                    allRate.setRating( rate );
+                                                    TextView allRateString = (TextView)findViewById(R.id.shop_detail_all_rate_str);
+                                                    allRateString.setText( "(" + String.format("%.2f", rate) + ")" );
+                                                    TextView allRateNum = (TextView)findViewById(R.id.shop_detail_all_rate_num);
+                                                    allRateNum.setText("評価件数：" + mshopDetail.assessment_aggregate.getAssessed_count());
+                                                    //******************************************************************************************************
                                                 }
                                             }
                                         },
@@ -437,5 +500,11 @@ public class ShopDetailActivity extends AppCompatActivity {
         int item_id;
         int price;
         String name;
+    }
+
+    private class ShopMyAssessment{
+        int shop_id;
+        Assessment my_assessment;
+        AssessedScore assessment_aggregate;
     }
 }

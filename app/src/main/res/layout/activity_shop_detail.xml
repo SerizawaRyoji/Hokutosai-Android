@@ -293,7 +293,7 @@
             android:gravity="center"
             android:clickable="true"
             android:textSize="18sp"
-            android:text="レビューを見る"
+            android:text="みんなのレビューを見る"
             android:onClick="reviewShowClickResult"
             android:textColor="@color/text_clickable"
             />
