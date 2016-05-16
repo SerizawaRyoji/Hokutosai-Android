@@ -109,6 +109,9 @@
                         android:id="@+id/shop_detail_place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:onClick="clickMapResult"
+                        android:textColor="@color/text_clickable"
                         android:paddingLeft="5dp"
                         android:textSize="@dimen/show_sentence_size"
                         />

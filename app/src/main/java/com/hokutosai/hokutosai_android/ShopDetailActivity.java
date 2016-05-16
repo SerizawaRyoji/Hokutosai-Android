@@ -480,6 +480,15 @@ public class ShopDetailActivity extends AppCompatActivity {
                 ).show();
     }
 
+    public void clickMapResult(View view){
+
+        if( !mshopDetail.name.isEmpty() ) {
+            Intent i = new Intent(ShopDetailActivity.this, ImageActivity.class);
+            //i.putExtra("ShopDetail", mshopDetail);
+            startActivity(i);
+        }
+    }
+
     public class ShopDetail implements Serializable {
         int shop_id;
         String name;
