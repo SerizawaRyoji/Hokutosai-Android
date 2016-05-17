@@ -16,10 +16,10 @@
     </style>
 
     <style name="CustomCirclePageIndicator">
-        <item name="fillColor">@color/clear_black</item>
+        <item name="fillColor">#303030</item>        <!--動く◯の色-->
         <item name="centered">true</item>
-        <item name="pageColor">@color/clear_black</item>
-        <item name="strokeColor">@color/ClearColor</item>
+        <item name="pageColor">#80000000</item>        <!--動かない横並びの◯の色-->
+        <!--<item name="strokeColor">#80000000</item>-->       <!--pageColorの周りの色-->
         <item name="radius">6dp</item>
     </style>
 

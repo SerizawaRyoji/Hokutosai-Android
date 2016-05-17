@@ -407,7 +407,8 @@ public class ShopDetailActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //コメント送信処理
-                                String url = "https://api.hokutosai.tech/2016/shops/" + mshopDetail.shop_id + "/assessment";
+                                String url = "https://api.hokutosai.tech/2016/shops/" + String.valueOf(mshopDetail.shop_id) + "/assessment";
+                                Log.d("test",url);
                                 int method = Request.Method.DELETE;
 
                                 MyStringRequest postJson = new MyStringRequest(method, url,
@@ -457,7 +458,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                                         new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
-                                                Log.d("test",error.toString());
+                                                Log.d("test",String.valueOf(error.networkResponse.statusCode));
                                                 if(ShopDetailActivity.this != null) Toast.makeText(ShopDetailActivity.this, "削除に失敗しました", Toast.LENGTH_SHORT).show();
                                             }
                                         }
