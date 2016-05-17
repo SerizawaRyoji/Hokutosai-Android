@@ -1,6 +1,7 @@
 package com.hokutosai.hokutosai_android;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,8 +11,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -104,21 +105,50 @@ public class NewsTopicFragment extends Fragment {
     public void setTopicView(){
 
         final ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.news_topic_view_pager);
-        final LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.news_topic_layout);
+        final FrameLayout layout = (FrameLayout) getActivity().findViewById(R.id.news_topic_layout);
 
 
         // density (比率)を取得する
-        float density = getResources().getDisplayMetrics().density;
+        //float density = getResources().getDisplayMetrics().density;
         // 21 dp を pixel に変換する ( dp × density + 0.5f（四捨五入) )
-        int px = (int) (21f * density + 0.5f);
-        int h = layout.getHeight();
-        viewPager.getLayoutParams().height = h-px;
+        //int px = (int) (21f * density + 0.5f);
+        //int h = layout.getHeight();
+        //viewPager.getLayoutParams().height = h-px;
 
         for (int i = 0; i < list.size(); ++i) {
+
+            //イメージ付きトピックニュース
             if( i!=0 && list.get(i).getMedias() != null && !list.get(i).getMedias().isEmpty() && list.get(i).getMedias().get(0).url != null) {  //画像つきのトピックニュース
+
+                FrameLayout fLayout = new FrameLayout(getActivity());
+
                 NetworkImageView view = new NetworkImageView(getActivity());
                 view.setImageUrl(list.get(i).getMedias().get(0).url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
-                view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                fLayout.addView(view);
+
+                if(list.get(i).getTitle() != null){
+                    TextView text = new TextView( getActivity() );
+                    text.setText(list.get(i).getTitle());
+                    text.setGravity(Gravity.CENTER);
+                    text.setTextSize(30);
+                    text.setFadingEdgeLength(4);
+                    text.setTextColor(Color.LTGRAY);
+                    text.setPadding(8,8,0,0);
+
+                    TextView text2 = new TextView( getActivity() );
+                    text2.setText(list.get(i).getTitle());
+                    text2.setGravity(Gravity.CENTER);
+                    text2.setTextSize(30);
+                    text2.setFadingEdgeLength(4);
+                    text2.setTextColor(Color.BLACK);
+
+                    fLayout.addView(text);
+                    fLayout.addView(text2);
+                }
+
+
 
                 if(i!=0 && list.get(i).getTitle() != null) {
                     final News newsItem = list.get(i);
@@ -130,9 +160,11 @@ public class NewsTopicFragment extends Fragment {
                         }
                     });
                 }
-                adapter.addView(view);
+                adapter.addView(fLayout);
 
             }
+
+            //イメージなしトピックニュース
             else if( i!=0 && list.get(i).getTitle() != null){
                 TextView view = new TextView(getActivity());
                 view.setText(list.get(i).getTitle());
@@ -151,6 +183,8 @@ public class NewsTopicFragment extends Fragment {
                 }
                 adapter.addView(view);
             }
+
+            //テーマ(１枚目の画像)
             else if(i==0){   //画像もタイトルも存在しない一つ目のトピック = テーマ画像
                 ImageView image = new ImageView(getActivity());
                 image.setImageResource(R.mipmap.hokutosai_2016_theme);
