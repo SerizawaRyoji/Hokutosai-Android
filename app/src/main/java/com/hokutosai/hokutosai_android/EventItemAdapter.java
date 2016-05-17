@@ -40,6 +40,7 @@ public class EventItemAdapter extends ArrayAdapter<Event> {
             holder.image = (NetworkImageView)convertView.findViewById(R.id.event_item_image);
             holder.liked = (ImageView)convertView.findViewById(R.id.event_item_like);
             holder.likes_count = (TextView)convertView.findViewById(R.id.event_item_like_count);
+            holder.topic = (ImageView) convertView.findViewById(R.id.news_item_topic);
 
             convertView.setTag(holder);
         } else {
@@ -67,6 +68,9 @@ public class EventItemAdapter extends ArrayAdapter<Event> {
             holder.image.setImageResource(R.mipmap.no_image_500x200);
         }
 
+        if( item.getFeatured() ) holder.topic.setVisibility(View.VISIBLE);
+        else holder.topic.setVisibility(View.INVISIBLE);
+
         return convertView;
     }
 
@@ -88,5 +92,6 @@ public class EventItemAdapter extends ArrayAdapter<Event> {
         NetworkImageView image;
         ImageView liked;
         TextView likes_count;
+        ImageView topic;
     }
 }
