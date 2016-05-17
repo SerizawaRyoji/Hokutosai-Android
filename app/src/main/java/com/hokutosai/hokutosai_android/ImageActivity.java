@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -33,5 +34,15 @@ public class ImageActivity extends AppCompatActivity {
         mImageView.setImageBitmap(bmp);
 
         mAttacher = new PhotoViewAttacher(mImageView);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){ // if使うとエラー（itemがInt形式なため）
+            case android.R.id.home:   // アプリアイコン（ホームアイコン）を押した時の処理
+                finish();
+                break;
+        }
+        return true;
     }
 }
