@@ -325,7 +325,7 @@
             android:gravity="center"
             android:clickable="false"
             android:textSize="18sp"
-            android:text="レビューを削除する"
+            android:text="自分のレビューを削除する"
             android:onClick="reviewDeleteClickResult"
             android:textColor="@color/text_clickable"
             />

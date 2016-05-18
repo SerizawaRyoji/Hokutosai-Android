@@ -169,7 +169,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 }
                                 else{
                                     Log.d("test", mshopDetail.my_assessment.toString());
-                                    reviewText.setText("レビューを修正する");
+                                    reviewText.setText("自分のレビューを修正する");
                                     deleteText.setClickable(true);  //レビュー削除ボタンを有効に
                                     deleteText.setTextColor(getResources().getColor(R.color.text_clickable));
                                 }
@@ -353,7 +353,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                                         deleteText.setClickable(true);  //レビュー削除ボタンを有効に
                                         deleteText.setTextColor(getResources().getColor(R.color.text_clickable));
                                         TextView reviewText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_write_review);
-                                        reviewText.setText("レビューを修正する");
+                                        reviewText.setText("自分のレビューを修正する");
 
                                         //評価(再描画)******************************************************************************************
                                         float rate = mshopDetail.assessment_aggregate.getTotal_score() / (float) mshopDetail.assessment_aggregate.getAssessed_count();
