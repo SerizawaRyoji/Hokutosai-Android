@@ -3,7 +3,6 @@ package com.hokutosai.hokutosai_android;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +115,6 @@ public class ShopAssessmentAdapter extends BaseAdapter {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                         int idx = spinner.getSelectedItemPosition();
-                        Log.d("test",reportList.get(idx).text+"が選択されました");
                         callAssessmentReport(pos, idx, context);                    //通報の送信処理
                     }
                 });
