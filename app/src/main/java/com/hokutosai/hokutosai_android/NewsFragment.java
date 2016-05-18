@@ -266,7 +266,7 @@ public class NewsFragment extends Fragment {
                             new Response.Listener<JSONArray>() {
                                 @Override
                                 public void onResponse(JSONArray response) {
-
+                                    Log.d("test","add");
                                     //JSONArrayをListShopItemに変換して取得
                                     Gson gson = new Gson();
                                     Type collectionType = new TypeToken<Collection<News>>() {
@@ -303,6 +303,7 @@ public class NewsFragment extends Fragment {
         String parameter1 = "?count=";
         parameter1 += String.valueOf(COUNT);
         url += parameter1;
+        Log.d("test",url);
 
         MyJsonArrayRequest jArrayRequest =
                 new MyJsonArrayRequest(url,
@@ -315,6 +316,7 @@ public class NewsFragment extends Fragment {
                                 Type collectionType = new TypeToken<Collection<News>>() {
                                 }.getType();
                                 Log.d("test",response.toString());
+
                                 list = gson.fromJson(response.toString(), collectionType);
 
                                 if(!list.isEmpty()) {

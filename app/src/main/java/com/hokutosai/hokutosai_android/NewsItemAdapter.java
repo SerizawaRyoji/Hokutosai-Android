@@ -96,7 +96,7 @@ public class NewsItemAdapter extends BaseAdapter {
         if( newsItemList.get(position).getRelated_event() != null ) related =  newsItemList.get(position).getRelated_event().title;
         else if(newsItemList.get(position).getRelated_shop() != null ) related =  newsItemList.get(position).getRelated_shop().name;
         else if(newsItemList.get(position).getRelated_exhibition() != null ) related =  newsItemList.get(position).getRelated_exhibition().title;
-        holder.related.setText(String.valueOf(newsItemList.get(position).getNews_id()));
+        holder.related.setText(related);
 
         holder.datetime.setText( MyDateFormatSingleton.getInstance().getDateTime(newsItemList.get(position).getDatetime()) );
         holder.like_icon.setSelected( newsItemList.get(position).getLiked() );
