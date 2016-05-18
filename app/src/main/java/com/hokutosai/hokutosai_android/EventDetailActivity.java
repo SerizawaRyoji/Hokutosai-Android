@@ -64,7 +64,6 @@ public class EventDetailActivity extends AppCompatActivity {
                                 //JSONArrayをListShopItemに変換して取得
                                 Gson gson = new Gson();
                                 mEventDetail = gson.fromJson(response.toString(), EventDetail.class);
-                                Log.d("test",response.toString());
                                 //画像の表示********************************************************************************************
                                 NetworkImageView image = (NetworkImageView) findViewById(R.id.event_detail_image);
                                 int w = image.getWidth();
