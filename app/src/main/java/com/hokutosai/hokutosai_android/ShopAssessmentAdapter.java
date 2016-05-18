@@ -1,6 +1,8 @@
 package com.hokutosai.hokutosai_android;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ public class ShopAssessmentAdapter extends BaseAdapter {
     LayoutInflater layoutInflater = null;
     ArrayList<Assessment> asList;
     private ViewHolder holder = null;
+    private ArrayList<ShopReviewActivity.AssessmentReportCause> reportList;
 
     public ShopAssessmentAdapter(Context context) {
         this.context = context;
@@ -28,6 +31,8 @@ public class ShopAssessmentAdapter extends BaseAdapter {
     public void setAssessmentList(ArrayList<Assessment> itemList) {
         this.asList = itemList;
     }
+
+    public void setAssessmentReportCauseList(ArrayList<ShopReviewActivity.AssessmentReportCause> itemList){reportList = itemList; }
 
     @Override
     public int getCount() {
@@ -55,6 +60,7 @@ public class ShopAssessmentAdapter extends BaseAdapter {
             holder.rate = (RatingBar) convertView.findViewById(R.id.assessment_rate);
             holder.datetime = (TextView) convertView.findViewById(R.id.assessment_datetime);
             holder.comment = (TextView) convertView.findViewById(R.id.assessment_comment);
+            holder.report = (TextView) convertView.findViewById(R.id.assessment_report);
 
             convertView.setTag(holder);
         }
@@ -73,6 +79,29 @@ public class ShopAssessmentAdapter extends BaseAdapter {
         holder.datetime.setText( MyDateFormatSingleton.getInstance().getDateTime(asList.get(position).getDatetime()) );
         holder.comment.setText(asList.get(position).getComment());
 
+        final Context context = parent.getContext();
+        holder.report.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("模擬店の評価");
+
+                builder.setPositiveButton("送信", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+                builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
         return convertView;
     }
 
@@ -81,5 +110,6 @@ public class ShopAssessmentAdapter extends BaseAdapter {
         RatingBar rate;
         TextView datetime;
         TextView comment;
+        TextView report;
     }
 }
