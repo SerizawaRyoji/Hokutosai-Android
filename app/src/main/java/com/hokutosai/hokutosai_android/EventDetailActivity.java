@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,9 @@ public class EventDetailActivity extends AppCompatActivity {
                                 Log.d("test",response.toString());
                                 //画像の表示********************************************************************************************
                                 NetworkImageView image = (NetworkImageView) findViewById(R.id.event_detail_image);
+                                int w = image.getWidth();
+                                int h = image.getWidth() * 2 / 5;
+                                image.setLayoutParams(new LinearLayout.LayoutParams(w,h));
                                 image.setImageUrl(mEventDetail.image_url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
                                 //****************************************************************************************************
 

@@ -14,7 +14,8 @@
             android:id="@+id/event_detail_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             />
 
         <!-- タイトル -->
