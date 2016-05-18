@@ -71,6 +71,8 @@ public class EventListFragment extends ListFragment {
                     for(int i=0 ; i<list.size() ; ++i){
                         if(event.event_id == list.get(i).getEvent_id()){
 
+                            if( event.liked == null || list.get(i).getLiked() == null) return;
+
                             if( event.liked && !list.get(i).getLiked() || !event.liked && list.get(i).getLiked()){
                                 list.get(i).setLiked( event.liked );    //いいねの状態が変わっていたら更新
                                 list.get(i).setLikes_count( event.likes_count );

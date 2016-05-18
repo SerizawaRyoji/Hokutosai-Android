@@ -84,6 +84,8 @@ public class NewsDetailActivity extends AppCompatActivity {
                                 Gson gson = new Gson();
                                 mNewsDetail = gson.fromJson(response.toString(), News.class);
 
+                                if(mNewsDetail.liked == null) mNewsDetail.liked = false;
+
                                 //画像の表示******************************************************************************************
                                 try {
                                     Gson gsonMedias = new Gson();

@@ -99,7 +99,11 @@ public class NewsItemAdapter extends BaseAdapter {
         holder.related.setText(related);
 
         holder.datetime.setText( MyDateFormatSingleton.getInstance().getDateTime(newsItemList.get(position).getDatetime()) );
-        holder.like_icon.setSelected( newsItemList.get(position).getLiked() );
+        if( newsItemList.get(position).getLiked() == null ){
+            holder.like_icon.setSelected(false);
+        }else {
+            holder.like_icon.setSelected( newsItemList.get(position).getLiked() );
+        }
         holder.likes_count.setText( String.valueOf(newsItemList.get(position).getLikes_count()) );
 
         holder.image.setVisibility(View.GONE);

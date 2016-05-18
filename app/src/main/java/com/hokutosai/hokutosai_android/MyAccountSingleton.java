@@ -20,6 +20,7 @@ public class MyAccountSingleton {
 
     private static MyAccountSingleton mAccount = new MyAccountSingleton();
     private AccountCredentials mAccountCredentials = new AccountCredentials();
+    private Boolean isAccountCreated = false;
 
     static final String HEADER = "user_id=client-android-app,access_token=fIsngZeqTRUOjl8HtlqRnhjPK8TTaDnd3bFsgda8fxMVpBGX180Ld3Hlr5gT30tr";
 
@@ -27,10 +28,13 @@ public class MyAccountSingleton {
 
     public void createAccount(Application app){
 
+        isAccountCreated = false;
+
         //アカウントデータの取得
         SharedPreferences data = app.getSharedPreferences("DataSave", Context.MODE_PRIVATE);
         mAccountCredentials.account_id = data.getString("account_id", "" );
         mAccountCredentials.account_pass = data.getString("account_pass", "" );
+        Log.d("test","check");
 
         if( mAccount.mAccountCredentials.account_id.isEmpty() || mAccount.mAccountCredentials.account_pass.isEmpty() ){   //アカウントが存在しないなら
 
@@ -51,6 +55,9 @@ public class MyAccountSingleton {
                                     editor.putString("account_id", mAccountCredentials.account_id);
                                     editor.putString("account_pass", mAccountCredentials.account_pass);
                                     editor.apply();
+
+                                    Log.d("test","create new account");
+                                    isAccountCreated = true;
                                 }
                             },
 
@@ -68,7 +75,7 @@ public class MyAccountSingleton {
         }
         else{   //アカウントが存在したなら
             Log.d("test","account id already created");
-
+            isAccountCreated = true;
         }
     }
 
@@ -79,6 +86,10 @@ public class MyAccountSingleton {
         }
 
         return HEADER + ",account_id=" + mAccount.mAccountCredentials.account_id + ",account_pass=" + mAccount.mAccountCredentials.account_pass;
+    }
+
+    public Boolean getIsAccountCreated(){
+        return isAccountCreated;
     }
 
     private class AccountCredentials{

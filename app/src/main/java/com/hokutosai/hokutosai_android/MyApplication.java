@@ -27,6 +27,13 @@ public class MyApplication extends Application {
         LruCacheSingleton.create();
 
         MyAccountSingleton.getInstance().createAccount(this);   //アカウントの作成
+
+        try {
+            if(!MyAccountSingleton.getInstance().getIsAccountCreated()) {
+                Thread.sleep(1000); //500ミリ秒Sleepする
+            }
+        } catch (InterruptedException e) {
+        }
     }
 
     public void setBmp(Bitmap bmp){

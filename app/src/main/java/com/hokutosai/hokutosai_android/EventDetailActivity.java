@@ -64,6 +64,9 @@ public class EventDetailActivity extends AppCompatActivity {
                                 //JSONArrayをListShopItemに変換して取得
                                 Gson gson = new Gson();
                                 mEventDetail = gson.fromJson(response.toString(), EventDetail.class);
+
+                                if(mEventDetail.liked == null) mEventDetail.liked = false;
+
                                 //画像の表示********************************************************************************************
                                 NetworkImageView image = (NetworkImageView) findViewById(R.id.event_detail_image);
                                 int w = image.getWidth();
@@ -176,6 +179,8 @@ public class EventDetailActivity extends AppCompatActivity {
             like.setOnClickListener(
                     new View.OnClickListener() {
                         public void onClick(View v) {
+
+                            if(item.getLiked() == null) return;
 
                             String url = "https://api.hokutosai.tech/2016/events/" + item.getEvent_id() + "/likes";
                             int method = Request.Method.POST;

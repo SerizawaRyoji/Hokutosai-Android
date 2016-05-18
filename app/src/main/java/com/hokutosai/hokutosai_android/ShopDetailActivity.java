@@ -92,6 +92,8 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 mshopDetail = gson.fromJson(response.toString(), ShopDetail.class);
                                 Log.d("test",response.toString());
 
+                                if(mshopDetail.liked == null) mshopDetail.liked = false;
+
                                 //画像の表示********************************************************************************************
                                 NetworkImageView image = (NetworkImageView) findViewById(R.id.shop_detail_image);
                                 int imagewidth = image.getWidth();
@@ -222,6 +224,8 @@ public class ShopDetailActivity extends AppCompatActivity {
             like.setOnClickListener(
                     new View.OnClickListener() {
                         public void onClick(View v) {
+                            if(item.getLiked() == null) return;
+
                             String url = "https://api.hokutosai.tech/2016/shops/" + item.getShop_id() + "/likes";
                             int method = Request.Method.POST;
                             if(item.getLiked()) method = Request.Method.DELETE; //いいね済みの状態でいいねを押した場合はDELETE

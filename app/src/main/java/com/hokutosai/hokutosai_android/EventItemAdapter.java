@@ -57,7 +57,9 @@ public class EventItemAdapter extends ArrayAdapter<Event> {
         else holder.state.setTextColor(Color.GRAY);
         holder.state.setText(stateStr);
 
-        holder.liked.setSelected( item.getLiked() );
+        if( item.getLiked() == null ) holder.liked.setSelected(false);
+        else holder.liked.setSelected( item.getLiked() );
+
         holder.likes_count.setText( String.valueOf(item.getLikes_count()) );
 
         holder.image.setErrorImageResId(R.mipmap.no_image_500x200);

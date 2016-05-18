@@ -159,6 +159,9 @@ public class NewsFragment extends Fragment {
 
                 if(getActivity() != null){
                     for(int i=0 ; i<list.size() ; ++i){
+
+                        if(news.getLiked() == null || list.get(i).getLiked() == null) return;
+
                         if(news.getNews_id() == list.get(i).getNews_id()){
 
                             if( news.getLiked() && !list.get(i).getLiked() || !news.getLiked() && list.get(i).getLiked()){

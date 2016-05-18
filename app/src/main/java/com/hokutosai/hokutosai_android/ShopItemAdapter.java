@@ -74,7 +74,10 @@ public class ShopItemAdapter extends BaseAdapter{
         holder.name.setText(shopList.get(position).getName());
         holder.tenant.setText(shopList.get(position).getTenant());
         holder.sales.setText(shopList.get(position).getSales());
-        holder.like_icon.setSelected( shopList.get(position).getLiked() );
+
+        if(shopList.get(position).getLiked() == null) holder.like_icon.setSelected( false );
+        else  holder.like_icon.setSelected( shopList.get(position).getLiked() );
+
         holder.likes_count.setText( String.valueOf(shopList.get(position).getLikes_count()) );
 
         if (shopList.get(position).getImage_url() != null) {

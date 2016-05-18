@@ -84,6 +84,8 @@ public class ExhibitionDetailActivity extends AppCompatActivity {
                                 Gson gson = new Gson();
                                 mExhibitionDetail = gson.fromJson(response.toString(), ExhibitionDetail.class);
 
+                                if(mExhibitionDetail.liked == null) mExhibitionDetail.liked = false;
+
                                 //画像の表示********************************************************************************************
                                 NetworkImageView image = (NetworkImageView) findViewById(R.id.exhibition_detail_image);
                                 int imagewidth = image.getWidth();
@@ -184,6 +186,8 @@ public class ExhibitionDetailActivity extends AppCompatActivity {
             like.setOnClickListener(
                     new View.OnClickListener() {
                         public void onClick(View v) {
+
+                            if(item.getLiked() == null) return;
 
                             String url = "https://api.hokutosai.tech/2016/exhibitions/" + item.getExhibition_id() + "/likes";
                             int method = Request.Method.POST;

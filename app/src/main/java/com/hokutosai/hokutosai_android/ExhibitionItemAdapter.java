@@ -68,7 +68,10 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
 
         holder.title.setText(exhibitionList.get(position).getTitle());
         holder.display.setText(exhibitionList.get(position).getDisplays());
-        holder.liked.setSelected(exhibitionList.get(position).getLiked());
+
+        if(exhibitionList.get(position).getLiked() == null) holder.liked.setSelected(false);
+        else holder.liked.setSelected(exhibitionList.get(position).getLiked());
+
         holder.likes_count.setText(String.valueOf(exhibitionList.get(position).getLikes_count()));
 
         if (exhibitionList.get(position).getImage_url() != null) {
