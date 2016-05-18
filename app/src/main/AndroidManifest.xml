@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ShopDetailActivity"></activity>
-        <activity android:name=".ShopReviewActivity"></activity>
+        <activity android:name=".ReviewListActivity"></activity>
         <activity android:name=".ExhibitionDetailActivity"></activity>
         <activity android:name=".EventDetailActivity"></activity>
         <activity android:name=".NewsDetailActivity"></activity>

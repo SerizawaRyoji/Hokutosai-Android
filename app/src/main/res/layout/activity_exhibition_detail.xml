@@ -167,5 +167,105 @@
             android:layout_marginBottom="@dimen/section_line_margin"
             />
 
+        <!--みんなの評価-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/show_icon_size_w"
+                android:layout_height="@dimen/show_icon_size_h"
+                android:src="@drawable/evaluation"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:textSize="@dimen/show_sub_title_size"
+                android:text="みんなの評価"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp" >
+
+            <RatingBar
+                android:id="@+id/exhibition_detail_all_rate"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/show_text_margin"
+                android:isIndicator="true"
+                style="@style/MyRating"
+                />
+            <!--星の数(文字) -->
+            <TextView
+                android:id="@+id/exhibition_detail_all_rate_str"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/exhibition_detail_all_rate"
+                android:layout_marginLeft="5dp"
+                android:gravity="bottom"
+                android:textSize="12sp"/>
+            <!--評価人数 -->
+            <TextView
+                android:id="@+id/exhibition_detail_all_rate_num"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|right"
+                android:textSize="12sp"/>
+        </RelativeLayout>
+
+        <include layout="@layout/under_line" />
+
+        <TextView
+            android:id="@+id/exhibition_detail_show_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="true"
+            android:textSize="18sp"
+            android:text="みんなのレビューを見る"
+            android:onClick="reviewShowClickResult"
+            android:textColor="@color/text_clickable"
+            android:visibility="invisible"
+            />
+
+        <include layout="@layout/under_line" />
+
+        <!--レビューを書く、修正する-->
+        <TextView
+            android:id="@+id/exhibition_detail_write_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="true"
+            android:textSize="18sp"
+            android:onClick="reviewWriteClickResult"
+            android:textColor="@color/text_clickable"
+            />
+
+        <include layout="@layout/under_line" />
+
+        <!--レビューを削除する-->
+        <TextView
+            android:id="@+id/exhibition_detail_delete_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="false"
+            android:textSize="18sp"
+            android:text="自分のレビューを削除する"
+            android:onClick="reviewDeleteClickResult"
+            android:textColor="@color/text_clickable"
+            android:visibility="invisible"
+            />
+
+        <include layout="@layout/under_line" />
+
     </LinearLayout>
 </ScrollView>

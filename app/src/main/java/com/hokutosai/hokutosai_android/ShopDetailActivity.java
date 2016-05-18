@@ -178,6 +178,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                                     deleteText.setClickable(true);  //レビュー削除ボタンを有効に
                                     deleteText.setTextColor(getResources().getColor(R.color.text_clickable));
                                 }
+                                //******************************************************************************************************
                             }
                         },
 
@@ -265,8 +266,14 @@ public class ShopDetailActivity extends AppCompatActivity {
     public void reviewShowClickResult( View view ){
 
         if( !mshopDetail.name.isEmpty() ) {
-            Intent i = new Intent(ShopDetailActivity.this, ShopReviewActivity.class);
-            i.putExtra("ShopDetail", mshopDetail);
+            Intent i = new Intent(ShopDetailActivity.this, ReviewListActivity.class);
+            ReviewAssessment ra = new ReviewAssessment();
+            ra.setId(mshopDetail.shop_id);
+            ra.setAssessment_aggregate(mshopDetail.assessment_aggregate);
+            ra.setAssessments(mshopDetail.assessments);
+            ra.setMy_assessment(mshopDetail.my_assessment);
+            ra.setName(mshopDetail.name);
+            i.putExtra("ReviewAssessment", ra);
             startActivity(i);
         }
     }

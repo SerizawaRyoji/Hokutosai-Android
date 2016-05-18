@@ -37,10 +37,10 @@ public class ReviewListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_shop_review);
+        setContentView(R.layout.activity_review_list);
 
         Intent i = getIntent();
-        final ShopDetailActivity.ShopDetail item = (ShopDetailActivity.ShopDetail)i.getSerializableExtra("ShopDetail");
+        final ReviewAssessment item = (ReviewAssessment)i.getSerializableExtra("ReviewAssessment");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(item.name);

@@ -30,7 +30,7 @@ public class ShopAssessmentAdapter extends BaseAdapter {
     LayoutInflater layoutInflater = null;
     ArrayList<Assessment> asList;
     private ViewHolder holder = null;
-    private ArrayList<ShopReviewActivity.AssessmentReportCause> reportList;
+    private ArrayList<ReviewListActivity.AssessmentReportCause> reportList;
     private ArrayList<String> reportStringList;
 
     public ShopAssessmentAdapter(Context context) {
@@ -42,7 +42,7 @@ public class ShopAssessmentAdapter extends BaseAdapter {
         this.asList = itemList;
     }
 
-    public void setAssessmentReportCauseList(ArrayList<ShopReviewActivity.AssessmentReportCause> itemList){
+    public void setAssessmentReportCauseList(ArrayList<ReviewListActivity.AssessmentReportCause> itemList){
         reportList = itemList;
         reportStringList = new ArrayList<>();
         for(int i=0 ; i<reportList.size() ; ++i) {
