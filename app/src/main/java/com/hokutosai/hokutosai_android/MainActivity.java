@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                                 url = "https://mobile.twitter.com/hokutosai_app";
                                 break;
                             case 6:	//著作権情報
-                                url = null;
+                                url = "copyright";
                                 break;
                         }
 
@@ -146,17 +146,17 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, ImageActivity.class);
                             startActivity(intent);
                         }
-
-                        else if(url != null){
-                            Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                            intent.putExtra("URL", url);
-                            startActivity(intent);
-                        } else{
+                        else if(url.equals("copyright")){
                             final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
                             alert.setView(R.layout.dialog_copyright);
                             alert.setTitle("著作権情報");
                             alert.setPositiveButton("OK",null);
                             alert.show();
+                        }
+                        else {
+                            Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                            intent.putExtra("URL", url);
+                            startActivity(intent);
                         }
                     }
                 }

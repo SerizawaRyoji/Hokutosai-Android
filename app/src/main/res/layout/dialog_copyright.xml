@@ -34,6 +34,18 @@
             android:text="・PagerSlidingTabStrip"
             android:textSize="14sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="・ViewPagerIndicator"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="・PhotoView"
+            android:textSize="14sp" />
+
         <include layout="@layout/under_line" />
 
         <!-- Appache license の文面 -->

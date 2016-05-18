@@ -1,6 +1,7 @@
 package com.hokutosai.hokutosai_android;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class ExhibitionItemAdapter  extends BaseAdapter {
         holder.likes_count.setText(String.valueOf(exhibitionList.get(position).getLikes_count()));
 
         if (exhibitionList.get(position).getImage_url() != null) {
+            Log.d("test","load");
             holder.image.setImageUrl(exhibitionList.get(position).getImage_url(), ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()) );
         }
 
