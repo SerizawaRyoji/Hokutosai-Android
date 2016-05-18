@@ -3,6 +3,7 @@ package com.hokutosai.hokutosai_android;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
@@ -34,10 +35,21 @@ public class ImageActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.image_menu, menu);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){ // if使うとエラー（itemがInt形式なため）
             case android.R.id.home:   // アプリアイコン（ホームアイコン）を押した時の処理
                 finish();
+                break;
+            case R.id.menu_download:    //ダウンロードボタン
+
                 break;
         }
         return true;

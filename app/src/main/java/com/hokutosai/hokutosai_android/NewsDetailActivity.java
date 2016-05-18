@@ -62,7 +62,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         mNewsDetail = item;
 
         mLikeCount = item.getLikes_count();
-        
+
         TextView title = (TextView)this.findViewById(R.id.news_detail_title);
         TextView date = (TextView)this.findViewById(R.id.news_detail_date);
         title.setText(item.getTitle());
