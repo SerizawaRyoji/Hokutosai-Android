@@ -10,9 +10,18 @@ public class ReviewAssessment implements Serializable {
 
     int id;
     String name;
+    Type type;
     Assessment my_assessment;
     AssessedScore assessment_aggregate;
     List<Assessment> assessments;
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public AssessedScore getAssessment_aggregate() {
         return assessment_aggregate;
@@ -52,5 +61,10 @@ public class ReviewAssessment implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    enum Type{
+        SHOP,
+        EXHIBITION,
     }
 }

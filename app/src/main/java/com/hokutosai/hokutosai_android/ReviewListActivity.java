@@ -26,7 +26,7 @@ import java.util.Collection;
  */
 public class ReviewListActivity extends AppCompatActivity {
 
-    ShopAssessmentAdapter adapter;
+    ReviewAssessmentAdapter adapter;
     ListView listView = null;
     ArrayList<AssessmentReportCause> reportList = new ArrayList<>();
 
@@ -71,10 +71,11 @@ public class ReviewListActivity extends AppCompatActivity {
                                     allRateNum.setText("評価件数：" + item.assessment_aggregate.getAssessed_count());
                                     //******************************************************************************************************
 
-                                    adapter = new ShopAssessmentAdapter(ReviewListActivity.this);
+                                    adapter = new ReviewAssessmentAdapter(ReviewListActivity.this);
 
                                     adapter.setAssessmentList(new ArrayList<>(item.assessments));
                                     adapter.setAssessmentReportCauseList(reportList);
+                                    adapter.setType(item.getType());
 
                                     listView = (ListView) findViewById(R.id.list_shop_review);
                                     listView.setAdapter(adapter);

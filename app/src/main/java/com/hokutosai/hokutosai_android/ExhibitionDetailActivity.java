@@ -230,7 +230,14 @@ public class ExhibitionDetailActivity extends AppCompatActivity {
 
         if( !mExhibitionDetail.title.isEmpty() ) {
             Intent i = new Intent(ExhibitionDetailActivity.this, ReviewListActivity.class);
-            //i.putExtra("ShopDetail", mshopDetail);
+            ReviewAssessment ra = new ReviewAssessment();
+            ra.setName(mExhibitionDetail.title);
+            ra.setId(mExhibitionDetail.exhibition_id);
+            ra.setMy_assessment(mExhibitionDetail.my_assessment);
+            ra.setAssessments(mExhibitionDetail.assessments);
+            ra.setAssessment_aggregate(mExhibitionDetail.assessment_aggregate);
+            ra.setType(ReviewAssessment.Type.EXHIBITION);
+            i.putExtra("ReviewAssessment", ra);
             startActivity(i);
         }
     }

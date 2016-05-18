@@ -273,6 +273,7 @@ public class ShopDetailActivity extends AppCompatActivity {
             ra.setAssessments(mshopDetail.assessments);
             ra.setMy_assessment(mshopDetail.my_assessment);
             ra.setName(mshopDetail.name);
+            ra.setType(ReviewAssessment.Type.SHOP);
             i.putExtra("ReviewAssessment", ra);
             startActivity(i);
         }

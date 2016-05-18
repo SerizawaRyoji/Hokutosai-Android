@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Created by ryoji on 2016/05/15.
  */
-public class ShopAssessmentAdapter extends BaseAdapter {
+public class ReviewAssessmentAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater layoutInflater = null;
@@ -32,8 +32,9 @@ public class ShopAssessmentAdapter extends BaseAdapter {
     private ViewHolder holder = null;
     private ArrayList<ReviewListActivity.AssessmentReportCause> reportList;
     private ArrayList<String> reportStringList;
+    private ReviewAssessment.Type type;
 
-    public ShopAssessmentAdapter(Context context) {
+    public ReviewAssessmentAdapter(Context context) {
         this.context = context;
         this.layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -48,6 +49,10 @@ public class ShopAssessmentAdapter extends BaseAdapter {
         for(int i=0 ; i<reportList.size() ; ++i) {
             reportStringList.add(reportList.get(i).text);
         }
+    }
+
+    public void setType(ReviewAssessment.Type type) {
+        this.type = type;
     }
 
     @Override
@@ -135,7 +140,11 @@ public class ShopAssessmentAdapter extends BaseAdapter {
     private void callAssessmentReport(int position, int reportSelectedPosition, final Context context ){
 
         //コメント送信処理
-        String url = "https://api.hokutosai.tech/2016/shops/assessment/" + asList.get(position).assessment_id + "/report";
+        String type = "";
+        if(this.type == ReviewAssessment.Type.EXHIBITION) type = "exhibitions";
+        else if(this.type == ReviewAssessment.Type.SHOP) type = "shops";
+
+        String url = "https://api.hokutosai.tech/2016/" + type + "/assessment/" + asList.get(position).assessment_id + "/report";
         // 送信したいパラメーター
         Map<String, String> params = new HashMap<String, String>();
         params.put("cause", reportList.get(reportSelectedPosition).cause_id );
