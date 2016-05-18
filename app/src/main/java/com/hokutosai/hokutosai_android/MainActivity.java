@@ -2,6 +2,9 @@ package com.hokutosai.hokutosai_android;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.DrawerLayout;
@@ -26,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
 
     private String[] mDrawerHokutosaiTitles;
-    private String[] mDrawerAppTitles;
 
     private ListView mDrawerHokutosaiList;
 
@@ -123,18 +125,29 @@ public class MainActivity extends AppCompatActivity {
                             case 2:	//スクールバス時刻表
                                 url = "https://www.hokutosai.tech/schoolbus";
                                 break;
-                            case 3:	//アプリについて
+                            case 3: //マップ
+                                url ="map";
+                                break;
+                            case 4:	//アプリについて
                                 url = "https://www.hokutosai.tech/";
                                 break;
-                            case 4:	//北斗祭アプリ公式ツイッター
+                            case 5:	//北斗祭アプリ公式ツイッター
                                 url = "https://mobile.twitter.com/hokutosai_app";
                                 break;
-                            case 5:	//著作権情報
+                            case 6:	//著作権情報
                                 url = null;
                                 break;
                         }
 
-                        if(url != null){
+                        if(url.equals("map")){
+                            Resources r = getResources();
+                            Bitmap bmp = BitmapFactory.decodeResource(r, R.mipmap.layout_map);
+                            MyApplication.getInstance().setBmp(bmp);
+                            Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                            startActivity(intent);
+                        }
+
+                        else if(url != null){
                             Intent intent = new Intent(MainActivity.this, WebActivity.class);
                             intent.putExtra("URL", url);
                             startActivity(intent);
