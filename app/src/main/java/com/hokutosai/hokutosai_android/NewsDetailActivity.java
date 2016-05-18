@@ -2,6 +2,8 @@ package com.hokutosai.hokutosai_android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -60,7 +62,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         mNewsDetail = item;
 
         mLikeCount = item.getLikes_count();
-
+        
         TextView title = (TextView)this.findViewById(R.id.news_detail_title);
         TextView date = (TextView)this.findViewById(R.id.news_detail_date);
         title.setText(item.getTitle());
@@ -100,6 +102,14 @@ public class NewsDetailActivity extends AppCompatActivity {
                                             view.setImageUrl(mNewsDetail.medias.get(i).url, ImageLoaderSingleton.getImageLoader(RequestQueueSingleton.getInstance(), LruCacheSingleton.getInstance()));
                                             view.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
+                                            view.setOnClickListener(new View.OnClickListener(){
+                                                public void onClick(View v){
+                                                    Bitmap bmp = ((BitmapDrawable) ((NetworkImageView) v).getDrawable()).getBitmap();
+                                                    MyApplication.getInstance().setBmp(bmp);
+                                                    Intent i = new Intent(NewsDetailActivity.this, ImageActivity.class);
+                                                    startActivity(i);
+                                                }
+                                            });
                                             adapter.addView(view);
                                         }
 

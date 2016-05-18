@@ -24,6 +24,10 @@ public class MyViewPagerAdapter extends PagerAdapter {
         viewList.add(view);
     }
 
+    public void setView(ArrayList<View> list){
+        viewList = list;
+    }
+
     @Override
     public int getCount() {
         return viewList.size();
