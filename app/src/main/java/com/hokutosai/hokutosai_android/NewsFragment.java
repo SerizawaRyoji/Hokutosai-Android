@@ -314,19 +314,22 @@ public class NewsFragment extends Fragment {
                                 Gson gson = new Gson();
                                 Type collectionType = new TypeToken<Collection<News>>() {
                                 }.getType();
+                                Log.d("test",response.toString());
                                 list = gson.fromJson(response.toString(), collectionType);
 
-                                mLastId = list.get(list.size()-1).getNews_id(); //取得したニュースのもっとも古いデータを保持
-                                adapter.setNewsItemList(list);
+                                if(!list.isEmpty()) {
+                                    mLastId = list.get(list.size() - 1).getNews_id(); //取得したニュースのもっとも古いデータを保持
+                                    adapter.setNewsItemList(list);
 
-                                if(getActivity() != null) {
-                                    //UIに反映
-                                    if(listView == null) {
-                                        listView = (ListView) getActivity().findViewById(R.id.list_news_view);
-                                        listView.addFooterView(progress, null, false);
-                                        listView.setAdapter(adapter);
-                                        setClickListener();     //クリックしたときの処理について
-                                        setScrollListener();    //スクロールしたときの処理について
+                                    if (getActivity() != null) {
+                                        //UIに反映
+                                        if (listView == null) {
+                                            listView = (ListView) getActivity().findViewById(R.id.list_news_view);
+                                            listView.addFooterView(progress, null, false);
+                                            listView.setAdapter(adapter);
+                                            setClickListener();     //クリックしたときの処理について
+                                            setScrollListener();    //スクロールしたときの処理について
+                                        }
                                     }
                                 }
                             }

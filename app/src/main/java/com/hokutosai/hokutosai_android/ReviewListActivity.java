@@ -24,7 +24,7 @@ import java.util.Collection;
 /**
  * Created by ryoji on 2016/05/15.
  */
-public class ShopReviewActivity extends AppCompatActivity {
+public class ReviewListActivity extends AppCompatActivity {
 
     ShopAssessmentAdapter adapter;
     ListView listView = null;
@@ -57,7 +57,7 @@ public class ShopReviewActivity extends AppCompatActivity {
                                 }.getType();
                                 Log.d("test",response.toString());
 
-                                if(ShopReviewActivity.this != null) {
+                                if(ReviewListActivity.this != null) {
                                     reportList = gson.fromJson(response.toString(), collectionType);      //通報理由の一覧を保持
 
                                     //評価***************************************************************************************************
@@ -71,7 +71,7 @@ public class ShopReviewActivity extends AppCompatActivity {
                                     allRateNum.setText("評価件数：" + item.assessment_aggregate.getAssessed_count());
                                     //******************************************************************************************************
 
-                                    adapter = new ShopAssessmentAdapter(ShopReviewActivity.this);
+                                    adapter = new ShopAssessmentAdapter(ReviewListActivity.this);
 
                                     adapter.setAssessmentList(new ArrayList<>(item.assessments));
                                     adapter.setAssessmentReportCauseList(reportList);
