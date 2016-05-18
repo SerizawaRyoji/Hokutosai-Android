@@ -3,6 +3,9 @@ package com.hokutosai.hokutosai_android;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -497,8 +500,10 @@ public class ShopDetailActivity extends AppCompatActivity {
     public void clickMapResult(View view){
 
         if( !mshopDetail.name.isEmpty() ) {
+            Resources r = getResources();
+            Bitmap bmp = BitmapFactory.decodeResource(r, R.mipmap.layout_map);
+            MyApplication.getInstance().setBmp(bmp);
             Intent i = new Intent(ShopDetailActivity.this, ImageActivity.class);
-            //i.putExtra("ShopDetail", mshopDetail);
             startActivity(i);
         }
     }

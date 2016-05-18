@@ -1,6 +1,7 @@
 package com.hokutosai.hokutosai_android;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 
 /**
  * Created by ryoji on 2016/05/02.
@@ -8,6 +9,9 @@ import android.app.Application;
 public class MyApplication extends Application {
 
     private static MyApplication sInstance;
+
+    private final String TAG = "APPLICATION";
+    private Bitmap bmp;
 
     public static synchronized MyApplication getInstance() {
         return sInstance;
@@ -23,5 +27,17 @@ public class MyApplication extends Application {
         LruCacheSingleton.create();
 
         MyAccountSingleton.getInstance().createAccount(this);   //アカウントの作成
+    }
+
+    public void setBmp(Bitmap bmp){
+        this.bmp = bmp;
+    }
+
+    public Bitmap getBmp(){
+        return bmp;
+    }
+
+    public void clearBmp(){
+        bmp = null;
     }
 }

@@ -1,8 +1,6 @@
 package com.hokutosai.hokutosai_android;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -27,8 +25,7 @@ public class ImageActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_image);
 
-        Resources r = getResources();
-        Bitmap bmp = BitmapFactory.decodeResource(r, R.mipmap.layout_map);
+        Bitmap bmp = MyApplication.getInstance().getBmp();
 
         mImageView = (ImageView)findViewById(R.id.image_activity);
         mImageView.setImageBitmap(bmp);
@@ -44,5 +41,11 @@ public class ImageActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApplication.getInstance().clearBmp();
     }
 }
