@@ -299,6 +299,7 @@
             android:text="みんなのレビューを見る"
             android:onClick="reviewShowClickResult"
             android:textColor="@color/text_clickable"
+            android:visibility="invisible"
             />
 
         <include layout="@layout/under_line" />
@@ -328,6 +329,7 @@
             android:text="自分のレビューを削除する"
             android:onClick="reviewDeleteClickResult"
             android:textColor="@color/text_clickable"
+            android:visibility="invisible"
             />
 
         <include layout="@layout/under_line" />

@@ -160,8 +160,13 @@ public class ShopDetailActivity extends AppCompatActivity {
                                 //******************************************************************************************************
 
                                 //レビュー***********************************************************************************************
+                                TextView showText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_show_review);
                                 TextView reviewText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_write_review);
                                 TextView deleteText = (TextView)ShopDetailActivity.this.findViewById(R.id.shop_detail_delete_review);
+
+                                showText.setVisibility(View.VISIBLE);
+                                deleteText.setVisibility(View.VISIBLE);
+
                                 if(mshopDetail.my_assessment == null){
                                     reviewText.setText("レビューを書く");
                                     deleteText.setClickable(false);
