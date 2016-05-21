@@ -48,13 +48,12 @@
         android:background="#0A0A0A"
         />
 
-
     <!--評価のリスト-->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/list_shop_review"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:scrollbars="none"
+        android:listSelector="@android:color/transparent"/>
 
 </LinearLayout>

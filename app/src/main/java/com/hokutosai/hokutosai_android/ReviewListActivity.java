@@ -79,8 +79,6 @@ public class ReviewListActivity extends AppCompatActivity {
 
                                     listView = (ListView) findViewById(R.id.list_shop_review);
                                     listView.setAdapter(adapter);
-
-                                    listView.setEnabled(false);
                                 }
                             }
                         },
@@ -99,6 +97,8 @@ public class ReviewListActivity extends AppCompatActivity {
         RequestQueueSingleton.getInstance().add(jArrayRequest);    //WebAPIの呼び出し
 
     }
+
+
 
     @Override
     public void onStop() {
