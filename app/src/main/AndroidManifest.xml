@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hokutosai.hokutosai_android">
+    package="com.hokutosai.hokutosai_android"
+    android:versionCode="2"
+    android:versionName="1.1">
 
     <supports-screens android:smallScreens="true"
         android:normalScreens="true" android:largeScreens="true"
