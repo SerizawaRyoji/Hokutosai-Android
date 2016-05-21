@@ -50,7 +50,7 @@
     <!-- 通報ボタン -->
     <android:TextView
         android:id="@+id/assessment_report"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/assessment_comment"
         android:layout_marginTop="6dp"
@@ -58,7 +58,7 @@
         android:clickable="true"
         android:textColor="@color/text_clickable"
         android:text="このコメントを通報する"
-        android:gravity="right"
+        android:layout_alignParentRight="true"
         android:textSize="12sp" />
 
 </RelativeLayout>
